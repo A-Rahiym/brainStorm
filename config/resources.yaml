@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceManifest
+metadata:
+  name: brainstorm-api-artifacts
+  description: Build/CI consumable artifacts for the Brainstorm School Management API
+resources:
+  - name: openapi-spec
+    type: openapi
+    source: config/openapi.json
+  - name: postman-collection
+    type: postman
+    source: config/postman_collection.json
