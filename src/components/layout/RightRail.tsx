@@ -22,6 +22,8 @@ export function RightRail() {
           <div className="flex gap-3">
             <IconButton
               icon="/icons/Bell.svg"
+              label="Notifications"
+              showLabel={false}
             />
             <IconButton
               icon="/icons/Info.svg"
@@ -30,6 +32,8 @@ export function RightRail() {
           </div>
           <IconButton
             icon="/icons/Settings.svg"
+            label="Settings"
+            showLabel={false}
           />
 
         </div>
@@ -53,7 +57,7 @@ export function RightRail() {
 
       <div className="mb-3.5 flex items-center justify-between text-md font-medium text-text-muted">
         Schedule
-        <button aria-label="Add schedule" className="flex h- w-7 items-center justify-center ">
+        <button aria-label="Add schedule" className="flex h-7 w-7 items-center justify-center ">
           <PlusIcon size={20} />
         </button>
       </div>
