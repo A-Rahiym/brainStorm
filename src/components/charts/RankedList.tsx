@@ -14,7 +14,7 @@ export function RankedList({ students }: { students: RankedStudent[] }) {
   return (
     <div>
       {students.map((student, index) => (
-        <div key={student.id} className="flex items-center gap-5 border-b border-border px-0 py-8 last:border-b-0">
+        <div key={student.id} className="flex items-center gap-3 border-b border-border px-0 py-8 last:border-b-0 xl:gap-5">
           <span className="w-4 shrink-0 text-[13px] font-bold text-text-muted">{index + 1}</span>
           <Avatar name={student.name} src={student.avatar} size={50} />
           <div className="min-w-0 flex-1">

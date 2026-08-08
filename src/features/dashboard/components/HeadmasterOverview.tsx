@@ -19,7 +19,7 @@ export function HeadmasterOverview() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-4 gap-[18px]">
+      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} variant="card" />
         ))}
@@ -35,7 +35,7 @@ export function HeadmasterOverview() {
 
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-4.5">
+      <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <StatCard
           primary
           label="Total students"
@@ -75,7 +75,7 @@ export function HeadmasterOverview() {
         <TermCountCard />
       </div>
 
-      <div className="grid grid-cols-2 gap-4.5">
+      <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
         <CalendarAgendaCard
           agenda={agenda}
           month={JULY}
@@ -89,7 +89,7 @@ export function HeadmasterOverview() {
         </div>
       </div>
 
-      <Card className="w-2/4">
+      <Card className="w-full">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
             <FileTextIcon size={17} className="text-text-secondary" />

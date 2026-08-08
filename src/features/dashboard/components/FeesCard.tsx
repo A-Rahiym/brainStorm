@@ -17,7 +17,7 @@ export function FeesCard({ fees }: { fees: FeesSummary }) {
           Details <ChevronRightIcon size={13} />
         </span>
       </div>
-      <div className="mb-1 text-4xl font-semibold leading-none tracking-tight text-text-primary">
+      <div className="mb-1 text-3xl font-semibold leading-none tracking-tight text-text-primary xl:text-4xl">
         {formatCurrency(fees.collected)}
       </div>
       <div className="mb-4 text-[13px] text-text-secondary">of {formatCurrency(fees.expected)} expected</div>

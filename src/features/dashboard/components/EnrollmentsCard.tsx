@@ -20,7 +20,7 @@ export function EnrollmentsCard({ enrollments }: { enrollments: EnrollmentSummar
 
   return (
     <Card className="flex flex-col">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
           <Pencil size={16} className="text-text-secondary" />
           Enrollments
@@ -41,8 +41,8 @@ export function EnrollmentsCard({ enrollments }: { enrollments: EnrollmentSummar
       </div>
 
       {view === "gender" ? (
-        <div className="flex items-center justify-start gap-20">
-          <DonutChart data={donutData} centerValue={String(enrollments.total)} centerLabel="TOTAL" height={250} />
+        <div className="flex flex-col items-center gap-6 xl:flex-row xl:justify-start xl:gap-8">
+          <DonutChart data={donutData} centerValue={String(enrollments.total)} centerLabel="TOTAL" height={190} />
           <div className="flex flex-col gap-3.5 text-md">
             <span className="flex items-center gap-2.5">
               <span className="h-4 w-4 rounded-md bg-primary" />

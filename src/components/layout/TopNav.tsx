@@ -5,16 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSessionStore } from "@/store/session.store";
 import {
-  BellIcon,
   ChevronDownIcon,
   DashboardIcon,
   GridIcon,
-  HelpIcon,
-  LogoIcon,
   PaymentsIcon,
   ResultsIcon,
   SearchIcon,
-  SettingsIcon,
   StudentsIcon,
   SubjectsIcon,
   TeachersIcon,
@@ -52,7 +48,7 @@ export function TopNav() {
   return (
 
 
-      <div className= "px-7 py-4 flex items-center gap-3 justify-between ">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-7">
         <Link href="/dashboard" className="flex items-center gap-2.5 font-semibold text-3xl text-text-primary">
           <span className="flex h-8.5 w-8.5 items-center justify-center   text-white">
             <Image
@@ -68,19 +64,20 @@ export function TopNav() {
           </span>
         </Link>
 
-        <div className="flex item-center justify-center gap-1 bg-white shadow p-3 rounded-full w-full">
-          <nav className="flex items-center gap-0.5 rounded-full" aria-label="Primary">
+        <div className="flex w-full min-w-0 items-center justify-center gap-1 rounded-full bg-white p-2 shadow lg:w-auto lg:flex-1 xl:p-3">
+          <nav className="flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-full" aria-label="Primary">
             {items.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors ${active ? "bg-primary-light text-primary" : "text-text-secondary hover:text-text-primary"
+                  title={item.label}
+                  className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold transition-colors xl:px-4 ${active ? "bg-primary-light text-primary" : "text-text-secondary hover:text-text-primary"
                     }`}
                 >
                   {item.icon}
-                  {item.label}
+                  <span className="hidden xl:inline">{item.label}</span>
                 </Link>
               );
             })}
@@ -89,7 +86,7 @@ export function TopNav() {
             <button aria-label="Apps" className="flex h-[38px] w-[38px] items-center justify-center rounded-full text-text-secondary hover:bg-bg">
               <GridIcon size={18} />
             </button>
-            <label className="flex items-center gap-2 rounded-full bg-bg px-3.5 py-2 text-sm text-text-muted">
+            <label className="hidden items-center gap-2 rounded-full bg-bg px-3.5 py-2 text-sm text-text-muted lg:flex">
               <SearchIcon size={16} />
               <input
                 placeholder="Search.."

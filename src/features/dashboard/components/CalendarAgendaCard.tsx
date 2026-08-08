@@ -31,7 +31,7 @@ export function CalendarAgendaCard({
 
   return (
     <Card className="flex flex-col">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
           <CalendarIcon size={17} className="text-text-secondary" />
           Calendar
