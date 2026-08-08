@@ -1,0 +1,32 @@
+[
+  {
+    "firstName": "Zainab",
+    "lastName": "Bello",
+    "admissionNumber": "BS-2026-001",
+    "dateOfBirth": "2012-02-18",
+    "gender": "FEMALE",
+    "address": "5 Crescent Close, Kaduna",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE"
+  },
+  {
+    "firstName": "Tunde",
+    "lastName": "Adebayo",
+    "admissionNumber": "BS-2026-002",
+    "dateOfBirth": "2013-05-30",
+    "gender": "MALE",
+    "address": "18 Market Road, Ibadan",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE"
+  },
+  {
+    "firstName": "Amina",
+    "lastName": "Yusuf",
+    "admissionNumber": "BS-2026-003",
+    "dateOfBirth": "2012-09-11",
+    "gender": "FEMALE",
+    "address": "9 Park View, Enugu",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE"
+  }
+]

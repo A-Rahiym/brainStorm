@@ -1,0 +1,14 @@
+[
+  {
+    "firstName": "Abdul",
+    "lastName": "Rahiym",
+    "email": "headmaster@brainstorm.test",
+    "phone": "+2348000000001",
+    "staffNumber": "HM-001",
+    "dateOfBirth": "1975-04-12",
+    "address": "14 Liberty Rd, Lagos",
+    "employmentDate": "2019-09-02",
+    "status": "ACTIVE",
+    "authEmail": "admin@brainstorm.test"
+  }
+]

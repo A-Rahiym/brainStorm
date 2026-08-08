@@ -19,6 +19,21 @@
       "key": "auth_password",
       "value": "password123",
       "type": "string"
+    },
+    {
+      "key": "headmaster_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "teacher_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "student_id",
+      "value": "",
+      "type": "string"
     }
   ],
   "auth": {
@@ -111,6 +126,236 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "Headmasters",
+      "item": [
+        {
+          "name": "Get Headmaster",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/headmasters/{{headmaster_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["headmasters", "{{headmaster_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Headmaster",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+2348000000999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/headmasters/{{headmaster_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["headmasters", "{{headmaster_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teachers",
+      "item": [
+        {
+          "name": "Create Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@brainstorm.test\",\n  \"phone\": \"+2348000000004\",\n  \"staffNumber\": \"TCH-003\",\n  \"dateOfBirth\": \"1990-03-15\",\n  \"employmentDate\": \"2023-09-04\",\n  \"qualification\": \"B.Sc Chemistry\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/teachers",
+              "host": ["{{base_url}}"],
+              "path": ["teachers"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('teacher_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Teachers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/teachers",
+              "host": ["{{base_url}}"],
+              "path": ["teachers"]
+            }
+          }
+        },
+        {
+          "name": "Get Teacher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/teachers/{{teacher_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teachers", "{{teacher_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Teacher",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+2348000000444\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/teachers/{{teacher_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teachers", "{{teacher_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Deactivate Teacher (soft delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/teachers/{{teacher_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["teachers", "{{teacher_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Chidi\",\n  \"lastName\": \"Nwosu\",\n  \"admissionNumber\": \"BS-2026-004\",\n  \"dateOfBirth\": \"2011-12-05\",\n  \"gender\": \"MALE\",\n  \"address\": \"2 School Rd, Onitsha\",\n  \"admissionDate\": \"2025-09-10\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students",
+              "host": ["{{base_url}}"],
+              "path": ["students"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('student_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students",
+              "host": ["{{base_url}}"],
+              "path": ["students"]
+            }
+          }
+        },
+        {
+          "name": "Get Student",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/{{student_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["students", "{{student_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"3 School Rd, Onitsha\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students/{{student_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["students", "{{student_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Deactivate Student (soft delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/{{student_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["students", "{{student_id}}"]
+            }
+          }
         }
       ]
     }

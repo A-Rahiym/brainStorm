@@ -1,0 +1,28 @@
+[
+  {
+    "firstName": "Grace",
+    "lastName": "Okon",
+    "email": "grace.okon@brainstorm.test",
+    "phone": "+2348000000002",
+    "staffNumber": "TCH-001",
+    "dateOfBirth": "1988-07-23",
+    "address": "3 Unity Street, Abuja",
+    "employmentDate": "2021-01-11",
+    "qualification": "B.Sc Mathematics",
+    "status": "ACTIVE",
+    "authEmail": null
+  },
+  {
+    "firstName": "Emeka",
+    "lastName": "Okafor",
+    "email": "emeka.okafor@brainstorm.test",
+    "phone": "+2348000000003",
+    "staffNumber": "TCH-002",
+    "dateOfBirth": "1991-11-02",
+    "address": "22 Palm Avenue, Port Harcourt",
+    "employmentDate": "2022-03-14",
+    "qualification": "B.Ed English",
+    "status": "ACTIVE",
+    "authEmail": null
+  }
+]
