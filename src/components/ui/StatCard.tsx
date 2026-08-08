@@ -1,9 +1,11 @@
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 export function StatCard({
   label,
   value,
   icon,
+  iconSrc,
   iconClassName = "",
   trend,
   trendValue,
@@ -14,6 +16,7 @@ export function StatCard({
   label: string;
   value: string;
   icon?: React.ReactNode;
+  iconSrc?: string;
   iconClassName?: string;
   trend?: "up" | "down";
   trendValue?: string;
@@ -33,13 +36,17 @@ export function StatCard({
         >
           {label}
         </span>
-        {icon && (
+        {(icon || iconSrc) && (
           <span
-            className={`flex h-8.5 w-8.5 items-center justify-center rounded-full ${
+            className={`flex h-10 w-10 items-center justify-center rounded-full ${
               primary ? "bg-white/15 text-white" : "bg-bg text-text-primary"
             } ${iconClassName}`}
           >
-            {icon}
+            {iconSrc ? (
+              <Image src={iconSrc} width={20} height={20} alt="" />
+            ) : (
+              icon
+            )}
           </span>
         )}
       </div>

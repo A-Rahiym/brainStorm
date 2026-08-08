@@ -2,7 +2,6 @@
 
 import { Card, Skeleton, StatCard, ErrorState } from "@/components/ui";
 import { ActivityFeed } from "@/components/charts/ActivityFeed";
-import { BookOpen, LayoutGrid, Users } from "lucide-react";
 import { formatNumber } from "@/lib/format";
 import { useTeacherDashboard } from "@/features/dashboard/hooks/queries/useTeacherDashboard";
 import { AssignmentsCard } from "@/features/dashboard/components/AssignmentsCard";
@@ -36,19 +35,19 @@ export function TeacherOverview() {
           primary
           label="My students"
           value={formatNumber(stats.students)}
-          icon={<Users size={16} />}
+          iconSrc="/icons/people.svg"
           footnote="across assigned classes"
         />
         <StatCard
           label="My classes"
           value={formatNumber(stats.classes)}
-          icon={<LayoutGrid size={16} />}
+          iconSrc="/icons/Case.svg"
           footnote="this term"
         />
         <StatCard
           label="My subjects"
           value={formatNumber(stats.subjects)}
-          icon={<BookOpen size={16} />}
+          iconSrc="/icons/Book.svg"
           footnote="scheduled periods"
         />
         <TermCountCard />

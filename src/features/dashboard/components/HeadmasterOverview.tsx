@@ -2,7 +2,7 @@
 
 import { Card, Skeleton, StatCard, ErrorState } from "@/components/ui";
 import { ActivityFeed } from "@/components/charts/ActivityFeed";
-import { ChevronRightIcon, FileTextIcon, StudentsIcon, SubjectsIcon, TeachersIcon } from "@/components/icons";
+import { ChevronRightIcon, FileTextIcon } from "@/components/icons";
 import { formatNumber } from "@/lib/format";
 import { useHeadmasterDashboard } from "@/features/dashboard/hooks/queries/useHeadmasterDashboard";
 import { CalendarAgendaCard } from "@/features/dashboard/components/CalendarAgendaCard";
@@ -40,7 +40,8 @@ export function HeadmasterOverview() {
           primary
           label="Total students"
           value={formatNumber(stats.students)}
-          icon={<StudentsIcon size={16} />}
+          iconSrc="/icons/people.svg"
+          iconClassName="!bg-surface"
           trend="up"
           trendValue="15%"
           footnote={
@@ -52,8 +53,8 @@ export function HeadmasterOverview() {
         <StatCard
           label="Teachers"
           value={formatNumber(stats.teachers)}
-          icon={<TeachersIcon size={16} />}
-          iconClassName="!bg-accent-black !text-white"
+          iconSrc="/icons/Case.svg"
+          iconClassName="!bg-accent-black"
           trend="down"
           trendValue="3%"
           footnote={
@@ -65,7 +66,8 @@ export function HeadmasterOverview() {
         <StatCard
           label="Subjects"
           value={formatNumber(stats.subjects)}
-          icon={<SubjectsIcon size={16} />}
+          iconSrc="/icons/Book.svg"
+          iconClassName="!bg-accent-black"
           footnote={
             <>
               Active today: <b>24</b>

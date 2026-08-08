@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui";
-import { ClockIcon } from "@/components/icons";
+import Image from "next/image";
 
 const BARS = Array.from({ length: 16 }, (_, i) => i >= 12);
 
@@ -8,8 +8,8 @@ export function TermCountCard({ remain = "4 wks" }: { remain?: string }) {
     <Card className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-text-secondary">Term count</span>
-        <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-bg text-text-primary">
-          <ClockIcon size={16} />
+        <span className="flex h-10 w-10 items-center bg-black justify-center rounded-full text-text-primary">
+          <Image src="/icons/Time.svg" width={25} height={25} alt="" />
         </span>
       </div>
       <div className="flex items-end gap-1" aria-hidden>
