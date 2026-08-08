@@ -1,0 +1,23 @@
+[
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "sessionName": "2026/2027",
+    "enrollmentDate": "2026-09-07",
+    "status": "ACTIVE"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "sessionName": "2026/2027",
+    "enrollmentDate": "2026-09-07",
+    "status": "ACTIVE"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "sessionName": "2026/2027",
+    "enrollmentDate": "2026-09-07",
+    "status": "ACTIVE"
+  }
+]

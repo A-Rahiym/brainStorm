@@ -1,0 +1,34 @@
+[
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
+  },
+  {
+    "staffNumber": "TCH-002",
+    "className": "JSS 1A",
+    "subjectCode": "ENG",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
+  }
+]

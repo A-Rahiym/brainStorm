@@ -69,6 +69,28 @@ type GradeSeed = {
   remark?: string | null;
 };
 
+type EnrollmentSeed = {
+  admissionNumber: string;
+  className: string;
+  sessionName: string;
+  enrollmentDate: string;
+  status?: "ACTIVE" | "TRANSFERRED" | "WITHDRAWN";
+};
+
+type ClassSubjectSeed = {
+  className: string;
+  subjectCode: string;
+};
+
+type TeachingAssignmentSeed = {
+  staffNumber: string;
+  className: string;
+  subjectCode: string;
+  sessionName: string;
+  termName: string;
+  status?: "ACTIVE" | "INACTIVE";
+};
+
 function readSeedData<T>(file: string): T[] {
   try {
     const raw = readFileSync(join(import.meta.dirname, "seed-data", file), "utf8");
@@ -288,6 +310,111 @@ async function main() {
     });
   }
 
+  const classIds = new Map<string, string>();
+  for (const c of classes) {
+    const row = await prisma.class.findFirst({ where: { schoolId: school.id, name: c.name } });
+    if (row) classIds.set(c.name, row.id);
+  }
+  const subjectIds = new Map<string, string>();
+  for (const s of subjects) {
+    const row = await prisma.subject.findFirst({ where: { schoolId: school.id, code: s.code } });
+    if (row) subjectIds.set(s.code, row.id);
+  }
+  const studentIds = new Map<string, string>();
+  for (const s of students) {
+    const row = await prisma.student.findFirst({
+      where: { schoolId: school.id, admissionNumber: s.admissionNumber },
+    });
+    if (row) studentIds.set(s.admissionNumber, row.id);
+  }
+  const termIds = new Map<string, string>();
+  for (const t of terms) {
+    const row = await prisma.term.findFirst({
+      where: { name: t.name, academicSession: { schoolId: school.id } },
+    });
+    if (row) termIds.set(t.name, row.id);
+  }
+  const teacherIds = new Map<string, string>();
+  for (const t of teachers) {
+    const row = await prisma.teacher.findFirst({
+      where: { schoolId: school.id, staffNumber: t.staffNumber },
+    });
+    if (row) teacherIds.set(t.staffNumber, row.id);
+  }
+
+  const enrollments = readSeedData<EnrollmentSeed>("enrollments.json");
+  for (const e of enrollments) {
+    const studentId = studentIds.get(e.admissionNumber);
+    const classId = classIds.get(e.className);
+    const sessionId = sessionIds.get(e.sessionName);
+    if (!studentId || !classId || !sessionId) {
+      console.warn(
+        `Enrollment skipped for ${e.admissionNumber} @ ${e.className} (${e.sessionName}): missing student/class/session`
+      );
+      continue;
+    }
+    const existing = await prisma.enrollment.findFirst({
+      where: { studentId, classId, academicSessionId: sessionId },
+    });
+    await prisma.enrollment.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        studentId,
+        classId,
+        academicSessionId: sessionId,
+        enrollmentDate: new Date(e.enrollmentDate),
+        status: (e.status as "ACTIVE" | "TRANSFERRED" | "WITHDRAWN") ?? "ACTIVE",
+      },
+    });
+  }
+
+  const classSubjects = readSeedData<ClassSubjectSeed>("class-subjects.json");
+  const classSubjectIds = new Map<string, string>();
+  for (const cs of classSubjects) {
+    const classId = classIds.get(cs.className);
+    const subjectId = subjectIds.get(cs.subjectCode);
+    if (!classId || !subjectId) {
+      console.warn(`ClassSubject skipped for ${cs.className} / ${cs.subjectCode}: missing class/subject`);
+      continue;
+    }
+    const existing = await prisma.classSubject.findFirst({ where: { classId, subjectId } });
+    const created = await prisma.classSubject.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: { classId, subjectId },
+    });
+    classSubjectIds.set(`${cs.className}|${cs.subjectCode}`, created.id);
+  }
+
+  const teachingAssignments = readSeedData<TeachingAssignmentSeed>("teaching-assignments.json");
+  for (const ta of teachingAssignments) {
+    const teacherId = teacherIds.get(ta.staffNumber);
+    const classSubjectId = classSubjectIds.get(`${ta.className}|${ta.subjectCode}`);
+    const sessionId = sessionIds.get(ta.sessionName);
+    const termId = termIds.get(ta.termName);
+    if (!teacherId || !classSubjectId || !sessionId || !termId) {
+      console.warn(
+        `TeachingAssignment skipped for ${ta.staffNumber} / ${ta.className}-${ta.subjectCode}: missing dependency`
+      );
+      continue;
+    }
+    const existing = await prisma.teachingAssignment.findFirst({
+      where: { classSubjectId, termId },
+    });
+    await prisma.teachingAssignment.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        teacherId,
+        classSubjectId,
+        academicSessionId: sessionId,
+        termId,
+        status: (ta.status as "ACTIVE" | "INACTIVE") ?? "ACTIVE",
+      },
+    });
+  }
+
   console.log(`Seeded school: ${school.name}`);
   console.log(`Seeded headmasters: ${headmasters.length}`);
   console.log(`Seeded teachers: ${teachers.length}`);
@@ -297,6 +424,9 @@ async function main() {
   console.log(`Seeded classes: ${classes.length}`);
   console.log(`Seeded subjects: ${subjects.length}`);
   console.log(`Seeded grades: ${grades.length}`);
+  console.log(`Seeded enrollments: ${enrollments.length}`);
+  console.log(`Seeded classSubjects: ${classSubjects.length}`);
+  console.log(`Seeded teachingAssignments: ${teachingAssignments.length}`);
   console.log("Seeded user: admin@brainstorm.test / password123");
   console.log(`Admin userId: ${adminUser.id} (link via authEmail to resolve schoolId on login)`);
 }
