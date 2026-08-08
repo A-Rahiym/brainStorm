@@ -28,9 +28,9 @@ export async function login(email: string, password: string): Promise<LoginResul
   const session: Session = {
     userId: user.id,
     role,
-    // Resolved from the linked Teacher/Headmaster record (Phase 2).
-    // Null until a staff record is linked to this user.
-    schoolId: null,
+    schoolId: user.headmaster?.schoolId ?? user.teacher?.schoolId ?? null,
+    headmasterId: user.headmaster?.id,
+    teacherId: user.teacher?.id,
   };
 
   return {

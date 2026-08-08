@@ -3,13 +3,13 @@ import { prisma } from "@/lib/prisma";
 export async function findUserByEmail(email: string) {
   return prisma.user.findUnique({
     where: { email },
-    include: { role: true },
+    include: { role: true, teacher: true, headmaster: true },
   });
 }
 
 export async function findUserById(id: string) {
   return prisma.user.findUnique({
     where: { id },
-    include: { role: true },
+    include: { role: true, teacher: true, headmaster: true },
   });
 }
