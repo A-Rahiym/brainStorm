@@ -2,6 +2,7 @@ import type { Role } from "@/server/context";
 
 export const PERMISSIONS: Record<Role, string[]> = {
   HEADMASTER: [
+    "headmasters.read", "headmasters.update",
     "students.read", "students.create", "students.update",
     "teachers.read", "teachers.create", "teachers.update",
     "finance.read", "payments.record",
