@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { AppError } from "@/server/errors";
 
 export function respondSuccess(data: unknown, status = 200) {
@@ -12,13 +13,14 @@ export function respondError(code: string, message: string, status: number, deta
   return Response.json({ error: { code, message, details } }, { status });
 }
 
-type Handler = (req: Request) => Promise<Response>;
-
-export function withErrorHandler(fn: Handler): Handler {
-  return async (req: Request) => {
+export function withErrorHandler<C>(fn: (req: Request, context: C) => Promise<Response>) {
+  return async (req: Request, context: C): Promise<Response> => {
     try {
-      return await fn(req);
+      return await fn(req, context);
     } catch (err) {
+      if (err instanceof z.ZodError) {
+        return respondError("VALIDATION_ERROR", "Invalid request", 400, err.flatten());
+      }
       if (err instanceof AppError) {
         const appError = err as AppError & { details?: unknown };
         return respondError(appError.code, appError.message, appError.status, appError.details);
