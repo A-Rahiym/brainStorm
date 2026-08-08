@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand / Primary */
+  --color-primary: #A00043;
+  --color-primary-dark: #7a0e36;
+  --color-primary-light: #fce7ef;
+
+  /* Secondary accents */
+  --color-accent-pink: #f4c6d8;
+  --color-accent-black: #17171a;
+
+  /* Status */
+  --color-success-bg: #dcfce7;
+  --color-success-text: #15803d;
+  --color-danger-text: #dc2626;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #b45309;
+  --color-meeting-bg: #f1e9fe;
+  --color-meeting-text: #7c3aed;
+
+  /* Neutrals */
+  --color-bg: #f7f7f9;
+  --color-surface: #ffffff;
+  --color-border: #ededf0;
+  --color-text-primary: #17171a;
+  --color-text-secondary: #6b6b76;
+  --color-text-muted: #a0a0ab;
+
+  /* Schedule tags */
+  --color-schedule-red: #e11d48;
+  --color-schedule-red-bg: #fce8ec;
+  --color-schedule-pink: #f4c6d8;
+  --color-schedule-neutral-bg: #f7f7f9;
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text-primary);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-light: var(--color-primary-light);
+  --color-accent-pink: var(--color-accent-pink);
+  --color-accent-black: var(--color-accent-black);
+  --color-success-bg: var(--color-success-bg);
+  --color-success-text: var(--color-success-text);
+  --color-danger-text: var(--color-danger-text);
+  --color-warning-bg: var(--color-warning-bg);
+  --color-warning-text: var(--color-warning-text);
+  --color-meeting-bg: var(--color-meeting-bg);
+  --color-meeting-text: var(--color-meeting-text);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-schedule-red: var(--color-schedule-red);
+  --color-schedule-red-bg: var(--color-schedule-red-bg);
+  --color-schedule-pink: var(--color-schedule-pink);
+  --color-schedule-neutral-bg: var(--color-schedule-neutral-bg);
+
+  --shadow-card: var(--shadow-card);
+
+  --radius-card: 16px;
+  --radius-btn: 10px;
+  --radius-pill: 999px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
+
+/* react-day-picker (v10) overrides scoped to MiniCalendar */
+.brain-cal {
+  --rdp-accent-color: var(--color-primary);
+  --rdp-accent-background-color: var(--color-primary-light);
+  --rdp-day-width: 30px;
+  --rdp-day-height: 30px;
+  --rdp-month-width: 100%;
+  font-size: 13px;
+  margin: 0;
+}
+
+.brain-cal .brain-months,
+.brain-cal .brain-month {
+  width: 100%;
+}
+
+.brain-cal .brain-month-grid,
+.brain-cal .brain-weekdays,
+.brain-cal .brain-week {
+  width: 100%;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.brain-cal.brain-cal-hide-caption .brain-caption {
+  display: none;
+}
+
+.brain-cal .brain-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.brain-cal .brain-caption-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.brain-cal .brain-nav {
+  display: flex;
+  gap: 1px;
+}
+
+.brain-cal .brain-prev,
+.brain-cal .brain-next {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  color: var(--color-text-muted);
+}
+
+.brain-cal .brain-prev:hover,
+.brain-cal .brain-next:hover {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.brain-cal .brain-weekdays {
+  margin-bottom: 6px;
+}
+
+.brain-cal .brain-weekday {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.brain-cal .brain-day-button {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 30%;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.brain-cal .brain-day-button:hover {
+  background: var(--color-bg);
+}
+
+.brain-cal .brain-selected .brain-day-button {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.brain-cal .brain-today:not(.brain-selected) .brain-day-button {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.brain-cal .brain-outside .brain-day-button {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.brain-cal .brain-cal-event .brain-day-button {
+  position: relative;
+}
+
+.brain-cal .brain-cal-event .brain-day-button::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
