@@ -41,15 +41,39 @@ enum Gender {
   FEMALE
 }
 
+enum SessionStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum TermStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum ClassStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum SubjectStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model School {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  headmasters Headmaster[]
-  teachers    Teacher[]
-  students    Student[]
+  headmasters      Headmaster[]
+  teachers         Teacher[]
+  students         Student[]
+  academicSessions AcademicSession[]
+  classes          Class[]
+  subjects         Subject[]
+  grades           Grade[]
 }
 
 model Role {
@@ -141,5 +165,82 @@ model Student {
   school School @relation(fields: [schoolId], references: [id])
 
   @@unique([schoolId, admissionNumber])
+  @@index([schoolId])
+}
+
+model AcademicSession {
+  id        String        @id @default(uuid()) @db.Uuid
+  schoolId  String        @db.Uuid
+  name      String
+  startDate DateTime      @db.Date
+  endDate   DateTime      @db.Date
+  status    SessionStatus @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+  terms  Term[]
+
+  @@index([schoolId])
+}
+
+model Term {
+  id                String     @id @default(uuid()) @db.Uuid
+  academicSessionId String     @db.Uuid
+  name              String
+  startDate         DateTime   @db.Date
+  endDate           DateTime   @db.Date
+  status            TermStatus @default(ACTIVE)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+
+  @@index([academicSessionId])
+}
+
+model Class {
+  id        String      @id @default(uuid()) @db.Uuid
+  schoolId  String      @db.Uuid
+  name      String
+  level     String
+  capacity  Int
+  status    ClassStatus @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  @@index([schoolId])
+}
+
+model Subject {
+  id          String        @id @default(uuid()) @db.Uuid
+  schoolId    String        @db.Uuid
+  name        String
+  code        String
+  description String?
+  status      SubjectStatus @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  @@unique([schoolId, code])
+  @@index([schoolId])
+}
+
+model Grade {
+  id        String   @id @default(uuid()) @db.Uuid
+  schoolId  String   @db.Uuid
+  name      String
+  minScore  Decimal  @db.Decimal(5, 2)
+  maxScore  Decimal  @db.Decimal(5, 2)
+  remark    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
   @@index([schoolId])
 }
