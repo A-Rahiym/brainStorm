@@ -1,9 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@/generated/prisma/client";
 import { hash } from "bcryptjs";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+
+const prisma = new PrismaClient({ adapter });
 
 type StaffSeed = {
   firstName: string;
@@ -68,7 +71,7 @@ type GradeSeed = {
 
 function readSeedData<T>(file: string): T[] {
   try {
-    const raw = readFileSync(join(__dirname, "seed-data", file), "utf8");
+    const raw = readFileSync(join(import.meta.dirname, "seed-data", file), "utf8");
     return JSON.parse(raw) as T[];
   } catch (err) {
     console.warn(`Skipping ${file}: ${(err as Error).message}`);
