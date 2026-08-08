@@ -1,0 +1,35 @@
+[
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Fractions worksheet",
+    "description": "Complete problems 1-20 on fractions",
+    "dueDate": "2026-09-15",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-002",
+    "className": "JSS 1A",
+    "subjectCode": "ENG",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Essay: My School",
+    "description": "Write a 300-word descriptive essay",
+    "dueDate": "2026-09-18",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Algebra basics",
+    "description": "Solve linear equations exercises",
+    "dueDate": "2026-09-16",
+    "status": "OPEN"
+  }
+]

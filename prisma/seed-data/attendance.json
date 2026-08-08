@@ -1,0 +1,37 @@
+[
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT"
+  }
+]

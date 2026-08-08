@@ -1,0 +1,30 @@
+[
+  {
+    "className": "JSS 1A",
+    "dayOfWeek": "MONDAY",
+    "periodName": "Period 1",
+    "staffNumber": "TCH-001",
+    "subjectCode": "MTH"
+  },
+  {
+    "className": "JSS 1A",
+    "dayOfWeek": "MONDAY",
+    "periodName": "Period 2",
+    "staffNumber": "TCH-002",
+    "subjectCode": "ENG"
+  },
+  {
+    "className": "JSS 2A",
+    "dayOfWeek": "MONDAY",
+    "periodName": "Period 1",
+    "staffNumber": "TCH-001",
+    "subjectCode": "MTH"
+  },
+  {
+    "className": "SSS 1A",
+    "dayOfWeek": "TUESDAY",
+    "periodName": "Period 1",
+    "staffNumber": "TCH-001",
+    "subjectCode": "PHY"
+  }
+]

@@ -91,6 +91,40 @@ type TeachingAssignmentSeed = {
   status?: "ACTIVE" | "INACTIVE";
 };
 
+type PeriodSeed = {
+  name: string;
+  startTime: string;
+  endTime: string;
+};
+
+type TimetableSeed = {
+  className: string;
+  dayOfWeek: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY";
+  periodName: string;
+  staffNumber: string;
+  subjectCode: string;
+};
+
+type AttendanceSeed = {
+  admissionNumber: string;
+  className: string;
+  termName: string;
+  date: string;
+  status?: "PRESENT" | "ABSENT" | "LATE" | "EXCUSED";
+};
+
+type AssignmentSeed = {
+  staffNumber: string;
+  className: string;
+  subjectCode: string;
+  sessionName: string;
+  termName: string;
+  title: string;
+  description?: string | null;
+  dueDate: string;
+  status?: "OPEN" | "CLOSED";
+};
+
 function readSeedData<T>(file: string): T[] {
   try {
     const raw = readFileSync(join(import.meta.dirname, "seed-data", file), "utf8");
@@ -388,6 +422,7 @@ async function main() {
   }
 
   const teachingAssignments = readSeedData<TeachingAssignmentSeed>("teaching-assignments.json");
+  const teachingAssignmentIds = new Map<string, string>();
   for (const ta of teachingAssignments) {
     const teacherId = teacherIds.get(ta.staffNumber);
     const classSubjectId = classSubjectIds.get(`${ta.className}|${ta.subjectCode}`);
@@ -402,7 +437,7 @@ async function main() {
     const existing = await prisma.teachingAssignment.findFirst({
       where: { classSubjectId, termId },
     });
-    await prisma.teachingAssignment.upsert({
+    const created = await prisma.teachingAssignment.upsert({
       where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
       update: {},
       create: {
@@ -411,6 +446,104 @@ async function main() {
         academicSessionId: sessionId,
         termId,
         status: (ta.status as "ACTIVE" | "INACTIVE") ?? "ACTIVE",
+      },
+    });
+    teachingAssignmentIds.set(
+      `${ta.staffNumber}|${ta.className}|${ta.subjectCode}|${ta.sessionName}|${ta.termName}`,
+      created.id
+    );
+  }
+
+  const periods = readSeedData<PeriodSeed>("periods.json");
+  const periodIds = new Map<string, string>();
+  for (const p of periods) {
+    const existing = await prisma.period.findFirst({
+      where: { schoolId: school.id, name: p.name },
+    });
+    const created = await prisma.period.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        name: p.name,
+        startTime: new Date(`1970-01-01T${p.startTime}:00`),
+        endTime: new Date(`1970-01-01T${p.endTime}:00`),
+      },
+    });
+    periodIds.set(p.name, created.id);
+  }
+
+  const timetable = readSeedData<TimetableSeed>("timetable.json");
+  for (const t of timetable) {
+    const classId = classIds.get(t.className);
+    const periodId = periodIds.get(t.periodName);
+    const teachingAssignmentId = teachingAssignmentIds.get(
+      `${t.staffNumber}|${t.className}|${t.subjectCode}|2026/2027|First Term`
+    );
+    if (!classId || !periodId || !teachingAssignmentId) {
+      console.warn(
+        `TimetableEntry skipped for ${t.className} ${t.dayOfWeek} ${t.periodName}: missing dependency`
+      );
+      continue;
+    }
+    const existing = await prisma.timetableEntry.findFirst({
+      where: { classId, periodId, dayOfWeek: t.dayOfWeek, teachingAssignmentId },
+    });
+    await prisma.timetableEntry.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: { classId, teachingAssignmentId, periodId, dayOfWeek: t.dayOfWeek },
+    });
+  }
+
+  const attendance = readSeedData<AttendanceSeed>("attendance.json");
+  for (const a of attendance) {
+    const studentId = studentIds.get(a.admissionNumber);
+    const classId = classIds.get(a.className);
+    const termId = termIds.get(a.termName);
+    const teacherId = teacherIds.get("TCH-001");
+    if (!studentId || !classId || !termId || !teacherId) {
+      console.warn(`Attendance skipped for ${a.admissionNumber} ${a.date}: missing dependency`);
+      continue;
+    }
+    const existing = await prisma.attendance.findFirst({
+      where: { studentId, classId, termId, date: new Date(a.date) },
+    });
+    await prisma.attendance.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        studentId,
+        classId,
+        termId,
+        date: new Date(a.date),
+        status: (a.status as "PRESENT" | "ABSENT" | "LATE" | "EXCUSED") ?? "PRESENT",
+        recordedBy: teacherId,
+      },
+    });
+  }
+
+  const assignments = readSeedData<AssignmentSeed>("assignments.json");
+  for (const asg of assignments) {
+    const teachingAssignmentId = teachingAssignmentIds.get(
+      `${asg.staffNumber}|${asg.className}|${asg.subjectCode}|${asg.sessionName}|${asg.termName}`
+    );
+    if (!teachingAssignmentId) {
+      console.warn(`Assignment skipped for ${asg.title}: missing teaching assignment`);
+      continue;
+    }
+    const existing = await prisma.assignment.findFirst({
+      where: { teachingAssignmentId, title: asg.title },
+    });
+    await prisma.assignment.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        teachingAssignmentId,
+        title: asg.title,
+        description: asg.description,
+        dueDate: new Date(asg.dueDate),
+        status: (asg.status as "OPEN" | "CLOSED") ?? "OPEN",
       },
     });
   }
@@ -427,6 +560,10 @@ async function main() {
   console.log(`Seeded enrollments: ${enrollments.length}`);
   console.log(`Seeded classSubjects: ${classSubjects.length}`);
   console.log(`Seeded teachingAssignments: ${teachingAssignments.length}`);
+  console.log(`Seeded periods: ${periods.length}`);
+  console.log(`Seeded timetable entries: ${timetable.length}`);
+  console.log(`Seeded attendance: ${attendance.length}`);
+  console.log(`Seeded assignments: ${assignments.length}`);
   console.log("Seeded user: admin@brainstorm.test / password123");
   console.log(`Admin userId: ${adminUser.id} (link via authEmail to resolve schoolId on login)`);
 }
