@@ -1,0 +1,20 @@
+[
+  {
+    "name": "JSS 1A",
+    "level": "JSS 1",
+    "capacity": 40,
+    "status": "ACTIVE"
+  },
+  {
+    "name": "JSS 2A",
+    "level": "JSS 2",
+    "capacity": 40,
+    "status": "ACTIVE"
+  },
+  {
+    "name": "SSS 1A",
+    "level": "SSS 1",
+    "capacity": 35,
+    "status": "ACTIVE"
+  }
+]

@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Brainstorm School Management System API",
-    "version": "0.2.0",
-    "description": "School Management System API. Implemented endpoints: Authentication, People (Headmaster, Teacher, Student). See the guide/ docs for the full planned surface."
+    "version": "0.3.0",
+    "description": "School Management System API. Implemented endpoints: Authentication, People (Headmaster, Teacher, Student), Academics (Sessions, Terms, Classes, Subjects), Grades. See the guide/ docs for the full planned surface."
   },
   "servers": [
     {
@@ -32,6 +32,14 @@
     {
       "name": "Students",
       "description": "Student management"
+    },
+    {
+      "name": "Academics",
+      "description": "Academic sessions, terms, classes, and subjects"
+    },
+    {
+      "name": "Grades",
+      "description": "Grade band configuration"
     }
   ],
   "paths": {
@@ -615,6 +623,438 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           }
+        }
+      }
+    },
+    "/academics/sessions": {
+      "post": {
+        "tags": ["Academics"],
+        "summary": "Create an academic session",
+        "description": "Only one ACTIVE session is allowed per school; creating one when another is active returns 409.",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "createSession",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateSessionRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Session created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SessionResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "409": { "$ref": "#/components/responses/Conflict" }
+        }
+      },
+      "get": {
+        "tags": ["Academics"],
+        "summary": "List academic sessions (paginated)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "listSessions",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated sessions",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SessionListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/academics/sessions/{id}/close": {
+      "patch": {
+        "tags": ["Academics"],
+        "summary": "Close an academic session (status becomes CLOSED)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "closeSession",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "responses": {
+          "200": {
+            "description": "Closed session",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SessionResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/academics/sessions/{sessionId}/terms": {
+      "post": {
+        "tags": ["Academics"],
+        "summary": "Create a term within a session",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "createTerm",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTermRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Term created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TermResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "get": {
+        "tags": ["Academics"],
+        "summary": "List terms for a session (paginated)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "listTerms",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          },
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated terms",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TermListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/academics/terms/{id}/close": {
+      "patch": {
+        "tags": ["Academics"],
+        "summary": "Close a term (status becomes CLOSED)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "closeTerm",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "responses": {
+          "200": {
+            "description": "Closed term",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TermResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/academics/classes": {
+      "post": {
+        "tags": ["Academics"],
+        "summary": "Create a class",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "createClass",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateClassRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Class created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClassResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      },
+      "get": {
+        "tags": ["Academics"],
+        "summary": "List classes (paginated)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "listClasses",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated classes",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClassListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/academics/classes/{id}": {
+      "get": {
+        "tags": ["Academics"],
+        "summary": "Get a class",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "getClass",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "responses": {
+          "200": {
+            "description": "Class",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClassResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Academics"],
+        "summary": "Update a class",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "updateClass",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateClassRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated class",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClassResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/academics/subjects": {
+      "post": {
+        "tags": ["Academics"],
+        "summary": "Create a subject",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "createSubject",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateSubjectRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Subject created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SubjectResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "409": { "$ref": "#/components/responses/Conflict" }
+        }
+      },
+      "get": {
+        "tags": ["Academics"],
+        "summary": "List subjects (paginated)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "listSubjects",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated subjects",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SubjectListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/academics/subjects/{id}": {
+      "patch": {
+        "tags": ["Academics"],
+        "summary": "Update a subject",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "updateSubject",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateSubjectRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated subject",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SubjectResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" }
+        }
+      }
+    },
+    "/grades": {
+      "post": {
+        "tags": ["Grades"],
+        "summary": "Create a grade band (headmaster only)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "createGrade",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateGradeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Grade created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GradeResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      },
+      "get": {
+        "tags": ["Grades"],
+        "summary": "List grade bands (paginated)",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "listGrades",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated grades",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GradeListResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/grades/{id}": {
+      "patch": {
+        "tags": ["Grades"],
+        "summary": "Update a grade band",
+        "security": [{ "sessionCookie": [] }],
+        "operationId": "updateGrade",
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateGradeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated grade",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GradeResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
         }
       }
     }
@@ -1252,6 +1692,214 @@
           "total": {
             "type": "integer"
           }
+        }
+      },
+      "CreateSessionRequest": {
+        "type": "object",
+        "required": ["name", "startDate", "endDate"],
+        "properties": {
+          "name": { "type": "string" },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" }
+        }
+      },
+      "AcademicSession": {
+        "type": "object",
+        "required": ["id", "schoolId", "name", "startDate", "endDate", "status"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "schoolId": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["ACTIVE", "CLOSED"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "SessionResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": { "data": { "$ref": "#/components/schemas/AcademicSession" } }
+      },
+      "SessionListResponse": {
+        "type": "object",
+        "required": ["data", "meta"],
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/AcademicSession" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+        }
+      },
+      "CreateTermRequest": {
+        "type": "object",
+        "required": ["name", "startDate", "endDate"],
+        "properties": {
+          "name": { "type": "string" },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" }
+        }
+      },
+      "Term": {
+        "type": "object",
+        "required": ["id", "academicSessionId", "name", "startDate", "endDate", "status"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "academicSessionId": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["ACTIVE", "CLOSED"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "TermResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": { "data": { "$ref": "#/components/schemas/Term" } }
+      },
+      "TermListResponse": {
+        "type": "object",
+        "required": ["data", "meta"],
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Term" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+        }
+      },
+      "CreateClassRequest": {
+        "type": "object",
+        "required": ["name", "level", "capacity"],
+        "properties": {
+          "name": { "type": "string" },
+          "level": { "type": "string" },
+          "capacity": { "type": "integer", "minimum": 1 }
+        }
+      },
+      "UpdateClassRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "level": { "type": "string" },
+          "capacity": { "type": "integer", "minimum": 1 },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE"] }
+        }
+      },
+      "Class": {
+        "type": "object",
+        "required": ["id", "schoolId", "name", "level", "capacity", "status"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "schoolId": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "level": { "type": "string" },
+          "capacity": { "type": "integer" },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ClassResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": { "data": { "$ref": "#/components/schemas/Class" } }
+      },
+      "ClassListResponse": {
+        "type": "object",
+        "required": ["data", "meta"],
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Class" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+        }
+      },
+      "CreateSubjectRequest": {
+        "type": "object",
+        "required": ["name", "code"],
+        "properties": {
+          "name": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "UpdateSubjectRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE"] }
+        }
+      },
+      "Subject": {
+        "type": "object",
+        "required": ["id", "schoolId", "name", "code", "status"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "schoolId": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "SubjectResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": { "data": { "$ref": "#/components/schemas/Subject" } }
+      },
+      "SubjectListResponse": {
+        "type": "object",
+        "required": ["data", "meta"],
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Subject" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMeta" }
+        }
+      },
+      "CreateGradeRequest": {
+        "type": "object",
+        "required": ["name", "minScore", "maxScore"],
+        "properties": {
+          "name": { "type": "string" },
+          "minScore": { "type": "number" },
+          "maxScore": { "type": "number" },
+          "remark": { "type": "string" }
+        }
+      },
+      "UpdateGradeRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "minScore": { "type": "number" },
+          "maxScore": { "type": "number" },
+          "remark": { "type": "string", "nullable": true }
+        }
+      },
+      "Grade": {
+        "type": "object",
+        "required": ["id", "schoolId", "name", "minScore", "maxScore"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "schoolId": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "minScore": { "type": "number" },
+          "maxScore": { "type": "number" },
+          "remark": { "type": "string", "nullable": true },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "GradeResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": { "data": { "$ref": "#/components/schemas/Grade" } }
+      },
+      "GradeListResponse": {
+        "type": "object",
+        "required": ["data", "meta"],
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Grade" } },
+          "meta": { "$ref": "#/components/schemas/PaginationMeta" }
         }
       },
       "ErrorResponse": {

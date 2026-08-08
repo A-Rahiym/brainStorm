@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Mathematics",
+    "code": "MTH",
+    "description": "Core mathematics",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "English Language",
+    "code": "ENG",
+    "description": "English language and literature",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "Physics",
+    "code": "PHY",
+    "description": "Physics",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "Biology",
+    "code": "BIO",
+    "description": "Biology",
+    "status": "ACTIVE"
+  }
+]

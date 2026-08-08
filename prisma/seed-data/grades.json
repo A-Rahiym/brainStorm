@@ -1,0 +1,32 @@
+[
+  {
+    "name": "A",
+    "minScore": 70,
+    "maxScore": 100,
+    "remark": "Excellent"
+  },
+  {
+    "name": "B",
+    "minScore": 60,
+    "maxScore": 69,
+    "remark": "Very Good"
+  },
+  {
+    "name": "C",
+    "minScore": 50,
+    "maxScore": 59,
+    "remark": "Good"
+  },
+  {
+    "name": "D",
+    "minScore": 40,
+    "maxScore": 49,
+    "remark": "Pass"
+  },
+  {
+    "name": "F",
+    "minScore": 0,
+    "maxScore": 39,
+    "remark": "Fail"
+  }
+]

@@ -30,6 +30,42 @@ type StudentSeed = {
   status?: "ACTIVE" | "INACTIVE" | "GRADUATED" | "SUSPENDED";
 };
 
+type SessionSeed = {
+  name: string;
+  startDate: string;
+  endDate: string;
+  status?: "ACTIVE" | "CLOSED";
+};
+
+type TermSeed = {
+  sessionName: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  status?: "ACTIVE" | "CLOSED";
+};
+
+type ClassSeed = {
+  name: string;
+  level: string;
+  capacity: number;
+  status?: "ACTIVE" | "INACTIVE";
+};
+
+type SubjectSeed = {
+  name: string;
+  code: string;
+  description?: string | null;
+  status?: "ACTIVE" | "INACTIVE";
+};
+
+type GradeSeed = {
+  name: string;
+  minScore: number;
+  maxScore: number;
+  remark?: string | null;
+};
+
 function readSeedData<T>(file: string): T[] {
   try {
     const raw = readFileSync(join(__dirname, "seed-data", file), "utf8");
@@ -152,10 +188,112 @@ async function main() {
     });
   }
 
+  const sessions = readSeedData<SessionSeed>("sessions.json");
+  const sessionIds = new Map<string, string>();
+  for (const s of sessions) {
+    const existing = await prisma.academicSession.findFirst({
+      where: { schoolId: school.id, name: s.name },
+    });
+    const created = await prisma.academicSession.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        name: s.name,
+        startDate: new Date(s.startDate),
+        endDate: new Date(s.endDate),
+        status: (s.status as "ACTIVE" | "CLOSED") ?? "ACTIVE",
+      },
+    });
+    sessionIds.set(s.name, created.id);
+  }
+
+  const terms = readSeedData<TermSeed>("terms.json");
+  for (const t of terms) {
+    const sessionId = sessionIds.get(t.sessionName);
+    if (!sessionId) {
+      console.warn(`Term ${t.name} skipped: session "${t.sessionName}" not found`);
+      continue;
+    }
+    const existing = await prisma.term.findFirst({
+      where: { academicSessionId: sessionId, name: t.name },
+    });
+    await prisma.term.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        academicSessionId: sessionId,
+        name: t.name,
+        startDate: new Date(t.startDate),
+        endDate: new Date(t.endDate),
+        status: (t.status as "ACTIVE" | "CLOSED") ?? "ACTIVE",
+      },
+    });
+  }
+
+  const classes = readSeedData<ClassSeed>("classes.json");
+  for (const c of classes) {
+    const existing = await prisma.class.findFirst({
+      where: { schoolId: school.id, name: c.name },
+    });
+    await prisma.class.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        name: c.name,
+        level: c.level,
+        capacity: c.capacity,
+        status: (c.status as "ACTIVE" | "INACTIVE") ?? "ACTIVE",
+      },
+    });
+  }
+
+  const subjects = readSeedData<SubjectSeed>("subjects.json");
+  for (const s of subjects) {
+    const existing = await prisma.subject.findFirst({
+      where: { schoolId: school.id, code: s.code },
+    });
+    await prisma.subject.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        name: s.name,
+        code: s.code,
+        description: s.description,
+        status: (s.status as "ACTIVE" | "INACTIVE") ?? "ACTIVE",
+      },
+    });
+  }
+
+  const grades = readSeedData<GradeSeed>("grades.json");
+  for (const g of grades) {
+    const existing = await prisma.grade.findFirst({
+      where: { schoolId: school.id, name: g.name },
+    });
+    await prisma.grade.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        name: g.name,
+        minScore: g.minScore,
+        maxScore: g.maxScore,
+        remark: g.remark,
+      },
+    });
+  }
+
   console.log(`Seeded school: ${school.name}`);
   console.log(`Seeded headmasters: ${headmasters.length}`);
   console.log(`Seeded teachers: ${teachers.length}`);
   console.log(`Seeded students: ${students.length}`);
+  console.log(`Seeded sessions: ${sessions.length}`);
+  console.log(`Seeded terms: ${terms.length}`);
+  console.log(`Seeded classes: ${classes.length}`);
+  console.log(`Seeded subjects: ${subjects.length}`);
+  console.log(`Seeded grades: ${grades.length}`);
   console.log("Seeded user: admin@brainstorm.test / password123");
   console.log(`Admin userId: ${adminUser.id} (link via authEmail to resolve schoolId on login)`);
 }

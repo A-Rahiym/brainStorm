@@ -34,6 +34,31 @@
       "key": "student_id",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "term_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "class_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subject_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "grade_id",
+      "value": "",
+      "type": "string"
     }
   ],
   "auth": {
@@ -354,6 +379,345 @@
               "raw": "{{base_url}}/students/{{student_id}}",
               "host": ["{{base_url}}"],
               "path": ["students", "{{student_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Academics",
+      "item": [
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"2027/2028\",\n  \"startDate\": \"2027-09-06\",\n  \"endDate\": \"2028-07-21\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "sessions"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('session_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "sessions"]
+            }
+          }
+        },
+        {
+          "name": "Close Session",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/sessions/{{session_id}}/close",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "sessions", "{{session_id}}", "close"]
+            }
+          }
+        },
+        {
+          "name": "Create Term",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"First Term\",\n  \"startDate\": \"2027-09-06\",\n  \"endDate\": \"2027-12-17\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/sessions/{{session_id}}/terms",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "sessions", "{{session_id}}", "terms"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('term_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Terms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/sessions/{{session_id}}/terms",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "sessions", "{{session_id}}", "terms"]
+            }
+          }
+        },
+        {
+          "name": "Close Term",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/terms/{{term_id}}/close",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "terms", "{{term_id}}", "close"]
+            }
+          }
+        },
+        {
+          "name": "Create Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"SSS 2A\",\n  \"level\": \"SSS 2\",\n  \"capacity\": 35\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/classes",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "classes"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('class_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Classes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/classes",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "classes"]
+            }
+          }
+        },
+        {
+          "name": "Get Class",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/classes/{{class_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "classes", "{{class_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Class",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacity\": 40\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/classes/{{class_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "classes", "{{class_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Subject",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Chemistry\",\n  \"code\": \"CHE\",\n  \"description\": \"Chemistry\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/subjects",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "subjects"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('subject_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Subjects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/academics/subjects",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "subjects"]
+            }
+          }
+        },
+        {
+          "name": "Update Subject",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"General and organic chemistry\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/academics/subjects/{{subject_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["academics", "subjects", "{{subject_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grades",
+      "item": [
+        {
+          "name": "Create Grade",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"E\",\n  \"minScore\": 30,\n  \"maxScore\": 39,\n  \"remark\": \"Below Average\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/grades",
+              "host": ["{{base_url}}"],
+              "path": ["grades"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('grade_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Grades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/grades",
+              "host": ["{{base_url}}"],
+              "path": ["grades"]
+            }
+          }
+        },
+        {
+          "name": "Update Grade",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"remark\": \"Below Average\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/grades/{{grade_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["grades", "{{grade_id}}"]
             }
           }
         }

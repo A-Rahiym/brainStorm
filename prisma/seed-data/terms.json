@@ -1,0 +1,23 @@
+[
+  {
+    "sessionName": "2026/2027",
+    "name": "First Term",
+    "startDate": "2026-09-07",
+    "endDate": "2026-12-18",
+    "status": "ACTIVE"
+  },
+  {
+    "sessionName": "2026/2027",
+    "name": "Second Term",
+    "startDate": "2027-01-11",
+    "endDate": "2027-04-02",
+    "status": "ACTIVE"
+  },
+  {
+    "sessionName": "2026/2027",
+    "name": "Third Term",
+    "startDate": "2027-04-19",
+    "endDate": "2027-07-23",
+    "status": "ACTIVE"
+  }
+]
