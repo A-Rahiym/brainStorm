@@ -47,3 +47,6 @@ next-env.d.ts
 
 guide/
 screens_html/
+
+# scratch session cookie dumps
+jar2.txt
