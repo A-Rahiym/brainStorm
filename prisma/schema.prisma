@@ -72,6 +72,26 @@ enum AssignmentContextStatus {
   INACTIVE
 }
 
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum AssignmentStatus {
+  OPEN
+  CLOSED
+}
+
 model School {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -85,6 +105,7 @@ model School {
   classes          Class[]
   subjects         Subject[]
   grades           Grade[]
+  periods          Period[]
 }
 
 model Role {
@@ -156,6 +177,7 @@ model Teacher {
   user   User?  @relation(fields: [userId], references: [id])
 
   teachingAssignments TeachingAssignment[]
+  attendance           Attendance[]
 
   @@unique([schoolId, staffNumber])
   @@index([schoolId])
@@ -177,6 +199,7 @@ model Student {
 
   school School @relation(fields: [schoolId], references: [id])
   enrollments Enrollment[]
+  attendance Attendance[]
 
   @@unique([schoolId, admissionNumber])
   @@index([schoolId])
@@ -213,6 +236,7 @@ model Term {
 
   academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
   teachingAssignments TeachingAssignment[]
+  attendance           Attendance[]
 
   @@index([academicSessionId])
 }
@@ -231,6 +255,8 @@ model Class {
 
   enrollments  Enrollment[]
   classSubjects ClassSubject[]
+  timetableEntries TimetableEntry[]
+  attendance       Attendance[]
 
   @@index([schoolId])
 }
@@ -316,6 +342,79 @@ model TeachingAssignment {
   academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
   term            Term            @relation(fields: [termId], references: [id])
 
+  timetableEntries TimetableEntry[]
+  assignments      Assignment[]
+
   @@unique([classSubjectId, termId])
   @@index([teacherId, academicSessionId, termId])
+}
+
+model Period {
+  id        String   @id @default(uuid()) @db.Uuid
+  schoolId  String   @db.Uuid
+  name      String
+  startTime DateTime @db.Time(0)
+  endTime   DateTime @db.Time(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  timetableEntries TimetableEntry[]
+
+  @@index([schoolId])
+}
+
+model TimetableEntry {
+  id                     String   @id @default(uuid()) @db.Uuid
+  classId                String   @db.Uuid
+  teachingAssignmentId   String   @db.Uuid
+  periodId               String   @db.Uuid
+  dayOfWeek              DayOfWeek
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  class               Class               @relation(fields: [classId], references: [id])
+  teachingAssignment  TeachingAssignment  @relation(fields: [teachingAssignmentId], references: [id])
+  period              Period              @relation(fields: [periodId], references: [id])
+
+  @@index([classId, dayOfWeek])
+  @@index([teachingAssignmentId])
+  @@index([periodId])
+}
+
+model Attendance {
+  id         String           @id @default(uuid()) @db.Uuid
+  studentId  String           @db.Uuid
+  classId    String           @db.Uuid
+  termId     String           @db.Uuid
+  date       DateTime         @db.Date
+  status     AttendanceStatus @default(PRESENT)
+  recordedBy String           @db.Uuid
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  student  Student  @relation(fields: [studentId], references: [id])
+  class    Class    @relation(fields: [classId], references: [id])
+  term     Term     @relation(fields: [termId], references: [id])
+  recorder Teacher  @relation(fields: [recordedBy], references: [id])
+
+  @@index([classId, termId, date])
+  @@index([studentId])
+  @@index([recordedBy])
+}
+
+model Assignment {
+  id                     String           @id @default(uuid()) @db.Uuid
+  teachingAssignmentId   String           @db.Uuid
+  title                  String
+  description            String?
+  dueDate                DateTime
+  status                 AssignmentStatus @default(OPEN)
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+
+  teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
+
+  @@index([teachingAssignmentId])
 }
