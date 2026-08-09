@@ -1,8 +1,8 @@
 import type { RequestContext } from "@/server/context";
 import { NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as gradeRepository from "@/server/repositories/grade.repository";
-import { createGradeSchema, updateGradeSchema } from "@/server/validators/grade.schema";
+import * as gradeRepository from "@/server/grades/repository/grade.repository";
+import { createGradeSchema, updateGradeSchema } from "@/server/grades/validator/grade.schema";
 
 export async function createGrade(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "grades.create");

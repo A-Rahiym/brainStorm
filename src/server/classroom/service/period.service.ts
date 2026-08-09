@@ -1,8 +1,8 @@
 import type { RequestContext } from "@/server/context";
 import { NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as periodRepository from "@/server/repositories/period.repository";
-import { createPeriodSchema, updatePeriodSchema } from "@/server/validators/period.schema";
+import * as periodRepository from "@/server/classroom/repository/period.repository";
+import { createPeriodSchema, updatePeriodSchema } from "@/server/classroom/validator/period.schema";
 
 function toTime(hhmm: string): Date {
   return new Date(`1970-01-01T${hhmm}:00`);

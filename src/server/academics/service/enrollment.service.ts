@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as enrollmentRepository from "@/server/repositories/enrollment.repository";
-import { createEnrollmentSchema, updateEnrollmentSchema } from "@/server/validators/enrollment.schema";
+import * as enrollmentRepository from "@/server/academics/repository/enrollment.repository";
+import { createEnrollmentSchema, updateEnrollmentSchema } from "@/server/academics/validator/enrollment.schema";
 
 export async function createEnrollment(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "enrollments.create");

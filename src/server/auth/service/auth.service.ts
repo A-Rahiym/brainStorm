@@ -1,8 +1,8 @@
 import { compare } from "bcryptjs";
 import type { Session } from "@/lib/auth";
 import { UnauthorizedError } from "@/server/errors";
-import { findUserByEmail } from "@/server/repositories/user.repository";
-import { loginSchema } from "@/server/validators/auth.schema";
+import { findUserByEmail } from "@/server/auth/repository/user.repository";
+import { loginSchema } from "@/server/auth/validator/auth.schema";
 import type { Role } from "@/server/context";
 
 export type LoginResult = {

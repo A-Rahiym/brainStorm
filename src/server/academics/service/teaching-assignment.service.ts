@@ -3,11 +3,11 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as teachingAssignmentRepository from "@/server/repositories/teaching-assignment.repository";
+import * as teachingAssignmentRepository from "@/server/academics/repository/teaching-assignment.repository";
 import {
   createTeachingAssignmentSchema,
   updateTeachingAssignmentSchema,
-} from "@/server/validators/teaching-assignment.schema";
+} from "@/server/academics/validator/teaching-assignment.schema";
 
 export async function createTeachingAssignment(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "teaching-assignments.create");

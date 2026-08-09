@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as classSubjectRepository from "@/server/repositories/class-subject.repository";
-import { createClassSubjectSchema } from "@/server/validators/class-subject.schema";
+import * as classSubjectRepository from "@/server/academics/repository/class-subject.repository";
+import { createClassSubjectSchema } from "@/server/academics/validator/class-subject.schema";
 
 export async function createClassSubject(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "class-subjects.create");

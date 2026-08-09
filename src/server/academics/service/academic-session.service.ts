@@ -2,8 +2,8 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as sessionRepository from "@/server/repositories/academic-session.repository";
-import { createSessionSchema, updateSessionSchema } from "@/server/validators/academic-session.schema";
+import * as sessionRepository from "@/server/academics/repository/academic-session.repository";
+import { createSessionSchema, updateSessionSchema } from "@/server/academics/validator/academic-session.schema";
 
 export async function createSession(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "sessions.create");

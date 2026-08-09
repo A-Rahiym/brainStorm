@@ -1,6 +1,6 @@
 import { respondSuccess, withErrorHandler } from "@/lib/api";
 import { getContext } from "@/lib/auth";
-import * as headmasterService from "@/server/services/headmaster.service";
+import * as headmasterService from "@/server/headmasters/service/headmaster.service";
 
 export const GET = withErrorHandler(async (req, { params }: { params: Promise<{ id: string }> }) => {
   const ctx = await getContext(req);

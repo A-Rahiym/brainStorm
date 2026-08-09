@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, ForbiddenError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as attendanceRepository from "@/server/repositories/attendance.repository";
-import { createAttendanceSchema, updateAttendanceSchema } from "@/server/validators/attendance.schema";
+import * as attendanceRepository from "@/server/classroom/repository/attendance.repository";
+import { createAttendanceSchema, updateAttendanceSchema } from "@/server/classroom/validator/attendance.schema";
 
 export async function createAttendance(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "attendance.record");

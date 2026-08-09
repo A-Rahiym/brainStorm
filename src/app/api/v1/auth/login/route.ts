@@ -1,6 +1,6 @@
 import { respondSuccess, withErrorHandler } from "@/lib/api";
 import { createSessionCookie, signSession } from "@/lib/auth";
-import { login } from "@/server/services/auth.service";
+import { login } from "@/server/auth/service/auth.service";
 
 export const POST = withErrorHandler(async (req) => {
   const body = await req.json();

@@ -2,9 +2,9 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as termRepository from "@/server/repositories/term.repository";
-import { getSession } from "@/server/services/academic-session.service";
-import { createTermSchema } from "@/server/validators/term.schema";
+import * as termRepository from "@/server/academics/repository/term.repository";
+import { getSession } from "@/server/academics/service/academic-session.service";
+import { createTermSchema } from "@/server/academics/validator/term.schema";
 
 export async function createTerm(ctx: RequestContext, sessionId: string, input: unknown) {
   requirePermission(ctx, "terms.create");

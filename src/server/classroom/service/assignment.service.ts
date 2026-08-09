@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as assignmentRepository from "@/server/repositories/assignment.repository";
-import { createAssignmentSchema, updateAssignmentSchema } from "@/server/validators/assignment.schema";
+import * as assignmentRepository from "@/server/classroom/repository/assignment.repository";
+import { createAssignmentSchema, updateAssignmentSchema } from "@/server/classroom/validator/assignment.schema";
 
 export async function createAssignment(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "assignments.create");

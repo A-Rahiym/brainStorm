@@ -2,8 +2,8 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as headmasterRepository from "@/server/repositories/headmaster.repository";
-import { createHeadmasterSchema, updateHeadmasterSchema } from "@/server/validators/headmaster.schema";
+import * as headmasterRepository from "@/server/headmasters/repository/headmaster.repository";
+import { createHeadmasterSchema, updateHeadmasterSchema } from "@/server/headmasters/validator/headmaster.schema";
 
 export async function createHeadmaster(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "headmasters.create");

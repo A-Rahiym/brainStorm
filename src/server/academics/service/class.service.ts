@@ -1,8 +1,8 @@
 import type { RequestContext } from "@/server/context";
 import { NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as classRepository from "@/server/repositories/class.repository";
-import { createClassSchema, updateClassSchema } from "@/server/validators/class.schema";
+import * as classRepository from "@/server/academics/repository/class.repository";
+import { createClassSchema, updateClassSchema } from "@/server/academics/validator/class.schema";
 
 export async function createClass(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "classes.create");

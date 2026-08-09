@@ -1,6 +1,6 @@
 import { respondSuccess, withErrorHandler } from "@/lib/api";
 import { getContext } from "@/lib/auth";
-import * as timetableEntryService from "@/server/services/timetable-entry.service";
+import * as timetableEntryService from "@/server/classroom/service/timetable-entry.service";
 
 export const GET = withErrorHandler(async (req, { params }: { params: Promise<{ id: string }> }) => {
   const ctx = await getContext(req);

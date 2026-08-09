@@ -2,8 +2,8 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as studentRepository from "@/server/repositories/student.repository";
-import { createStudentSchema, updateStudentSchema } from "@/server/validators/student.schema";
+import * as studentRepository from "@/server/students/repository/student.repository";
+import { createStudentSchema, updateStudentSchema } from "@/server/students/validator/student.schema";
 
 export async function createStudent(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "students.create");

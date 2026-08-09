@@ -2,8 +2,8 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as subjectRepository from "@/server/repositories/subject.repository";
-import { createSubjectSchema, updateSubjectSchema } from "@/server/validators/subject.schema";
+import * as subjectRepository from "@/server/academics/repository/subject.repository";
+import { createSubjectSchema, updateSubjectSchema } from "@/server/academics/validator/subject.schema";
 
 export async function createSubject(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "subjects.create");

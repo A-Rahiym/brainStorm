@@ -1,6 +1,6 @@
 import { respondSuccess, withErrorHandler } from "@/lib/api";
 import { getContext } from "@/lib/auth";
-import * as gradeService from "@/server/services/grade.service";
+import * as gradeService from "@/server/grades/service/grade.service";
 
 export const PATCH = withErrorHandler(async (req, { params }: { params: Promise<{ id: string }> }) => {
   const ctx = await getContext(req);

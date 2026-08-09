@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as timetableEntryRepository from "@/server/repositories/timetable-entry.repository";
-import { createTimetableEntrySchema } from "@/server/validators/timetable-entry.schema";
+import * as timetableEntryRepository from "@/server/classroom/repository/timetable-entry.repository";
+import { createTimetableEntrySchema } from "@/server/classroom/validator/timetable-entry.schema";
 
 export async function createTimetableEntry(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "timetable.create");

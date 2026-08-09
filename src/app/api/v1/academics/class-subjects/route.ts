@@ -1,7 +1,7 @@
 import { respondPaginated, respondSuccess, withErrorHandler } from "@/lib/api";
 import { getContext } from "@/lib/auth";
 import { parsePagination } from "@/lib/pagination";
-import * as classSubjectService from "@/server/services/class-subject.service";
+import * as classSubjectService from "@/server/academics/service/class-subject.service";
 
 export const POST = withErrorHandler(async (req) => {
   const ctx = await getContext(req);

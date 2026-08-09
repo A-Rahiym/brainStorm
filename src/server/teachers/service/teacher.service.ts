@@ -2,9 +2,9 @@ import { Prisma } from "@/generated/prisma/client";
 import type { RequestContext } from "@/server/context";
 import { ConflictError, NotFoundError } from "@/server/errors";
 import { requirePermission } from "@/server/permissions/guard";
-import * as teacherRepository from "@/server/repositories/teacher.repository";
-import { findUserById } from "@/server/repositories/user.repository";
-import { createTeacherSchema, updateTeacherSchema } from "@/server/validators/teacher.schema";
+import * as teacherRepository from "@/server/teachers/repository/teacher.repository";
+import { findUserById } from "@/server/auth/repository/user.repository";
+import { createTeacherSchema, updateTeacherSchema } from "@/server/teachers/validator/teacher.schema";
 
 export async function createTeacher(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "teachers.create");
