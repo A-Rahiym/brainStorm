@@ -1,12 +1,17 @@
-import { apiFetch } from "@/lib/api-client";
+import { apiFetch, type SingleResponse } from "@/lib/api-client";
 import type { LoginRequest, LoginResponse, SessionResponse } from "@/features/auth/types";
 
 export async function loginUser(body: LoginRequest): Promise<LoginResponse> {
-  return apiFetch<LoginResponse>("/auth/login", { method: "POST", body: JSON.stringify(body) });
+  const res = await apiFetch<SingleResponse<LoginResponse>>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  return res.data;
 }
 
 export async function getSession(): Promise<SessionResponse> {
-  return apiFetch<SessionResponse>("/auth/session");
+  const res = await apiFetch<SingleResponse<SessionResponse>>("/auth/session");
+  return res.data;
 }
 
 export async function logoutUser(): Promise<void> {

@@ -8,6 +8,7 @@ import {
   ChevronDownIcon,
   DashboardIcon,
   GridIcon,
+  LogOutIcon,
   PaymentsIcon,
   ResultsIcon,
   SearchIcon,
@@ -16,6 +17,7 @@ import {
   TeachersIcon,
   UsersIcon,
 } from "@/components/icons";
+import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
 
 
 const navGroups: Record<
@@ -42,8 +44,9 @@ const navGroups: Record<
 
 export function TopNav() {
   const pathname = usePathname();
-  const role = useSessionStore((s) => s.role) ?? "HEADMASTER";
-  const items = navGroups[role] ?? navGroups.HEADMASTER;
+  const role = useSessionStore((s) => s.role);
+  const items = role ? navGroups[role] : [];
+  const logout = useLogout();
 
   return (
 
@@ -65,23 +68,25 @@ export function TopNav() {
         </Link>
 
         <div className="flex w-full min-w-0 items-center justify-center gap-1 rounded-full bg-white p-2 shadow lg:w-auto lg:flex-1 xl:p-3">
-          <nav className="flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-full" aria-label="Primary">
-            {items.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  title={item.label}
-                  className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold transition-colors xl:px-4 ${active ? "bg-primary-light text-primary" : "text-text-secondary hover:text-text-primary"
-                    }`}
-                >
-                  {item.icon}
-                  <span className="hidden xl:inline">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+          {items.length > 0 && (
+            <nav className="flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-full" aria-label="Primary">
+              {items.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    title={item.label}
+                    className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold transition-colors xl:px-4 ${active ? "bg-primary-light text-primary" : "text-text-secondary hover:text-text-primary"
+                      }`}
+                  >
+                    {item.icon}
+                    <span className="hidden xl:inline">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          )}
           <div className="flex items-center gap-1 rounded-full">
             <button aria-label="Apps" className="flex h-[38px] w-[38px] items-center justify-center rounded-full text-text-secondary hover:bg-bg">
               <GridIcon size={18} />
@@ -93,6 +98,15 @@ export function TopNav() {
                 className="w-3/4  bg-transparent text-text-primary placeholder:text-text-muted focus:outline-none "
               />
             </label>
+            <button
+              aria-label="Log out"
+              title="Log out"
+              disabled={logout.isPending}
+              onClick={() => logout.mutate()}
+              className="flex h-[38px] w-[38px] items-center justify-center rounded-full text-text-secondary hover:bg-danger-text/10 hover:text-danger-text disabled:opacity-50"
+            >
+              <LogOutIcon size={18} />
+            </button>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader initialRole={session.role} />
       <DashboardPageClient initialRole={session.role} />
     </>
   );

@@ -1,12 +1,10 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { getSession, loginUser } from "@/features/auth/api";
 import { useSessionStore } from "@/store/session.store";
 
 export function useLogin() {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const setSession = useSessionStore((s) => s.setSession);
 
@@ -26,14 +24,12 @@ export function useLogin() {
         setSession({ userId: result.user.id, role: result.user.role, schoolId: null });
       }
       queryClient.clear();
-      router.push("/dashboard");
-      router.refresh();
+      window.location.assign("/dashboard");
     },
   });
 }
 
 export function useLogout() {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const clearSession = useSessionStore((s) => s.clearSession);
 
@@ -45,8 +41,7 @@ export function useLogout() {
     onSuccess: () => {
       clearSession();
       queryClient.clear();
-      router.push("/login");
-      router.refresh();
+      window.location.assign("/login");
     },
   });
 }

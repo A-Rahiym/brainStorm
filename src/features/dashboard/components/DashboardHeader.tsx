@@ -16,12 +16,13 @@ function Pill({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function DashboardHeader() {
+export function DashboardHeader({ initialRole }: { initialRole: "HEADMASTER" | "TEACHER" }) {
+  const subtitle = initialRole === "TEACHER" ? "Teacher overview · updated moments ago" : "Admin overview · updated moments ago";
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
         <h1 className="text-[26px] font-semibold text-text-primary">Dashboard</h1>
-        <p className="mt-1 text-sm text-text-secondary">Admin overview · updated moments ago</p>
+        <p className="mt-1 text-sm text-text-secondary">{subtitle}</p>
       </div>
       <div className="flex flex-wrap items-center gap-3 xl:gap-6">
         <div className="flex justify-between item-center gap-3">

@@ -152,7 +152,7 @@ async function main() {
     create: { name: "HEADMASTER", description: "School administrator" },
   });
 
-  await prisma.role.upsert({
+  const teacherRole = await prisma.role.upsert({
     where: { name: "TEACHER" },
     update: {},
     create: { name: "TEACHER", description: "Teaching staff" },
@@ -170,6 +170,17 @@ async function main() {
       email: "admin@brainstorm.test",
       passwordHash: await hash("password123", 12),
       roleId: headmasterRole.id,
+      status: "ACTIVE",
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { email: "teacher@brainstorm.test" },
+    update: {},
+    create: {
+      email: "teacher@brainstorm.test",
+      passwordHash: await hash("password123", 12),
+      roleId: teacherRole.id,
       status: "ACTIVE",
     },
   });

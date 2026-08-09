@@ -4,6 +4,8 @@ import { Providers } from "@/lib/providers";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SessionHydrator } from "@/components/layout/SessionHydrator";
 
+export const revalidate = 0;
+
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
   if (!session) redirect("/login");
