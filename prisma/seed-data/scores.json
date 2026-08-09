@@ -1,0 +1,58 @@
+[
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assessmentName": "CA 1",
+    "admissionNumber": "BS-2026-001",
+    "score": 26
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assessmentName": "CA 1",
+    "admissionNumber": "BS-2026-003",
+    "score": 24
+  },
+  {
+    "staffNumber": "TCH-002",
+    "className": "JSS 1A",
+    "subjectCode": "ENG",
+    "assessmentName": "CA 1",
+    "admissionNumber": "BS-2026-001",
+    "score": 16
+  },
+  {
+    "staffNumber": "TCH-002",
+    "className": "JSS 1A",
+    "subjectCode": "ENG",
+    "assessmentName": "CA 1",
+    "admissionNumber": "BS-2026-003",
+    "score": 14
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assessmentName": "Mid-Term Test",
+    "admissionNumber": "BS-2026-001",
+    "score": 34
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assessmentName": "Mid-Term Test",
+    "admissionNumber": "BS-2026-003",
+    "score": 30
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "assessmentName": "CA 1",
+    "admissionNumber": "BS-2026-002",
+    "score": 27
+  }
+]

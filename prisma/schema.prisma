@@ -92,6 +92,38 @@ enum AssignmentStatus {
   CLOSED
 }
 
+enum AssessmentType {
+  QUIZ
+  TEST
+  CA
+  EXAMINATION
+}
+
+enum FeeAccountStatus {
+  PENDING
+  PARTIAL
+  PAID
+}
+
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  CARD
+  ONLINE
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  LATE
+  GRADED
+}
+
 model School {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -106,6 +138,7 @@ model School {
   subjects         Subject[]
   grades           Grade[]
   periods          Period[]
+  feeStructures    FeeStructure[]
 }
 
 model Role {
@@ -130,6 +163,7 @@ model User {
   role       Role        @relation(fields: [roleId], references: [id])
   headmaster Headmaster?
   teacher    Teacher?
+  payments   Payment[]
 
   @@index([roleId])
 }
@@ -200,6 +234,9 @@ model Student {
   school School @relation(fields: [schoolId], references: [id])
   enrollments Enrollment[]
   attendance Attendance[]
+  scores      Score[]
+  feeAccounts StudentFeeAccount[]
+  submissions Submission[]
 
   @@unique([schoolId, admissionNumber])
   @@index([schoolId])
@@ -221,6 +258,8 @@ model AcademicSession {
   enrollments         Enrollment[]
   teachingAssignments TeachingAssignment[]
 
+  feeStructures FeeStructure[]
+
   @@index([schoolId])
 }
 
@@ -237,6 +276,7 @@ model Term {
   academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
   teachingAssignments TeachingAssignment[]
   attendance           Attendance[]
+  assessments          Assessment[]
 
   @@index([academicSessionId])
 }
@@ -291,6 +331,8 @@ model Grade {
 
   school School @relation(fields: [schoolId], references: [id])
 
+  scores Score[]
+
   @@index([schoolId])
 }
 
@@ -344,6 +386,7 @@ model TeachingAssignment {
 
   timetableEntries TimetableEntry[]
   assignments      Assignment[]
+  assessments      Assessment[]
 
   @@unique([classSubjectId, termId])
   @@index([teacherId, academicSessionId, termId])
@@ -416,5 +459,112 @@ model Assignment {
 
   teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
 
+  submissions Submission[]
+
   @@index([teachingAssignmentId])
+}
+
+model Assessment {
+  id                   String         @id @default(uuid()) @db.Uuid
+  teachingAssignmentId String         @db.Uuid
+  termId               String         @db.Uuid
+  name                 String
+  type                 AssessmentType
+  maxScore             Decimal        @db.Decimal(5, 2)
+  date                 DateTime       @db.Date
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
+  term               Term               @relation(fields: [termId], references: [id])
+  scores             Score[]
+
+  @@index([teachingAssignmentId, termId])
+}
+
+model Score {
+  id           String   @id @default(uuid()) @db.Uuid
+  assessmentId String   @db.Uuid
+  studentId    String   @db.Uuid
+  gradeId      String?  @db.Uuid
+  score        Decimal  @db.Decimal(5, 2)
+  remark       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+  grade      Grade?     @relation(fields: [gradeId], references: [id])
+
+  @@unique([assessmentId, studentId])
+  @@index([studentId])
+}
+
+model FeeStructure {
+  id                String   @id @default(uuid()) @db.Uuid
+  schoolId          String   @db.Uuid
+  academicSessionId String   @db.Uuid
+  name              String
+  amount            Decimal  @db.Decimal(12, 2)
+  description       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  school           School              @relation(fields: [schoolId], references: [id])
+  academicSession  AcademicSession     @relation(fields: [academicSessionId], references: [id])
+  studentFeeAccounts StudentFeeAccount[]
+
+  @@index([schoolId])
+}
+
+model StudentFeeAccount {
+  id             String          @id @default(uuid()) @db.Uuid
+  studentId      String          @db.Uuid
+  feeStructureId String          @db.Uuid
+  amountDue      Decimal         @db.Decimal(12, 2)
+  status         FeeAccountStatus @default(PENDING)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  student      Student      @relation(fields: [studentId], references: [id])
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
+  payments     Payment[]
+
+  @@unique([studentId, feeStructureId])
+  @@index([feeStructureId])
+}
+
+model Payment {
+  id                   String        @id @default(uuid()) @db.Uuid
+  studentFeeAccountId  String        @db.Uuid
+  amount               Decimal       @db.Decimal(12, 2)
+  paymentDate          DateTime      @default(now()) @db.Date
+  paymentMethod        PaymentMethod @default(CASH)
+  reference            String        @unique
+  status               PaymentStatus @default(CONFIRMED)
+  recordedBy           String        @db.Uuid
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  studentFeeAccount StudentFeeAccount @relation(fields: [studentFeeAccountId], references: [id])
+  recorder          User              @relation(fields: [recordedBy], references: [id])
+
+  @@index([studentFeeAccountId])
+}
+
+model Submission {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @db.Uuid
+  studentId    String           @db.Uuid
+  submittedAt  DateTime         @default(now())
+  status       SubmissionStatus @default(SUBMITTED)
+  content      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+
+  @@unique([assignmentId, studentId])
+  @@index([studentId])
 }

@@ -1,0 +1,42 @@
+[
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assignmentTitle": "Fractions worksheet",
+    "admissionNumber": "BS-2026-001",
+    "submittedAt": "2026-09-13",
+    "status": "GRADED",
+    "content": "Problems 1-20 on fractions completed in the answer booklet."
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "assignmentTitle": "Fractions worksheet",
+    "admissionNumber": "BS-2026-003",
+    "submittedAt": "2026-09-17",
+    "status": "LATE",
+    "content": "Handed in after the due date; all problems attempted."
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "assignmentTitle": "Algebra basics",
+    "admissionNumber": "BS-2026-002",
+    "submittedAt": "2026-09-15",
+    "status": "SUBMITTED",
+    "content": "Linear equation exercises solved in the workbook."
+  },
+  {
+    "staffNumber": "TCH-002",
+    "className": "JSS 1A",
+    "subjectCode": "ENG",
+    "assignmentTitle": "Essay: My School",
+    "admissionNumber": "BS-2026-001",
+    "submittedAt": "2026-09-17",
+    "status": "SUBMITTED",
+    "content": "300-word descriptive essay submitted on time."
+  }
+]

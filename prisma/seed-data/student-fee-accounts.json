@@ -1,0 +1,32 @@
+[
+  {
+    "admissionNumber": "BS-2026-001",
+    "feeStructureName": "Tuition",
+    "amountDue": 150000
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "feeStructureName": "Development Fee",
+    "amountDue": 25000
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "feeStructureName": "Tuition",
+    "amountDue": 150000
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "feeStructureName": "Development Fee",
+    "amountDue": 25000
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "feeStructureName": "Tuition",
+    "amountDue": 150000
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "feeStructureName": "Development Fee",
+    "amountDue": 25000
+  }
+]

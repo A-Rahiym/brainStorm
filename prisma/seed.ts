@@ -125,6 +125,61 @@ type AssignmentSeed = {
   status?: "OPEN" | "CLOSED";
 };
 
+type AssessmentSeed = {
+  staffNumber: string;
+  className: string;
+  subjectCode: string;
+  sessionName: string;
+  termName: string;
+  name: string;
+  type: "QUIZ" | "TEST" | "CA" | "EXAMINATION";
+  maxScore: number;
+  date: string;
+};
+
+type ScoreSeed = {
+  staffNumber: string;
+  className: string;
+  subjectCode: string;
+  assessmentName: string;
+  admissionNumber: string;
+  score: number;
+};
+
+type SubmissionSeed = {
+  staffNumber: string;
+  className: string;
+  subjectCode: string;
+  assignmentTitle: string;
+  admissionNumber: string;
+  submittedAt: string;
+  status: "SUBMITTED" | "LATE" | "GRADED";
+  content?: string | null;
+};
+
+type FeeStructureSeed = {
+  sessionName: string;
+  name: string;
+  amount: number;
+  description?: string | null;
+};
+
+type StudentFeeAccountSeed = {
+  admissionNumber: string;
+  feeStructureName: string;
+  amountDue: number;
+};
+
+type PaymentSeed = {
+  admissionNumber: string;
+  feeStructureName: string;
+  amount: number;
+  paymentDate: string;
+  paymentMethod: "CASH" | "TRANSFER" | "CARD" | "ONLINE";
+  reference: string;
+  status: "PENDING" | "CONFIRMED" | "FAILED";
+};
+
 function readSeedData<T>(file: string): T[] {
   try {
     const raw = readFileSync(join(import.meta.dirname, "seed-data", file), "utf8");
@@ -559,6 +614,179 @@ async function main() {
     });
   }
 
+  const assessments = readSeedData<AssessmentSeed>("assessments.json");
+  const assessmentIds = new Map<string, string>();
+  for (const a of assessments) {
+    const teachingAssignmentId = teachingAssignmentIds.get(
+      `${a.staffNumber}|${a.className}|${a.subjectCode}|${a.sessionName}|${a.termName}`
+    );
+    const termId = termIds.get(a.termName);
+    if (!teachingAssignmentId || !termId) {
+      console.warn(`Assessment skipped for ${a.name} (${a.subjectCode}): missing teaching assignment/term`);
+      continue;
+    }
+    const existing = await prisma.assessment.findFirst({
+      where: { teachingAssignmentId, name: a.name },
+    });
+    const created = await prisma.assessment.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        teachingAssignmentId,
+        termId,
+        name: a.name,
+        type: a.type,
+        maxScore: a.maxScore,
+        date: new Date(a.date),
+      },
+    });
+    assessmentIds.set(`${a.staffNumber}|${a.className}|${a.subjectCode}|${a.name}`, created.id);
+  }
+
+  const scores = readSeedData<ScoreSeed>("scores.json");
+  for (const s of scores) {
+    const assessmentId = assessmentIds.get(
+      `${s.staffNumber}|${s.className}|${s.subjectCode}|${s.assessmentName}`
+    );
+    const studentId = studentIds.get(s.admissionNumber);
+    if (!assessmentId || !studentId) {
+      console.warn(`Score skipped for ${s.admissionNumber} ${s.assessmentName}: missing assessment/student`);
+      continue;
+    }
+    const grade = await prisma.grade.findFirst({
+      where: { schoolId: school.id, minScore: { lte: s.score }, maxScore: { gte: s.score } },
+      orderBy: { minScore: "desc" },
+    });
+    await prisma.score.upsert({
+      where: { assessmentId_studentId: { assessmentId, studentId } },
+      update: { score: s.score, gradeId: grade?.id ?? null },
+      create: { assessmentId, studentId, score: s.score, gradeId: grade?.id ?? null },
+    });
+  }
+
+  const submissions = readSeedData<SubmissionSeed>("submissions.json");
+  for (const sub of submissions) {
+    const teachingAssignmentId = teachingAssignmentIds.get(
+      `${sub.staffNumber}|${sub.className}|${sub.subjectCode}|2026/2027|First Term`
+    );
+    const studentId = studentIds.get(sub.admissionNumber);
+    if (!teachingAssignmentId || !studentId) {
+      console.warn(`Submission skipped for ${sub.admissionNumber} ${sub.assignmentTitle}: missing dependency`);
+      continue;
+    }
+    const assignment = await prisma.assignment.findFirst({
+      where: { teachingAssignmentId, title: sub.assignmentTitle },
+      select: { id: true },
+    });
+    if (!assignment) {
+      console.warn(`Submission skipped for ${sub.admissionNumber} ${sub.assignmentTitle}: assignment not found`);
+      continue;
+    }
+    await prisma.submission.upsert({
+      where: { assignmentId_studentId: { assignmentId: assignment.id, studentId } },
+      update: { status: sub.status, content: sub.content },
+      create: {
+        assignmentId: assignment.id,
+        studentId,
+        submittedAt: new Date(sub.submittedAt),
+        status: sub.status,
+        content: sub.content,
+      },
+    });
+  }
+
+  const feeStructures = readSeedData<FeeStructureSeed>("fee-structures.json");
+  const feeStructureIds = new Map<string, string>();
+  for (const f of feeStructures) {
+    const sessionId = sessionIds.get(f.sessionName);
+    if (!sessionId) {
+      console.warn(`FeeStructure skipped for ${f.name}: session "${f.sessionName}" not found`);
+      continue;
+    }
+    const existing = await prisma.feeStructure.findFirst({
+      where: { schoolId: school.id, name: f.name },
+    });
+    const created = await prisma.feeStructure.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: {
+        schoolId: school.id,
+        academicSessionId: sessionId,
+        name: f.name,
+        amount: f.amount,
+        description: f.description,
+      },
+    });
+    feeStructureIds.set(f.name, created.id);
+  }
+
+  const studentFeeAccounts = readSeedData<StudentFeeAccountSeed>("student-fee-accounts.json");
+  for (const acc of studentFeeAccounts) {
+    const studentId = studentIds.get(acc.admissionNumber);
+    const feeStructureId = feeStructureIds.get(acc.feeStructureName);
+    if (!studentId || !feeStructureId) {
+      console.warn(
+        `StudentFeeAccount skipped for ${acc.admissionNumber} ${acc.feeStructureName}: missing dependency`
+      );
+      continue;
+    }
+    const existing = await prisma.studentFeeAccount.findFirst({
+      where: { studentId, feeStructureId },
+    });
+    await prisma.studentFeeAccount.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: {},
+      create: { studentId, feeStructureId, amountDue: acc.amountDue, status: "PENDING" },
+    });
+  }
+
+  const payments = readSeedData<PaymentSeed>("payments.json");
+  for (const p of payments) {
+    const studentId = studentIds.get(p.admissionNumber);
+    const feeStructureId = feeStructureIds.get(p.feeStructureName);
+    if (!studentId || !feeStructureId) {
+      console.warn(`Payment skipped for ${p.reference}: missing dependency`);
+      continue;
+    }
+    const account = await prisma.studentFeeAccount.findFirst({
+      where: { studentId, feeStructureId },
+      select: { id: true },
+    });
+    if (!account) {
+      console.warn(`Payment skipped for ${p.reference}: fee account not found`);
+      continue;
+    }
+    const existing = await prisma.payment.findUnique({ where: { reference: p.reference } });
+    await prisma.payment.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: { status: p.status },
+      create: {
+        studentFeeAccountId: account.id,
+        amount: p.amount,
+        paymentDate: new Date(p.paymentDate),
+        paymentMethod: p.paymentMethod,
+        reference: p.reference,
+        status: p.status,
+        recordedBy: adminUser.id,
+      },
+    });
+  }
+
+  const feeAccounts = await prisma.studentFeeAccount.findMany({
+    where: { student: { schoolId: school.id } },
+    select: { id: true, amountDue: true },
+  });
+  for (const acc of feeAccounts) {
+    const paid = await prisma.payment.aggregate({
+      where: { studentFeeAccountId: acc.id, status: "CONFIRMED" },
+      _sum: { amount: true },
+    });
+    const totalPaid = Number(paid._sum.amount ?? 0);
+    const totalDue = Number(acc.amountDue);
+    const status = totalPaid >= totalDue ? "PAID" : totalPaid > 0 ? "PARTIAL" : "PENDING";
+    await prisma.studentFeeAccount.update({ where: { id: acc.id }, data: { status } });
+  }
+
   console.log(`Seeded school: ${school.name}`);
   console.log(`Seeded headmasters: ${headmasters.length}`);
   console.log(`Seeded teachers: ${teachers.length}`);
@@ -575,6 +803,12 @@ async function main() {
   console.log(`Seeded timetable entries: ${timetable.length}`);
   console.log(`Seeded attendance: ${attendance.length}`);
   console.log(`Seeded assignments: ${assignments.length}`);
+  console.log(`Seeded assessments: ${assessments.length}`);
+  console.log(`Seeded scores: ${scores.length}`);
+  console.log(`Seeded submissions: ${submissions.length}`);
+  console.log(`Seeded feeStructures: ${feeStructures.length}`);
+  console.log(`Seeded studentFeeAccounts: ${studentFeeAccounts.length}`);
+  console.log(`Seeded payments: ${payments.length}`);
   console.log("Seeded user: admin@brainstorm.test / password123");
   console.log(`Admin userId: ${adminUser.id} (link via authEmail to resolve schoolId on login)`);
 }
