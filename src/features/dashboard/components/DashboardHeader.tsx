@@ -1,20 +1,7 @@
 "use client";
 
-import { ChevronDownIcon } from "@/components/icons";
-import { Button } from "@/components/ui";
+import { Button, ControlPill } from "@/components/ui";
 import Image from "next/image";
-
-function Pill({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center bg-surface border border-border gap-2.5 rounded-full pl-3 px-2 py-1.5 text-md font-semibold">
-      <span className="font-medium text-text-secondary">{label}</span>
-      <button className="flex items-center gap-1.5 rounded-full bg-bg py-2 pl-3.5 pr-3 text-sm">
-        <span className="font-bold text-text-primary">{value}</span>
-        <ChevronDownIcon size={14} className="text-text-muted" />
-      </button>
-    </div>
-  );
-}
 
 export function DashboardHeader({ initialRole }: { initialRole: "HEADMASTER" | "TEACHER" }) {
   const subtitle = initialRole === "TEACHER" ? "Teacher overview · updated moments ago" : "Admin overview · updated moments ago";
@@ -26,8 +13,8 @@ export function DashboardHeader({ initialRole }: { initialRole: "HEADMASTER" | "
       </div>
       <div className="flex flex-wrap items-center gap-3 xl:gap-6">
         <div className="flex justify-between item-center gap-3">
-          <Pill label="Year" value="2026" />
-          <Pill label="Term" value="First" />
+          <ControlPill label="Year" variant="outline" size="md" value="2026" onClick={() => {}} />
+          <ControlPill label="Term" variant="outline" size="md" value="First" onClick={() => {}} />
           <button className="flex items-center justify-between bg-surface gap-3 rounded-full py-2 px-2 text-md">
             <div className="flex w-12 h-10 item-center justify-center rounded-full bg-bg">
               <Image src="/icons/export.svg" alt="Export" width={18} height={18} />

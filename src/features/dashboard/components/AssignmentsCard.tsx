@@ -1,18 +1,30 @@
-import { Card, Badge } from "@/components/ui";
+import { Card, Badge, ControlPill } from "@/components/ui";
 import { formatDate } from "@/lib/format";
 import type { AssignmentItem } from "@/features/dashboard/types";
+
+import { useState } from "react";
 
 const statusTone: Record<AssignmentItem["status"], "success" | "warning" | "neutral"> = {
   OPEN: "success",
   CLOSED: "neutral",
 };
 
+const classes = ["Math", "Science", "History", "English", "Art", "Music", "Physical Education", "Computer Science"];
+
 export function AssignmentsCard({ assignments }: { assignments: AssignmentItem[] }) {
+  const [selectedClass, setSelectedClass] = useState<string>(classes[0]);
+
   return (
     <Card className="flex flex-col">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-[15px] font-bold text-text-primary">Assignments</h3>
-        <Badge tone="neutral">Due soon</Badge>
+        <ControlPill value={selectedClass} onChange={(v) => setSelectedClass(v)}>
+          {classes.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </ControlPill>
       </div>
       <div className="space-y-4">
         {assignments.map((item) => (

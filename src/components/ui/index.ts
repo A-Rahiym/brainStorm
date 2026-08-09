@@ -1,13 +1,13 @@
 export { Button } from "./Button";
 export { Input } from "./Input";
 export { Select } from "./Select";
+export { ControlPill } from "./ControlPill";
 export { Modal } from "./Modal";
 export { Card } from "./Card";
 export { Badge } from "./Badge";
 export { Avatar } from "./Avatar";
 export { ProgressBar } from "./ProgressBar";
 export { DonutChart } from "./DonutChart";
-export { Dropdown } from "./Dropdown";
 export { IconButton } from "./IconButton";
 export { Tabs } from "./Tabs";
 export { StatCard } from "./StatCard";
