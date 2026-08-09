@@ -2,7 +2,7 @@ import type { Role } from "@/server/context";
 
 export const PERMISSIONS: Record<Role, string[]> = {
   HEADMASTER: [
-    "headmasters.read", "headmasters.update",
+    "headmasters.read", "headmasters.create", "headmasters.update",
     "students.read", "students.create", "students.update",
     "teachers.read", "teachers.create", "teachers.update",
     "sessions.read", "sessions.create", "sessions.update",
@@ -16,8 +16,14 @@ export const PERMISSIONS: Record<Role, string[]> = {
     "periods.read", "periods.create", "periods.update",
     "timetable.read", "timetable.create",
     "assignments.read", "assignments.update",
-    "finance.read", "payments.record",
-    "attendance.read", "assessments.read",
+    "attendance.read",
+    "assessments.read", "assessments.create", "assessments.update",
+    "scores.read", "scores.record", "scores.update",
+    "submissions.read", "submissions.update",
+    "fee-structures.read", "fee-structures.create", "fee-structures.update",
+    "student-fee-accounts.read", "student-fee-accounts.create", "student-fee-accounts.update",
+    "payments.read", "payments.record",
+    "dashboard.read",
   ],
   TEACHER: [
     "students.read",
@@ -25,8 +31,12 @@ export const PERMISSIONS: Record<Role, string[]> = {
     "enrollments.read", "class-subjects.read", "teaching-assignments.read",
     "periods.read", "timetable.read",
     "attendance.read", "attendance.record",
-    "assignments.create", "assignments.read",
-    "assessments.create", "scores.record",
+    "assignments.create", "assignments.read", "assignments.update",
+    "assessments.read", "assessments.create", "assessments.update",
+    "scores.read", "scores.record", "scores.update",
+    "submissions.create", "submissions.read", "submissions.update",
+    "fee-structures.read", "student-fee-accounts.read", "payments.read",
+    "dashboard.read",
   ],
 };
 
