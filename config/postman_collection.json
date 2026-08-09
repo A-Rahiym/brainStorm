@@ -59,6 +59,38 @@
       "key": "grade_id",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "period_id",
+      "value": ""
+    },
+    {
+      "key": "assignment_id",
+      "value": ""
+    },
+    {
+      "key": "assessment_id",
+      "value": ""
+    },
+    {
+      "key": "fee_structure_id",
+      "value": ""
+    },
+    {
+      "key": "account_id",
+      "value": ""
+    },
+    {
+      "key": "payment_id",
+      "value": ""
+    },
+    {
+      "key": "score_id",
+      "value": ""
+    },
+    {
+      "key": "submission_id",
+      "value": ""
     }
   ],
   "auth": {
@@ -84,8 +116,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
             }
           },
           "event": [
@@ -109,8 +146,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/auth/session",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "session"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "session"
+              ]
             }
           },
           "event": [
@@ -134,8 +176,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/auth/logout",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "logout"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
             }
           },
           "event": [
@@ -164,8 +211,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/headmasters/{{headmaster_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["headmasters", "{{headmaster_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "headmasters",
+                "{{headmaster_id}}"
+              ]
             }
           }
         },
@@ -185,10 +237,80 @@
             },
             "url": {
               "raw": "{{base_url}}/headmasters/{{headmaster_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["headmasters", "{{headmaster_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "headmasters",
+                "{{headmaster_id}}"
+              ]
             }
           }
+        },
+        {
+          "name": "Create Headmaster",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/headmasters",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "headmasters"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"headmaster2@brainstorm.test\",\n  \"phone\": \"+2348000000009\",\n  \"staffNumber\": \"HST-002\",\n  \"dateOfBirth\": \"1975-05-20\",\n  \"employmentDate\": \"2020-01-05\",\n  \"status\": \"ACTIVE\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('headmaster_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Headmasters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/headmasters",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "headmasters"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
@@ -211,8 +333,12 @@
             },
             "url": {
               "raw": "{{base_url}}/teachers",
-              "host": ["{{base_url}}"],
-              "path": ["teachers"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "teachers"
+              ]
             }
           },
           "event": [
@@ -236,8 +362,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/teachers",
-              "host": ["{{base_url}}"],
-              "path": ["teachers"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "teachers"
+              ]
             }
           }
         },
@@ -248,8 +378,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["teachers", "{{teacher_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           }
         },
@@ -269,8 +404,13 @@
             },
             "url": {
               "raw": "{{base_url}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["teachers", "{{teacher_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           }
         },
@@ -281,8 +421,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/teachers/{{teacher_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["teachers", "{{teacher_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "teachers",
+                "{{teacher_id}}"
+              ]
             }
           }
         }
@@ -307,8 +452,12 @@
             },
             "url": {
               "raw": "{{base_url}}/students",
-              "host": ["{{base_url}}"],
-              "path": ["students"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "students"
+              ]
             }
           },
           "event": [
@@ -332,8 +481,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/students",
-              "host": ["{{base_url}}"],
-              "path": ["students"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "students"
+              ]
             }
           }
         },
@@ -344,8 +497,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/students/{{student_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["students", "{{student_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "students",
+                "{{student_id}}"
+              ]
             }
           }
         },
@@ -365,8 +523,13 @@
             },
             "url": {
               "raw": "{{base_url}}/students/{{student_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["students", "{{student_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "students",
+                "{{student_id}}"
+              ]
             }
           }
         },
@@ -377,8 +540,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/students/{{student_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["students", "{{student_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "students",
+                "{{student_id}}"
+              ]
             }
           }
         }
@@ -403,8 +571,13 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/sessions",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "sessions"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "sessions"
+              ]
             }
           },
           "event": [
@@ -428,8 +601,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/sessions",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "sessions"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "sessions"
+              ]
             }
           }
         },
@@ -440,8 +618,15 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/sessions/{{session_id}}/close",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "sessions", "{{session_id}}", "close"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "sessions",
+                "{{session_id}}",
+                "close"
+              ]
             }
           }
         },
@@ -461,8 +646,15 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/sessions/{{session_id}}/terms",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "sessions", "{{session_id}}", "terms"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "sessions",
+                "{{session_id}}",
+                "terms"
+              ]
             }
           },
           "event": [
@@ -486,8 +678,15 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/sessions/{{session_id}}/terms",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "sessions", "{{session_id}}", "terms"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "sessions",
+                "{{session_id}}",
+                "terms"
+              ]
             }
           }
         },
@@ -498,8 +697,15 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/terms/{{term_id}}/close",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "terms", "{{term_id}}", "close"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "terms",
+                "{{term_id}}",
+                "close"
+              ]
             }
           }
         },
@@ -519,8 +725,13 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/classes",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "classes"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "classes"
+              ]
             }
           },
           "event": [
@@ -544,8 +755,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/classes",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "classes"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "classes"
+              ]
             }
           }
         },
@@ -556,8 +772,14 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/classes/{{class_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "classes", "{{class_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "classes",
+                "{{class_id}}"
+              ]
             }
           }
         },
@@ -577,8 +799,14 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/classes/{{class_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "classes", "{{class_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "classes",
+                "{{class_id}}"
+              ]
             }
           }
         },
@@ -598,8 +826,13 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/subjects",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "subjects"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "subjects"
+              ]
             }
           },
           "event": [
@@ -623,8 +856,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/academics/subjects",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "subjects"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "subjects"
+              ]
             }
           }
         },
@@ -644,8 +882,14 @@
             },
             "url": {
               "raw": "{{base_url}}/academics/subjects/{{subject_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["academics", "subjects", "{{subject_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "academics",
+                "subjects",
+                "{{subject_id}}"
+              ]
             }
           }
         }
@@ -670,8 +914,12 @@
             },
             "url": {
               "raw": "{{base_url}}/grades",
-              "host": ["{{base_url}}"],
-              "path": ["grades"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "grades"
+              ]
             }
           },
           "event": [
@@ -695,8 +943,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/grades",
-              "host": ["{{base_url}}"],
-              "path": ["grades"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "grades"
+              ]
             }
           }
         },
@@ -716,10 +968,1219 @@
             },
             "url": {
               "raw": "{{base_url}}/grades/{{grade_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["grades", "{{grade_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "grades",
+                "{{grade_id}}"
+              ]
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "Classroom",
+      "item": [
+        {
+          "name": "Create Period",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/periods",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "periods"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Period 5\",\n  \"startTime\": \"13:00\",\n  \"endTime\": \"13:40\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('period_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Periods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/periods",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "periods"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Period",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/periods/{{period_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "periods",
+                "{{period_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Period",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/periods/{{period_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "periods",
+                "{{period_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Period 5 (revised)\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Timetable Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/timetable",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "timetable"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"classId\": \"{{class_id}}\",\n  \"teachingAssignmentId\": \"{{teacher_id}}\",\n  \"periodId\": \"{{period_id}}\",\n  \"dayOfWeek\": \"MONDAY\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Timetable",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/timetable",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "timetable"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Record Attendance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/attendance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "attendance"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": \"{{student_id}}\",\n  \"classId\": \"{{class_id}}\",\n  \"termId\": \"{{term_id}}\",\n  \"date\": \"2026-09-14\",\n  \"status\": \"PRESENT\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Attendance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/attendance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "attendance"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/assignments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teachingAssignmentId\": \"{{teacher_id}}\",\n  \"title\": \"Algebra Worksheet 5\",\n  \"description\": \"Solve all problems\",\n  \"dueDate\": \"2026-10-05\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('assignment_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Assignments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/assignments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assignments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Assignment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/assignments/{{assignment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assignments",
+                "{{assignment_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Assignment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/assignments/{{assignment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assignments",
+                "{{assignment_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CLOSED\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/assessments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assessments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teachingAssignmentId\": \"{{teacher_id}}\",\n  \"termId\": \"{{term_id}}\",\n  \"name\": \"End of Term Exam\",\n  \"type\": \"EXAMINATION\",\n  \"maxScore\": 100,\n  \"date\": \"2026-11-20\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('assessment_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Assessments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/assessments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assessments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Assessment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/assessments/{{assessment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assessments",
+                "{{assessment_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Assessment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/assessments/{{assessment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "assessments",
+                "{{assessment_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxScore\": 100\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Record Scores",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/scores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "scores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assessmentId\": \"{{assessment_id}}\",\n  \"scores\": [\n    {\n      \"studentId\": \"{{student_id}}\",\n      \"score\": 85\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Scores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/scores?assessmentId={{assessment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "scores"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Score",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/scores/{{score_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "scores",
+                "{{score_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Score",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/scores/{{score_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "scores",
+                "{{score_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"score\": 90\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/submissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "submissions"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignmentId\": \"{{assignment_id}}\",\n  \"studentId\": \"{{student_id}}\",\n  \"content\": \"Completed worksheet attached\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/submissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "submissions"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Submission",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/classroom/submissions/{{submission_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "submissions",
+                "{{submission_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Submission",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/classroom/submissions/{{submission_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "classroom",
+                "submissions",
+                "{{submission_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"GRADED\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "item": [
+        {
+          "name": "Create Fee Structure",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/finance/fee-structures",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "fee-structures"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"academicSessionId\": \"{{session_id}}\",\n  \"name\": \"Sports Fee\",\n  \"amount\": 10000,\n  \"description\": \"Termly sports levy\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('fee_structure_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Fee Structures",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/fee-structures",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "fee-structures"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Fee Structure",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/fee-structures/{{fee_structure_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "fee-structures",
+                "{{fee_structure_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Fee Structure",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/finance/fee-structures/{{fee_structure_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "fee-structures",
+                "{{fee_structure_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 12000\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Fee Accounts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/finance/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "accounts"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"feeStructureId\": \"{{fee_structure_id}}\",\n  \"studentIds\": [\n    \"{{student_id}}\"\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('account_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Fee Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "accounts"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Fee Account",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/accounts/{{account_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "accounts",
+                "{{account_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Fee Account",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/finance/accounts/{{account_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "accounts",
+                "{{account_id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amountDue\": 12000\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Record Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/finance/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "payments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentFeeAccountId\": \"{{account_id}}\",\n  \"amount\": 5000,\n  \"paymentMethod\": \"CASH\",\n  \"reference\": \"PAY-2026-9001\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('payment_id', body.data.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "payments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/finance/payments/{{payment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "finance",
+                "payments",
+                "{{payment_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('response has stats', () => pm.expect(body.data.stats).to.be.an('object'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     }
