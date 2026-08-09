@@ -35,7 +35,7 @@ export type AssignmentItem = {
   subject: string;
   className: string;
   dueDate: string;
-  status: "DRAFT" | "PUBLISHED" | "CLOSED";
+  status: "OPEN" | "CLOSED";
 };
 
 export type HeadmasterDashboard = {

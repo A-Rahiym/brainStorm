@@ -3,8 +3,7 @@ import { formatDate } from "@/lib/format";
 import type { AssignmentItem } from "@/features/dashboard/types";
 
 const statusTone: Record<AssignmentItem["status"], "success" | "warning" | "neutral"> = {
-  PUBLISHED: "success",
-  DRAFT: "warning",
+  OPEN: "success",
   CLOSED: "neutral",
 };
 
