@@ -18,7 +18,7 @@ export function AssignmentsCard({ assignments }: { assignments: AssignmentItem[]
     <Card className="flex flex-col">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-[15px] font-bold text-text-primary">Assignments</h3>
-        <ControlPill value={selectedClass} onChange={(v) => setSelectedClass(v)}>
+        <ControlPill label="" value={selectedClass} onChange={(v) => setSelectedClass(v)}>
           {classes.map((m) => (
             <option key={m} value={m}>
               {m}

@@ -16,7 +16,7 @@ export function HeadmasterOverview() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} variant="card" />
         ))}
@@ -35,7 +35,7 @@ export function HeadmasterOverview() {
 
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <StatCard
           primary
           label="Total students"

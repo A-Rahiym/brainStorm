@@ -19,26 +19,25 @@ import {
 } from "@/components/icons";
 import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
 
-
 const navGroups: Record<
   "HEADMASTER" | "TEACHER",
   { href: string; label: string; icon: React.ReactNode }[]
 > = {
   HEADMASTER: [
-    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={17} /> },
-    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={17} /> },
-    { href: "/students", label: "Students", icon: <StudentsIcon size={17} /> },
-    { href: "/teachers", label: "Teachers", icon: <TeachersIcon size={17} /> },
-    { href: "/results", label: "Results", icon: <ResultsIcon size={17} /> },
-    { href: "/payments", label: "Payments", icon: <PaymentsIcon size={17} /> },
+    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={18} /> },
+    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={18} /> },
+    { href: "/students", label: "Students", icon: <StudentsIcon size={18} /> },
+    { href: "/teachers", label: "Teachers", icon: <TeachersIcon size={18} /> },
+    { href: "/results", label: "Results", icon: <ResultsIcon size={18} /> },
+    { href: "/payments", label: "Payments", icon: <PaymentsIcon size={18} /> },
   ],
   TEACHER: [
-    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={17} /> },
-    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={17} /> },
-    { href: "/students", label: "Students", icon: <StudentsIcon size={17} /> },
-    { href: "/attendance", label: "Attendance", icon: <UsersIcon size={17} /> },
-    { href: "/assessments", label: "Assessments", icon: <ResultsIcon size={17} /> },
-    { href: "/grades", label: "Grades", icon: <ResultsIcon size={17} /> },
+    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={18} /> },
+    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={18} /> },
+    { href: "/students", label: "Students", icon: <StudentsIcon size={18} /> },
+    { href: "/attendance", label: "Attendance", icon: <UsersIcon size={18} /> },
+    { href: "/assessments", label: "Assessments", icon: <ResultsIcon size={18} /> },
+    { href: "/grades", label: "Grades", icon: <ResultsIcon size={18} /> },
   ],
 };
 
@@ -49,67 +48,79 @@ export function TopNav() {
   const logout = useLogout();
 
   return (
+    <div className="flex items-center justify-start gap-4 px-4 py-4 sm:px-8 xl:gap-4.5">
+      <Link
+        href="/dashboard"
+        className="flex flex-none items-center gap-2.5 text-[23px] font-bold tracking-[-0.02em] text-text-primary"
+      >
+        <span className="flex h-9 w-9 items-center justify-center">
+          <Image src={"/Logo.svg"} alt="Logo" width={36} height={36} />
+        </span>
+        Brainstorm
+        <span className="text-text-muted">
+          <ChevronDownIcon size={14} />
+        </span>
+      </Link>
 
 
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-7">
-        <Link href="/dashboard" className="flex items-center gap-2.5 font-semibold text-3xl text-text-primary">
-          <span className="flex h-8.5 w-8.5 items-center justify-center   text-white">
-            <Image
-              src={"/Logo.svg"}
-              alt="Logo"
-              width={35}
-              height={35}
-            />
-          </span>
-          Brainstorm
-          <span className="text-xs text-text-muted">
-            <ChevronDownIcon size={12} />
-          </span>
-        </Link>
-
-        <div className="flex w-full min-w-0 items-center justify-center gap-1 rounded-full bg-white p-2 shadow lg:w-auto lg:flex-1 xl:p-3">
-          {items.length > 0 && (
-            <nav className="flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-full" aria-label="Primary">
-              {items.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    title={item.label}
-                    className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold transition-colors xl:px-4 ${active ? "bg-primary-light text-primary" : "text-text-secondary hover:text-text-primary"
-                      }`}
-                  >
+      <div className="flex h-14 items-center gap-0.5 rounded-full border border-border bg-surface p-1.5 shadow-card lg:w-auto">
+        {items.length > 0 && (
+          <nav
+            className="flex min-w-0 items-center gap-0.5 overflow-x-auto rounded-full [&::-webkit-scrollbar]:hidden"
+            aria-label="Primary"
+          >
+            {items.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  title={item.label}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex h-11 flex-none items-center gap-1.75 whitespace-nowrap rounded-full px-3 text-sm transition-colors ${active
+                    ? "bg-[#FBE3EC] font-semibold text-[#9F1244]"
+                    : "font-medium text-text-primary hover:bg-bg"
+                    }`}
+                >
+                  <span className={active ? "text-[#9F1244]" : "text-text-secondary"}>
                     {item.icon}
-                    <span className="hidden xl:inline">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-          )}
-          <div className="flex items-center gap-1 rounded-full">
-            <button aria-label="Apps" className="flex h-[38px] w-[38px] items-center justify-center rounded-full text-text-secondary hover:bg-bg">
-              <GridIcon size={18} />
-            </button>
-            <label className="hidden items-center gap-2 rounded-full bg-bg px-3.5 py-2 text-sm text-text-muted lg:flex">
-              <SearchIcon size={16} />
-              <input
-                placeholder="Search.."
-                className="w-3/4  bg-transparent text-text-primary placeholder:text-text-muted focus:outline-none "
-              />
-            </label>
-            <button
-              aria-label="Log out"
-              title="Log out"
-              disabled={logout.isPending}
-              onClick={() => logout.mutate()}
-              className="flex h-[38px] w-[38px] items-center justify-center rounded-full text-text-secondary hover:bg-danger-text/10 hover:text-danger-text disabled:opacity-50"
-            >
-              <LogOutIcon size={18} />
-            </button>
-          </div>
-        </div>
-      </div>
+                  </span>
+                  <span className={active ? "inline" : "hidden xl:inline"}>
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
+        )}
 
+        <div className="ml-0.5 flex flex-none items-center gap-0.5">
+          <button
+            aria-label="Apps"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-bg"
+          >
+            <GridIcon size={18} />
+          </button>
+
+          <label className="hidden h-11 items-center gap-2.5 rounded-full bg-bg pl-3.5 pr-4 text-sm text-text-muted lg:flex">
+            <SearchIcon size={18} />
+            <input
+              placeholder="Search.."
+              className="w-24 bg-transparent text-text-primary placeholder:text-text-muted focus:outline-none xl:w-32"
+            />
+          </label>
+
+        </div>
+        <button
+          aria-label="Log out"
+          title="Log out"
+          disabled={logout.isPending}
+          onClick={() => logout.mutate()}
+          className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-danger-text/10 hover:text-danger-text disabled:opacity-50"
+        >
+          <LogOutIcon size={18} />
+        </button>
+      </div>
+    </div>
   );
 }

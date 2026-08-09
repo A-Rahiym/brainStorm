@@ -16,8 +16,8 @@ const triggerStyles: Record<ControlPillVariant, string> = {
 };
 
 const sizes: Record<"sm" | "md", { trigger: string; icon: number }> = {
-  sm: { trigger: "px-3 py-1.5 text-md", icon: 12 },
-  md: { trigger: "px-3.5 py-2 text-sm", icon: 14 },
+  sm: { trigger: "px-3 py-1.5 text-md", icon: 16 },
+  md: { trigger: "px-3.5 py-2 text-sm", icon: 18 },
 };
 
 export function ControlPill({
