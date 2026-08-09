@@ -180,6 +180,13 @@ type PaymentSeed = {
   status: "PENDING" | "CONFIRMED" | "FAILED";
 };
 
+type SchoolEventSeed = {
+  title: string;
+  type: "MEETING" | "DEADLINE" | "EXAM" | "ACTIVITY";
+  date: string;
+  description?: string | null;
+};
+
 function readSeedData<T>(file: string): T[] {
   try {
     const raw = readFileSync(join(import.meta.dirname, "seed-data", file), "utf8");
@@ -787,6 +794,24 @@ async function main() {
     await prisma.studentFeeAccount.update({ where: { id: acc.id }, data: { status } });
   }
 
+  const schoolEvents = readSeedData<SchoolEventSeed>("school-events.json");
+  for (const ev of schoolEvents) {
+    const existing = await prisma.schoolEvent.findFirst({
+      where: { schoolId: school.id, title: ev.title },
+    });
+    await prisma.schoolEvent.upsert({
+      where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
+      update: { type: ev.type, date: new Date(ev.date), description: ev.description },
+      create: {
+        schoolId: school.id,
+        title: ev.title,
+        type: ev.type,
+        date: new Date(ev.date),
+        description: ev.description,
+      },
+    });
+  }
+
   console.log(`Seeded school: ${school.name}`);
   console.log(`Seeded headmasters: ${headmasters.length}`);
   console.log(`Seeded teachers: ${teachers.length}`);
@@ -809,6 +834,7 @@ async function main() {
   console.log(`Seeded feeStructures: ${feeStructures.length}`);
   console.log(`Seeded studentFeeAccounts: ${studentFeeAccounts.length}`);
   console.log(`Seeded payments: ${payments.length}`);
+  console.log(`Seeded schoolEvents: ${schoolEvents.length}`);
   console.log("Seeded user: admin@brainstorm.test / password123");
   console.log(`Admin userId: ${adminUser.id} (link via authEmail to resolve schoolId on login)`);
 }

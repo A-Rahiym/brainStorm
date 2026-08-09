@@ -11,9 +11,6 @@ import { FeesCard } from "@/features/dashboard/components/FeesCard";
 import { TopStudentsCard } from "@/features/dashboard/components/TopStudentsCard";
 import { TermCountCard } from "@/features/dashboard/components/TermCountCard";
 
-const JULY = new Date(2026, 6, 1);
-const EVENT_DAYS = [new Date(2026, 6, 18), new Date(2026, 6, 23)];
-
 export function HeadmasterOverview() {
   const { data, isLoading, isError, error, refetch } = useHeadmasterDashboard();
 
@@ -32,6 +29,9 @@ export function HeadmasterOverview() {
   }
 
   const { stats, fees, enrollments, agenda, topStudents, activities } = data;
+
+  const eventDays = agenda.map((a) => new Date(a.date));
+  const calendarMonth = eventDays[0] ?? new Date();
 
   return (
     <div className="space-y-5">
@@ -80,9 +80,9 @@ export function HeadmasterOverview() {
       <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
         <CalendarAgendaCard
           agenda={agenda}
-          month={JULY}
-          selected={new Date(2026, 6, 25)}
-          eventDays={EVENT_DAYS}
+          month={calendarMonth}
+          selected={eventDays[0]}
+          eventDays={eventDays}
         />
         <div className="flex flex-col gap-4.5">
           <FeesCard fees={fees} />

@@ -124,6 +124,13 @@ enum SubmissionStatus {
   GRADED
 }
 
+enum SchoolEventType {
+  MEETING
+  DEADLINE
+  EXAM
+  ACTIVITY
+}
+
 model School {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -139,6 +146,7 @@ model School {
   grades           Grade[]
   periods          Period[]
   feeStructures    FeeStructure[]
+  schoolEvents     SchoolEvent[]
 }
 
 model Role {
@@ -567,4 +575,19 @@ model Submission {
 
   @@unique([assignmentId, studentId])
   @@index([studentId])
+}
+
+model SchoolEvent {
+  id          String          @id @default(uuid()) @db.Uuid
+  schoolId    String          @db.Uuid
+  title       String
+  type        SchoolEventType @default(MEETING)
+  date        DateTime        @db.Date
+  description String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  @@index([schoolId, date])
 }

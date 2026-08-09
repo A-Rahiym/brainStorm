@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Staff briefing - Term 1 moderation",
+    "type": "MEETING",
+    "date": "2026-09-14",
+    "description": "Review moderation guidelines for all First Term assessments."
+  },
+  {
+    "title": "Tuition fee payment deadline",
+    "type": "DEADLINE",
+    "date": "2026-09-30",
+    "description": "Last day to settle Tuition fees without late penalties."
+  },
+  {
+    "title": "Mid-Term Test week begins",
+    "type": "EXAM",
+    "date": "2026-10-12",
+    "description": "Mid-Term tests run across all classes this week."
+  },
+  {
+    "title": "PTA meeting",
+    "type": "MEETING",
+    "date": "2026-10-20",
+    "description": "Quarterly Parents-Teachers Association meeting."
+  },
+  {
+    "title": "Staff appraisal review",
+    "type": "MEETING",
+    "date": "2026-11-16",
+    "description": "Termly performance review with department heads."
+  },
+  {
+    "title": "First Term Examination begins",
+    "type": "EXAM",
+    "date": "2026-12-07",
+    "description": "First Term examinations start across all classes."
+  },
+  {
+    "title": "Result submission deadline",
+    "type": "DEADLINE",
+    "date": "2026-12-18",
+    "description": "Final date for teachers to submit First Term results."
+  }
+]

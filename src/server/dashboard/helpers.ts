@@ -35,6 +35,24 @@ export function toAgendaItem(
     day: dayLabel(due),
     title: assignment.title,
     tag,
+    date: due.toISOString(),
+  };
+}
+
+export function schoolEventToAgendaItem(event: {
+  id: string;
+  title: string;
+  date: Date;
+  type: string;
+}): AgendaItem {
+  const date = new Date(event.date);
+  return {
+    id: event.id,
+    time: date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }),
+    day: dayLabel(date),
+    title: event.title,
+    tag: event.type === "MEETING" ? "MEETING" : "EVENT",
+    date: date.toISOString(),
   };
 }
 

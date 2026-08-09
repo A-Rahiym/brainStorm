@@ -9,9 +9,9 @@ import {
   recentEnrollments,
   recentPayments,
   topScoredStudents,
-  upcomingAssignments,
+  upcomingSchoolEvents,
 } from "@/server/dashboard/repository/dashboard.repository";
-import { toAgendaItem, toRankedStudent } from "@/server/dashboard/helpers";
+import { schoolEventToAgendaItem, toRankedStudent } from "@/server/dashboard/helpers";
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { HeadmasterDashboard } from "@/features/dashboard/types";
 
@@ -23,12 +23,12 @@ export async function getHeadmasterDashboard(ctx: RequestContext): Promise<Headm
     throw new Error("No active academic session or term found");
   }
 
-  const [stats, feesSummary, enrollmentSummary, agendaRows, topRows, enrollRows, payRows, assignRows] =
+  const [stats, feesSummary, enrollmentSummary, eventRows, topRows, enrollRows, payRows, assignRows] =
     await Promise.all([
       headmasterStats(ctx),
       fees(ctx, context.sessionId),
       enrollments(ctx, context.sessionId),
-      upcomingAssignments(ctx, context.termId, {}),
+      upcomingSchoolEvents(ctx, 4),
       topScoredStudents(ctx, context.termId, context.sessionId, {}),
       recentEnrollments(ctx, context.sessionId, 4),
       recentPayments(ctx, 4),
@@ -62,7 +62,7 @@ export async function getHeadmasterDashboard(ctx: RequestContext): Promise<Headm
     stats,
     fees: feesSummary,
     enrollments: enrollmentSummary,
-    agenda: agendaRows.map((a) => toAgendaItem(a, "EVENT")),
+    agenda: eventRows.map(schoolEventToAgendaItem),
     topStudents: topRows.map(toRankedStudent),
     activities,
   };

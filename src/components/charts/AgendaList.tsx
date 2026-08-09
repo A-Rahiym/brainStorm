@@ -8,6 +8,7 @@ export type AgendaItem = {
   day?: string;
   title: string;
   tag: "EVENT" | "MEETING";
+  date: string;
 };
 
 export function AgendaList({ items }: { items: AgendaItem[] }) {

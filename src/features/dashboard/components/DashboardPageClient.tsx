@@ -8,10 +8,10 @@ export function DashboardPageClient({ initialRole }: { initialRole: "HEADMASTER"
   if (initialRole === "HEADMASTER") return <HeadmasterOverview />;
   if (initialRole === "TEACHER") return <TeacherOverview />;
   return (
-    <div className="grid grid-cols-3 gap-5">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <Skeleton key={i} variant="card" />
-      ))}
+    <div className="grid grid-cols-1 gap-9.5 sm:grid-cols-2 xl:grid-cols-4">
+      {/* {Array.from({ length: 3 }).map((_, i) => ( */}
+        <Skeleton  variant="card" />
+      {/* ))} */}
     </div>
   );
 }

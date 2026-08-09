@@ -243,6 +243,17 @@ export async function upcomingAssignments(
   });
 }
 
+export async function upcomingSchoolEvents(ctx: RequestContext, take = 4) {
+  const schoolId = ctx.schoolId ?? undefined;
+  const now = new Date();
+  return prisma.schoolEvent.findMany({
+    where: { schoolId, date: { gte: now } },
+    orderBy: { date: "asc" },
+    take,
+    select: { id: true, title: true, date: true, type: true },
+  });
+}
+
 export async function recentEnrollments(ctx: RequestContext, sessionId: string, take = 5) {
   const schoolId = ctx.schoolId ?? undefined;
   return prisma.enrollment.findMany({
