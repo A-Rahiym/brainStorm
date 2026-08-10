@@ -4,48 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSessionStore } from "@/store/session.store";
-import {
-  ChevronDownIcon,
-  DashboardIcon,
-  GridIcon,
-  LogOutIcon,
-  PaymentsIcon,
-  ResultsIcon,
-  SearchIcon,
-  StudentsIcon,
-  SubjectsIcon,
-  TeachersIcon,
-  UsersIcon,
-} from "@/components/icons";
-import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
-
-const navGroups: Record<
-  "HEADMASTER" | "TEACHER",
-  { href: string; label: string; icon: React.ReactNode }[]
-> = {
-  HEADMASTER: [
-    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={18} /> },
-    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={18} /> },
-    { href: "/students", label: "Students", icon: <StudentsIcon size={18} /> },
-    { href: "/teachers", label: "Teachers", icon: <TeachersIcon size={18} /> },
-    { href: "/results", label: "Results", icon: <ResultsIcon size={18} /> },
-    { href: "/payments", label: "Payments", icon: <PaymentsIcon size={18} /> },
-  ],
-  TEACHER: [
-    { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon size={18} /> },
-    { href: "/subjects", label: "Subjects", icon: <SubjectsIcon size={18} /> },
-    { href: "/students", label: "Students", icon: <StudentsIcon size={18} /> },
-    { href: "/attendance", label: "Attendance", icon: <UsersIcon size={18} /> },
-    { href: "/assessments", label: "Assessments", icon: <ResultsIcon size={18} /> },
-    { href: "/grades", label: "Grades", icon: <ResultsIcon size={18} /> },
-  ],
-};
+import { ChevronDownIcon, GridIcon, SearchIcon } from "@/components/icons";
+import { NAV_ITEMS } from "@/features/subjects/constants/nav.constants";
 
 export function TopNav() {
   const pathname = usePathname();
   const role = useSessionStore((s) => s.role);
-  const items = role ? navGroups[role] : [];
-  
+  const items = role ? NAV_ITEMS[role] : [];
 
   return (
     <div className="flex items-center justify-start gap-4 px-4 py-4 sm:px-8 xl:gap-4.5">
@@ -83,7 +48,7 @@ export function TopNav() {
                     }`}
                 >
                   <span className={active ? "text-primary" : "text-text-secondary"}>
-                    {item.icon}
+                    <item.icon size={18} />
                   </span>
                   <span className={active ? "inline" : "hidden xl:inline"}>
                     {item.label}

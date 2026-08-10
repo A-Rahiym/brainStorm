@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { Avatar } from "@/components/ui";
 import { IconButton } from "@/components/ui/IconButton";
-import { ScheduleTimeline, TEACHER_BLOCKS } from "@/components/charts/ScheduleTimeline";
+import { ScheduleTimeline } from "@/components/charts/ScheduleTimeline";
+import { TEACHER_BLOCKS } from "@/features/dashboard/mock/timeline";
+import { RAIL_CLASS_TABS } from "@/features/dashboard/constants/constants";
 import { useSessionStore } from "@/store/session.store";
 import { ChevronRightIcon, LogOutIcon, FilterIcon, PlusIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
-const CLASS_TABS = ["JSS 3", "SS1", "SS2"];
 
 export function RightRail() {
   const role = useSessionStore((s) => s.role);
   const isTeacher = role === "TEACHER";
-  const [activeClass, setActiveClass] = useState(CLASS_TABS[0]);
+  const [activeClass, setActiveClass] = useState(RAIL_CLASS_TABS[0]);
   const logout = useLogout();
   const profileName = isTeacher ? "Grace Okon" : "Bello Salis Adam";
   const profileSubtitle = isTeacher ? "Mathematics" : "Headmaster";
@@ -42,7 +43,7 @@ export function RightRail() {
       <div className="flex flex-col items-center border-b border-border pb-5 text-center">
         <Avatar
           name={profileName}
-          src={isTeacher ? null : "/profile.png"}
+          src={"/images/profile.png"}
           size={84}
           className={`mb-4 border-3 border-surface shadow-[0_0_0_1px_var(--color-border)] ${isTeacher ? "bg-[#7A5C4B]! text-white!" : ""
             }`}
@@ -76,13 +77,13 @@ export function RightRail() {
             blocks={TEACHER_BLOCKS}
             afterStrip={
               <div className="mb-4.5 flex gap-2" role="tablist" aria-label="Classes">
-                {CLASS_TABS.map((c) => (
+                {RAIL_CLASS_TABS.map((c) => (
                   <button
                     key={c}
                     role="tab"
                     aria-selected={activeClass === c}
                     onClick={() => setActiveClass(c)}
-                    className={`h-9.5 flex-1 rounded-btn text-sm font-semibold transition-colors ${activeClass === c ? "bg-primary text-white" : "bg-bg text-text-primary hover:bg-[#EDEDF0]"
+                    className={`h-9.5 flex-1 rounded-full text-sm font-semibold transition-colors ${activeClass === c ? "bg-primary text-white" : "bg-bg text-text-primary hover:bg-[#EDEDF0]"
                       }`}
                   >
                     {c}

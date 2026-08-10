@@ -3,101 +3,17 @@
 import { useState } from "react";
 import { Clock, User } from "lucide-react";
 import { ChevronDownIcon } from "@/components/icons";
+import { TIMELINE_DAY_STRIP, TIMELINE_MONTH_LABEL } from "@/features/dashboard/constants/timeline";
+import type { ScheduleBlock } from "@/features/dashboard/constants/timeline";
+import { HEADMASTER_BLOCKS } from "@/features/dashboard/mock/timeline";
 
-export type ScheduleBlock = {
-  id: string;
-  timeLabel: string;
-  now?: boolean;
-  events: {
-    id: string;
-    name: string;
-    code?: string;
-    description?: string;
-    time?: string;
-    person?: string;
-    tone: "red" | "pink" | "neutral";
-  }[];
-  break?: string;
-};
+export type { ScheduleBlock } from "@/features/dashboard/constants/timeline";
 
 const chipTones = {
   red: { bg: "bg-schedule-red-bg", name: "text-schedule-red" },
   pink: { bg: "bg-schedule-pink", name: "text-primary" },
   neutral: { bg: "bg-bg", name: "text-text-primary" },
 };
-
-const DAY_STRIP = [
-  { dow: "Mon", num: "14" },
-  { dow: "Tue", num: "15" },
-  { dow: "Wed", num: "16" },
-  { dow: "Thu", num: "17" },
-  { dow: "Fri", num: "18" },
-  { dow: "Sat", num: "19" },
-  { dow: "Sun", num: "20" },
-];
-
-export const TEACHER_BLOCKS: ScheduleBlock[] = [
-  { id: "t08", timeLabel: "08:00", events: [] },
-  {
-    id: "t09",
-    timeLabel: "09:00",
-    now: true,
-    events: [
-      { id: "e1", name: "English", code: "DP", description: "Phonetics", time: "8:30 - 10:00", person: "Mr. Salis", tone: "red" },
-    ],
-  },
-  {
-    id: "t10",
-    timeLabel: "10:00",
-    events: [
-      { id: "e2", name: "Mathematics", code: "DP", description: "Numbers & sequences", time: "10:00 - 11:30", person: "Me", tone: "pink" },
-    ],
-  },
-  { id: "t11", timeLabel: "11:00", events: [], break: "11:30 - 12:00" },
-  {
-    id: "t12",
-    timeLabel: "12:00",
-    events: [
-      { id: "e3", name: "Civic Education", code: "SP", time: "12:00 - 12:45", person: "Mr. Abubakar", tone: "red" },
-    ],
-  },
-  {
-    id: "t13",
-    timeLabel: "01:00",
-    events: [
-      { id: "e4", name: "History", code: "SP", time: "12:00 - 12:45", person: "Mr. Abubakar", tone: "red" },
-    ],
-  },
-  { id: "t14", timeLabel: "02:00", events: [] },
-  { id: "t15", timeLabel: "03:00", events: [] },
-  { id: "t16", timeLabel: "04:00", events: [] },
-];
-
-const DEFAULT_BLOCKS: ScheduleBlock[] = [
-  { id: "t08", timeLabel: "08:00", events: [] },
-  {
-    id: "t09",
-    timeLabel: "09:00",
-    events: [
-      { id: "e1", name: "Staff meeting", description: "How to improve student recor...", time: "8:30 - 10:00", tone: "red" },
-    ],
-  },
-  { id: "t10", timeLabel: "10:00", events: [] },
-  {
-    id: "t11",
-    timeLabel: "11:00",
-    events: [
-      { id: "e2", name: "Contact Parent", description: "How to improve student recor...", time: "8:30 - 10:00", tone: "red" },
-    ],
-    break: "11:30 - 12:00",
-  },
-  { id: "t12", timeLabel: "12:00", events: [] },
-  { id: "t13", timeLabel: "01:00", events: [] },
-  { id: "t14", timeLabel: "02:00", events: [] },
-  { id: "t15", timeLabel: "03:00", events: [] },
-  { id: "t16", timeLabel: "04:00", events: [] },
-  { id: "t17", timeLabel: "05:00", events: [] },
-];
 
 export function ScheduleTimeline({
   blocks,
@@ -109,18 +25,18 @@ export function ScheduleTimeline({
   afterStrip?: React.ReactNode;
 }) {
   const [activeDay, setActiveDay] = useState("14");
-  const timeline = blocks ?? DEFAULT_BLOCKS;
+  const timeline = blocks ?? HEADMASTER_BLOCKS;
   const isCard = variant === "card";
 
   return (
     <div>
       <div className="mb-3.5 flex items-center gap-2 text-[15px] font-semibold text-text-primary">
-        August 2026
+        {TIMELINE_MONTH_LABEL}
         <ChevronDownIcon size={13} className="text-text-secondary" />
       </div>
 
       <div className="mb-4.5 grid grid-cols-7 gap-0.5">
-        {DAY_STRIP.map(({ dow, num }) => (
+        {TIMELINE_DAY_STRIP.map(({ dow, num }) => (
           <button
             key={num}
             onClick={() => setActiveDay(num)}
@@ -212,7 +128,7 @@ export function ScheduleTimeline({
                     </span>
                   </div>
                 ) : (
-                  <div className="-mt-px mb-2 flex items-center justify-between rounded-[10px] bg-schedule-red-bg px-3 py-2 text-xs font-extrabold text-schedule-red">
+                  <div className="-mt-px mb-2 flex items-center justify-between rounded-full bg-schedule-red-bg px-3 py-2 text-xs font-extrabold text-schedule-red">
                     Break
                     <span className="flex items-center gap-1 font-semibold">
                       <Clock size={11} /> {block.break}
