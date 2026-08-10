@@ -1,7 +1,12 @@
 import type { RequestContext } from "@/server/context";
 import { requirePermission } from "@/server/permissions/guard";
 import { findCurrentTerm } from "@/server/shared/repository/dashboard.repository";
-import { teacherStudents } from "@/server/teachers/repository/teacher-dashboard.repository";
+import {
+  teacherStudents,
+  teacherScoreTrend,
+  teacherAttendanceTrend,
+  type TrendPoint,
+} from "@/server/teachers/repository/teacher-dashboard.repository";
 import { gradeCodeFor } from "@/server/shared/helpers";
 import {
   STUDENT_CLASS_FILTERS,
@@ -20,7 +25,17 @@ const AVATAR_COLORS = [
   "#8E3B5E",
 ];
 
-function computeMetrics(students: StudentRow[]): StudentMetrics {
+function trendFor(points: TrendPoint[]): string {
+  if (points.length < 2) return "";
+  const delta = points[points.length - 1].value - points[0].value;
+  return `${delta >= 0 ? "+" : "-"}${Math.abs(Math.round(delta))}%`;
+}
+
+function computeMetrics(
+  students: StudentRow[],
+  scoreTrend: TrendPoint[],
+  attendanceTrend: TrendPoint[]
+): StudentMetrics {
   const count = students.length;
   const avgPerformance =
     count > 0 ? students.reduce((sum, s) => sum + s.total, 0) / count : 0;
@@ -33,15 +48,15 @@ function computeMetrics(students: StudentRow[]): StudentMetrics {
       id: "students-performance",
       label: "Students Performance",
       value: `${avgPerformance.toFixed(1)}%`,
-      trend: "",
-      points: [],
+      trend: trendFor(scoreTrend),
+      points: scoreTrend.map((p) => p.value),
     },
     attendance: {
       id: "attendance-rate",
       label: "Attendance Rate",
       value: `${Math.round(avgAttendance)}%`,
-      trend: "",
-      points: [],
+      trend: trendFor(attendanceTrend),
+      points: attendanceTrend.map((p) => p.value),
     },
   };
 }
@@ -50,15 +65,23 @@ export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherSt
   requirePermission(ctx, "dashboard.read");
 
   let students: StudentRow[] = [];
+  let scoreTrend: TrendPoint[] = [];
+  let attendanceTrend: TrendPoint[] = [];
 
   if (ctx.teacherId) {
     const context = await findCurrentTerm(ctx);
     if (context) {
-      const rows = await teacherStudents(ctx, {
-        teacherId: ctx.teacherId,
-        termId: context.termId,
-        sessionId: context.sessionId,
-      });
+      const [rows, scoreSeries, attendanceSeries] = await Promise.all([
+        teacherStudents(ctx, {
+          teacherId: ctx.teacherId,
+          termId: context.termId,
+          sessionId: context.sessionId,
+        }),
+        teacherScoreTrend(ctx, ctx.teacherId, context.termId),
+        teacherAttendanceTrend(ctx, ctx.teacherId, context.termId),
+      ]);
+      scoreTrend = scoreSeries;
+      attendanceTrend = attendanceSeries;
 
       const hasData =
         rows.length > 0 &&
@@ -77,7 +100,7 @@ export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherSt
             id: r.student.id,
             name: `${r.student.firstName} ${r.student.lastName}`,
             admissionNumber: r.student.admissionNumber,
-            avatar: null,
+            avatar: r.student.photoUrl,
             avatarColor: AVATAR_COLORS[i % AVATAR_COLORS.length],
             className: r.className,
             attendance: { present: r.attendance.present, total: r.attendance.total, pct },
@@ -94,7 +117,7 @@ export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherSt
   }
 
   return {
-    metrics: computeMetrics(students),
+    metrics: computeMetrics(students, scoreTrend, attendanceTrend),
     students,
     classes: STUDENT_CLASS_FILTERS,
     subjects: STUDENT_SUBJECT_FILTERS,

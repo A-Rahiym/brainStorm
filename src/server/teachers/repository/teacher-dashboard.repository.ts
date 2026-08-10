@@ -112,6 +112,7 @@ export type TeacherStudentRow = {
     firstName: string;
     lastName: string;
     admissionNumber: string;
+    photoUrl: string | null;
   };
   className: string;
   attendance: { present: number; total: number };
@@ -145,7 +146,13 @@ export async function teacherStudents(
       },
       select: {
         student: {
-          select: { id: true, firstName: true, lastName: true, admissionNumber: true },
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            admissionNumber: true,
+            photoUrl: true,
+          },
         },
         class: { select: { name: true } },
       },
@@ -212,6 +219,81 @@ export async function teacherStudents(
       total,
     };
   });
+}
+
+export type TrendPoint = { date: Date; value: number };
+
+export async function teacherScoreTrend(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string
+): Promise<TrendPoint[]> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const scores = await prisma.score.findMany({
+    where: {
+      assessment: {
+        termId,
+        teachingAssignment: { teacherId, academicSession: { schoolId }, status: "ACTIVE" },
+      },
+    },
+    select: {
+      score: true,
+      assessment: { select: { maxScore: true, date: true } },
+    },
+  });
+
+  const byDate = new Map<string, { sum: number; count: number }>();
+  for (const s of scores) {
+    const max = Number(s.assessment.maxScore) || 100;
+    const pct = (Number(s.score) / max) * 100;
+    const key = s.assessment.date.toISOString().slice(0, 10);
+    const entry = byDate.get(key) ?? { sum: 0, count: 0 };
+    entry.sum += pct;
+    entry.count += 1;
+    byDate.set(key, entry);
+  }
+
+  return [...byDate.entries()]
+    .map(([date, { sum, count }]) => ({
+      date: new Date(date),
+      value: count > 0 ? Math.round((sum / count) * 10) / 10 : 0,
+    }))
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
+}
+
+export async function teacherAttendanceTrend(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string
+): Promise<TrendPoint[]> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const assignments = await prisma.teachingAssignment.findMany({
+    where: { teacherId, termId, status: "ACTIVE", academicSession: { schoolId } },
+    select: { classSubject: { select: { classId: true } } },
+  });
+  const classIds = [...new Set(assignments.map((a) => a.classSubject.classId))];
+  if (classIds.length === 0) return [];
+
+  const rows = await prisma.attendance.findMany({
+    where: { classId: { in: classIds }, termId, student: { schoolId } },
+    select: { date: true, status: true },
+  });
+
+  const byDate = new Map<string, { present: number; total: number }>();
+  for (const r of rows) {
+    const key = r.date.toISOString().slice(0, 10);
+    const entry = byDate.get(key) ?? { present: 0, total: 0 };
+    entry.total += 1;
+    if (r.status === "PRESENT") entry.present += 1;
+    byDate.set(key, entry);
+  }
+
+  return [...byDate.entries()]
+    .map(([date, { present, total }]) => ({
+      date: new Date(date),
+      value: total > 0 ? Math.round((present / total) * 100) : 0,
+    }))
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 }
 
 export async function subjectScoreProgress(
