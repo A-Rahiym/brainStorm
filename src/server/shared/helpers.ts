@@ -77,6 +77,7 @@ export function toRankedStudent(
       lastName: string;
       admissionNumber: string;
       enrollments: { class: { name: string } }[];
+      photoUrl?: string | null;
     };
     avgPct: number;
   }
@@ -88,7 +89,7 @@ export function toRankedStudent(
     meta: [className, row.student.admissionNumber].filter(Boolean).join(" · "),
     score: row.avgPct.toFixed(1),
     grade: gradeFor(row.avgPct),
-    avatar: null,
+    avatar: row.student.photoUrl || null,
   };
 }
 

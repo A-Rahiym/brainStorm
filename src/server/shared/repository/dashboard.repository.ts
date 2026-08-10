@@ -87,6 +87,7 @@ export async function topScoredStudents(
           firstName: true,
           lastName: true,
           admissionNumber: true,
+          photoUrl: true,
           enrollments: {
             where: { academicSessionId: sessionId, status: "ACTIVE" },
             select: { class: { select: { name: true } } },
