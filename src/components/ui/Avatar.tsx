@@ -14,6 +14,7 @@ interface AvatarProps {
   src?: string | null;
   size?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export function Avatar({
@@ -21,6 +22,7 @@ export function Avatar({
   src,
   size = 38,
   className = "",
+  style,
 }: AvatarProps) {
   if (src) {
     return (
@@ -33,6 +35,7 @@ export function Avatar({
         style={{
           width: size,
           height: size,
+          ...style,
         }}
       />
     );
@@ -46,6 +49,7 @@ export function Avatar({
         width: size,
         height: size,
         fontSize: size * 0.38,
+        ...style,
       }}
     >
       {initials(name)}

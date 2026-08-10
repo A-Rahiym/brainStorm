@@ -6,11 +6,11 @@ export function TopStudentsCard({ students }: { students: RankedStudent[] }) {
   return (
     <Card className="flex flex-col">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
-          <StudentsIcon size={17} className="text-text-secondary" />
+        <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
+          <StudentsIcon size={20} className="text-text-primary" />
           Top students
         </h3>
-        <ControlPill label="By" value="All classes" onClick={() => {}} />
+        <ControlPill label="By" value="All classes" variant="outline" size="md" onClick={() => {}} />
       </div>
       <RankedList students={students} />
     </Card>
