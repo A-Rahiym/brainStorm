@@ -45,7 +45,7 @@ export function TopNav() {
   const pathname = usePathname();
   const role = useSessionStore((s) => s.role);
   const items = role ? navGroups[role] : [];
-  const logout = useLogout();
+  
 
   return (
     <div className="flex items-center justify-start gap-4 px-4 py-4 sm:px-8 xl:gap-4.5">
@@ -78,11 +78,11 @@ export function TopNav() {
                   title={item.label}
                   aria-current={active ? "page" : undefined}
                   className={`flex h-11 flex-none items-center gap-1.75 whitespace-nowrap rounded-full px-3 text-sm transition-colors ${active
-                    ? "bg-[#FBE3EC] font-semibold text-[#9F1244]"
+                    ? "bg-primary-pill font-semibold text-primary"
                     : "font-medium text-text-primary hover:bg-bg"
                     }`}
                 >
-                  <span className={active ? "text-[#9F1244]" : "text-text-secondary"}>
+                  <span className={active ? "text-primary" : "text-text-secondary"}>
                     {item.icon}
                   </span>
                   <span className={active ? "inline" : "hidden xl:inline"}>
@@ -111,15 +111,6 @@ export function TopNav() {
           </label>
 
         </div>
-        <button
-          aria-label="Log out"
-          title="Log out"
-          disabled={logout.isPending}
-          onClick={() => logout.mutate()}
-          className="flex h-11 w-11 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-danger-text/10 hover:text-danger-text disabled:opacity-50"
-        >
-          <LogOutIcon size={18} />
-        </button>
       </div>
     </div>
   );
