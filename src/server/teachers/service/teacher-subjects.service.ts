@@ -3,10 +3,10 @@ import { requirePermission } from "@/server/permissions/guard";
 import {
   findCurrentTerm,
   listAssignments,
-  teacherSubjects,
   topScoredStudents,
-} from "@/server/dashboard/repository/dashboard.repository";
-import { toRankedStudent } from "@/server/dashboard/helpers";
+} from "@/server/shared/repository/dashboard.repository";
+import { teacherSubjects } from "@/server/teachers/repository/teacher-dashboard.repository";
+import { toRankedStudent } from "@/server/shared/helpers";
 import { CLASS_FILTERS } from "@/features/subjects/constants/constants";
 import {
   MOCK_ASSIGNMENTS,

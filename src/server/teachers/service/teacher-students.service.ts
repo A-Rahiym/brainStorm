@@ -1,10 +1,8 @@
 import type { RequestContext } from "@/server/context";
 import { requirePermission } from "@/server/permissions/guard";
-import {
-  findCurrentTerm,
-  teacherStudents,
-} from "@/server/dashboard/repository/dashboard.repository";
-import { gradeCodeFor } from "@/server/dashboard/helpers";
+import { findCurrentTerm } from "@/server/shared/repository/dashboard.repository";
+import { teacherStudents } from "@/server/teachers/repository/teacher-dashboard.repository";
+import { gradeCodeFor } from "@/server/shared/helpers";
 import {
   STUDENT_CLASS_FILTERS,
   STUDENT_SUBJECT_FILTERS,

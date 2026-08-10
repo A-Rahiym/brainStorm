@@ -1,17 +1,19 @@
 import type { RequestContext } from "@/server/context";
 import { requirePermission } from "@/server/permissions/guard";
 import {
+  findCurrentTerm,
+  recentAssignments,
+  topScoredStudents,
+} from "@/server/shared/repository/dashboard.repository";
+import {
   enrollments,
   fees,
-  findCurrentTerm,
   headmasterStats,
-  recentAssignments,
   recentEnrollments,
   recentPayments,
-  topScoredStudents,
   upcomingSchoolEvents,
 } from "@/server/dashboard/repository/dashboard.repository";
-import { schoolEventToAgendaItem, toRankedStudent } from "@/server/dashboard/helpers";
+import { schoolEventToAgendaItem, toRankedStudent } from "@/server/shared/helpers";
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { HeadmasterDashboard } from "@/features/dashboard/types";
 

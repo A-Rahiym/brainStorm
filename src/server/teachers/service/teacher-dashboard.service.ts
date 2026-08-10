@@ -5,12 +5,14 @@ import {
   findCurrentTerm,
   listAssignments,
   recentAssignments,
+  topScoredStudents,
+} from "@/server/shared/repository/dashboard.repository";
+import {
   recentAttendance,
   teacherStats,
-  topScoredStudents,
   upcomingAssignments,
-} from "@/server/dashboard/repository/dashboard.repository";
-import { toAgendaItem, toRankedStudent } from "@/server/dashboard/helpers";
+} from "@/server/teachers/repository/teacher-dashboard.repository";
+import { toAgendaItem, toRankedStudent } from "@/server/shared/helpers";
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { TeacherDashboard } from "@/features/dashboard/types";
 

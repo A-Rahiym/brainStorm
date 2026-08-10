@@ -1,7 +1,7 @@
 import { respondSuccess, withErrorHandler } from "@/lib/api";
 import { getContext } from "@/lib/auth";
 import { getHeadmasterDashboard } from "@/server/dashboard/service/headmaster-dashboard.service";
-import { getTeacherDashboard } from "@/server/dashboard/service/teacher-dashboard.service";
+import { getTeacherDashboard } from "@/server/teachers/service/teacher-dashboard.service";
 
 export const GET = withErrorHandler(async (req) => {
   const ctx = await getContext(req);
