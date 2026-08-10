@@ -12,25 +12,31 @@ export type ActivityItem = {
   createdAt: string | Date;
 };
 
-const kindStyles: Record<ActivityKind, { Icon: React.ComponentType<{ size?: number }>; className: string }> = {
-  document: { Icon: FileText, className: "bg-success-bg text-success-text" },
-  payment: { Icon: Wallet, className: "bg-blue-100 text-blue-600" },
-  enrollment: { Icon: UserPlus, className: "bg-[#EDE4FE] text-[#7C3AED]" },
+const kindIcons: Record<ActivityKind, React.ComponentType<{ size?: number }>> = {
+  document: FileText,
+  payment: Wallet,
+  enrollment: UserPlus,
 };
 
 export function ActivityFeed({ items }: { items: ActivityItem[] }) {
   return (
     <div>
-      {items.map((item) => {
-        const { Icon, className } = kindStyles[item.kind];
+      {items.map((item, index) => {
+        const Icon = kindIcons[item.kind];
+        const isLast = index === items.length - 1;
         return (
-          <div key={item.id} className="flex items-start gap-3.5 border-t border-border py-3.5 first:border-t-0 first:pt-0">
-            <span className={`flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-full ${className}`}>
-              <Icon size={15} />
+          <div
+            key={item.id}
+            className={`grid grid-cols-[44px_minmax(0,1fr)] items-center gap-3.5 border-b border-border py-4 ${
+              isLast ? "border-b-0 pb-0.5" : ""
+            }`}
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#E8F6EE] text-[#2F7A55]">
+              <Icon size={19} />
             </span>
             <div>
-              <div className="text-sm font-semibold text-text-primary">{item.description}</div>
-              <div className="mt-0.5 text-xs text-text-muted">{formatRelativeTime(item.createdAt)}</div>
+              <p className="text-[15px] font-medium tracking-[-0.01em] text-text-primary">{item.description}</p>
+              <p className="mt-0.5 text-[13px] text-text-secondary">{formatRelativeTime(item.createdAt)}</p>
             </div>
           </div>
         );

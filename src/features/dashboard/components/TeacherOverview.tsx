@@ -2,6 +2,7 @@
 
 import { Card, Skeleton, StatCard, ErrorState } from "@/components/ui";
 import { ActivityFeed } from "@/components/charts/ActivityFeed";
+import { ChevronRightIcon, FileTextIcon } from "@/components/icons";
 import { formatNumber } from "@/lib/format";
 import { useTeacherDashboard } from "@/features/dashboard/hooks/queries/useTeacherDashboard";
 import { AssignmentsCard } from "@/features/dashboard/components/AssignmentsCard";
@@ -14,7 +15,7 @@ export function TeacherOverview() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-9.5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} variant="card" />
         ))}
@@ -30,7 +31,7 @@ export function TeacherOverview() {
 
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-1 gap-9.5 sm:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           primary
           label="My students"
@@ -38,35 +39,44 @@ export function TeacherOverview() {
           iconSrc="/icons/people.svg"
           footnote="across assigned classes"
           iconClassName="!bg-surface"
+          trend="up"
+          trendValue="15%"
         />
         <StatCard
           label="My classes"
           value={formatNumber(stats.classes)}
           iconSrc="/icons/Case.svg"
           footnote="this term"
-          iconClassName="!bg-accent-black"
         />
         <StatCard
           label="My subjects"
           value={formatNumber(stats.subjects)}
           iconSrc="/icons/Book.svg"
           footnote="scheduled periods"
-          iconClassName="!bg-accent-black"
         />
         <TermCountCard />
       </div>
 
-      <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
-        <CalendarAgendaCard agenda={agenda} />
-        <AssignmentsCard assignments={assignments} />
-      </div>
-
-      <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
-        <Card className="flex flex-col">
-          <h3 className="mb-4 text-[15px] font-bold text-text-primary">Recent activity</h3>
-          <ActivityFeed items={activities} />
-        </Card>
-        <TopStudentsCard students={topStudents} />
+      <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-[minmax(0,1.22fr)_minmax(0,1fr)]">
+        <div className="flex flex-col gap-3">
+          <CalendarAgendaCard agenda={agenda} />
+          <Card className="flex flex-col">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
+                <FileTextIcon size={20} className="text-text-primary" />
+                Recent Activities
+              </h3>
+              <span className="flex items-center gap-1.5 text-sm font-semibold text-primary">
+                View all <ChevronRightIcon size={14} />
+              </span>
+            </div>
+            <ActivityFeed items={activities} />
+          </Card>
+        </div>
+        <div className="flex flex-col gap-3">
+          <AssignmentsCard assignments={assignments} />
+          <TopStudentsCard students={topStudents} />
+        </div>
       </div>
     </div>
   );
