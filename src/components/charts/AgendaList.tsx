@@ -13,17 +13,15 @@ export type AgendaItem = {
 
 export function AgendaList({ items }: { items: AgendaItem[] }) {
   return (
-    <div>
+    <div className="space-y-2.5">
       {items.map((item) => (
-        <div key={item.id} className="flex items-start gap-3.5 border-t border-border px-0 py-3 first:border-t-0 first:pt-0">
-          <div className="w-14 flex-shrink-0">
-            <div className="text-[13px] font-bold text-text-primary">{item.time}</div>
-            {item.day && (
-              <div className="mt-0.5 text-[11px] font-bold uppercase text-primary">{item.day}</div>
-            )}
+        <div key={item.id} className="grid grid-cols-[86px_minmax(0,1fr)] items-start gap-3">
+          <div className="pt-4 text-[13px] font-semibold uppercase leading-[1.45] tracking-[0.03em] text-text-secondary">
+            {item.time}
+            {item.day && <b className="block font-bold uppercase text-primary">{item.day}</b>}
           </div>
-          <div className="min-w-0">
-            <div className="mb-1.5 text-sm font-semibold text-text-primary">{item.title}</div>
+          <div className="rounded-xl border border-border px-4 py-3.5">
+            <p className="mb-2.5 text-base font-semibold tracking-[-0.01em] text-text-primary">{item.title}</p>
             <Badge tone={item.tag === "EVENT" ? "warning" : "meeting"}>{item.tag}</Badge>
           </div>
         </div>

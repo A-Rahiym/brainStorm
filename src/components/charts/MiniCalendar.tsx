@@ -61,7 +61,7 @@ export function MiniCalendar({
         weekdays: "brain-weekdays",
         weekday: "brain-weekday",
         week: "brain-week",
-        day: "brain-day",
+ day: "m-1 h-9 w-9 p-0 font-normal aria-selected:opacity-100",
         day_button: "brain-day-button",
         selected: "brain-selected",
         today: "brain-today",

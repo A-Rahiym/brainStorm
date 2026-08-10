@@ -16,16 +16,24 @@
   --color-danger-text: #dc2626;
   --color-warning-bg: #fef3c7;
   --color-warning-text: #b45309;
-  --color-meeting-bg: #f1e9fe;
-  --color-meeting-text: #7c3aed;
+  --color-meeting-bg: #ede9fe;
+  --color-meeting-text: #6d28d9;
+  --color-info-bg: #e7eefb;
+  --color-info-text: #2f5fa8;
 
   /* Neutrals */
   --color-bg: #f7f7f9;
   --color-surface: #ffffff;
   --color-border: #ededf0;
+  --color-border-strong: #e2e2e8;
+  --color-chip-bg: #f2f2f5;
   --color-text-primary: #17171a;
   --color-text-secondary: #6b6b76;
   --color-text-muted: #a0a0ab;
+
+  /* Brand tones */
+  --color-primary-pill: #fbe3ec;
+  --color-primary-track: #f6dde6;
 
   /* Schedule tags */
   --color-schedule-red: #e11d48;
@@ -56,12 +64,18 @@
   --color-warning-text: var(--color-warning-text);
   --color-meeting-bg: var(--color-meeting-bg);
   --color-meeting-text: var(--color-meeting-text);
+  --color-info-bg: var(--color-info-bg);
+  --color-info-text: var(--color-info-text);
   --color-bg: var(--color-bg);
   --color-surface: var(--color-surface);
   --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-chip-bg: var(--color-chip-bg);
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
+  --color-primary-pill: var(--color-primary-pill);
+  --color-primary-track: var(--color-primary-track);
   --color-schedule-red: var(--color-schedule-red);
   --color-schedule-red-bg: var(--color-schedule-red-bg);
   --color-schedule-pink: var(--color-schedule-pink);
@@ -102,7 +116,7 @@ body {
 .brain-cal .brain-week {
   width: 100%;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 20px;
 }
 
 .brain-cal.brain-cal-hide-caption .brain-caption {
@@ -147,18 +161,20 @@ body {
 }
 
 .brain-cal .brain-weekday {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
   text-align: center;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .brain-cal .brain-day-button {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 30%;
-  font-size: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: 15px;
   font-weight: 500;
   color: var(--color-text-primary);
 }
@@ -169,7 +185,9 @@ body {
 
 .brain-cal .brain-selected .brain-day-button {
   background: var(--color-primary);
+  border-color: var(--color-primary);
   color: #fff;
+  font-weight: 600;
 }
 
 .brain-cal .brain-today:not(.brain-selected) .brain-day-button {
@@ -184,17 +202,23 @@ body {
 
 .brain-cal .brain-cal-event .brain-day-button {
   position: relative;
+  color: #e58a0b;
+  font-weight: 600;
 }
 
 .brain-cal .brain-cal-event .brain-day-button::after {
   content: "";
   position: absolute;
-  bottom: 2px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: #e58a0b;
+}
+
+.brain-cal .brain-selected.brain-cal-event .brain-day-button::after {
+  background: rgba(255, 255, 255, 0.75);
 }
 

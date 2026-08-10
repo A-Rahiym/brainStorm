@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Button, Card, ControlPill } from "@/components/ui";
-import { CalendarIcon, PlusIcon } from "@/components/icons";
+import { CalendarIcon, FilterIcon, PlusIcon } from "@/components/icons";
 import { useUiStore } from "@/store/ui.store";
+import { useSessionStore } from "@/store/session.store";
 import { MiniCalendar } from "@/components/charts/MiniCalendar";
 import { AgendaList, type AgendaItem } from "@/components/charts/AgendaList";
 
@@ -26,20 +27,23 @@ export function CalendarAgendaCard({
 }) {
   const [selectedMonth, setSelectedMonth] = useState<Date>(month ?? new Date());
   const setCalendarMonth = useUiStore((s) => s.setCalendarMonth);
+  const role = useSessionStore((s) => s.role);
 
   const months = monthOptions(selectedMonth);
 
   return (
     <Card className="flex flex-col">
       <div className="mb-4 flex  w-full items-center justify-between gap-3">
-        <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
-          <CalendarIcon size={17} className="text-text-secondary" />
+        <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
+          <CalendarIcon size={20} className="text-text-primary" />
           Calendar
         </h3>
 
         <ControlPill
           label="Month"
           value={selectedMonth.toISOString()}
+          variant="outline"
+          size="md"
           onChange={(v) => {
             const next = new Date(v);
             setSelectedMonth(next);
@@ -60,11 +64,20 @@ export function CalendarAgendaCard({
         eventDays={eventDays}
       />
 
-      <div className="mt-6 mb-4 flex items-center justify-between">
-        <h3 className="text-[15px] font-bold text-text-primary">Agenda</h3>
-        <Button variant="dark" size="sm" className="h-8 rounded-full px-3.5">
-          <PlusIcon size={13} /> Add
-        </Button>
+      <div className="mb-3.5 mt-7 flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-text-primary">Agenda</h3>
+        {role === "HEADMASTER" ? (
+          <Button variant="dark" size="sm" className="h-8 rounded-full px-3.5">
+            <PlusIcon size={13} /> Add
+          </Button>
+        ) : (
+          <button
+            aria-label="Filter agenda"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-bg hover:text-text-primary"
+          >
+            <FilterIcon size={20} />
+          </button>
+        )}
       </div>
 
       <AgendaList items={agenda} />
