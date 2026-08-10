@@ -10,6 +10,7 @@ export function StatCard({
   trend,
   trendValue,
   footnote,
+  chip,
   primary = false,
   className = "",
 }: {
@@ -21,6 +22,7 @@ export function StatCard({
   trend?: "up" | "down";
   trendValue?: string;
   footnote?: React.ReactNode;
+  chip?: string;
   primary?: boolean;
   className?: string;
 }) {
@@ -32,14 +34,14 @@ export function StatCard({
     >
       <div className="flex items-center justify-between">
         <span
-          className={`text-sm font-semibold ${primary ? "text-white/80" : "text-text-secondary"}`}
+          className={`text-[15px] font-medium ${primary ? "text-white/80" : "text-text-primary"}`}
         >
           {label}
         </span>
         {(icon || iconSrc) && (
           <span
             className={`flex h-10 w-10 items-center justify-center rounded-full ${
-              primary ? "bg-white/15 text-white" : "bg-bg text-text-primary"
+              primary ? "bg-white/15 text-white" : "bg-accent-black text-white"
             } ${iconClassName}`}
           >
             {iconSrc ? (
@@ -50,13 +52,22 @@ export function StatCard({
           </span>
         )}
       </div>
-      <div className="flex items-baseline gap-2.5">
-        <span className="text-[32px] font-semibold leading-none tracking-tight">{value}</span>
+      <div className="flex items-center gap-2.5">
+        <span className="text-[32px] font-bold leading-none tracking-[-0.02em]">{value}</span>
+        {chip && (
+          <span className="inline-flex h-7.5 items-center rounded-full bg-primary-pill px-3 text-sm font-bold text-primary">
+            {chip}
+          </span>
+        )}
         {trend && trendValue && (
           <span
             className={`inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-xs font-bold ${
-              trend === "up" ? "bg-success-bg text-success-text" : "bg-danger-text/10 text-danger-text"
-            } ${primary ? "!bg-white/20 !text-white" : ""}`}
+              primary
+                ? "bg-white/15 text-white"
+                : trend === "up"
+                  ? "bg-success-bg text-success-text"
+                  : "bg-danger-text/10 text-danger-text"
+            }`}
           >
             {trend === "up" ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
             {trendValue}
@@ -64,7 +75,7 @@ export function StatCard({
         )}
       </div>
       {footnote && (
-        <div className={`text-[13px] ${primary ? "text-white/70" : "text-text-muted"}`}>{footnote}</div>
+        <div className={`text-[13px] ${primary ? "text-white/70" : "text-text-secondary"}`}>{footnote}</div>
       )}
     </div>
   );
