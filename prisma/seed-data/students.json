@@ -7,7 +7,8 @@
     "gender": "FEMALE",
     "address": "5 Crescent Close, Kaduna",
     "admissionDate": "2025-09-08",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-1.png"
   },
   {
     "firstName": "Tunde",
@@ -17,7 +18,8 @@
     "gender": "MALE",
     "address": "18 Market Road, Ibadan",
     "admissionDate": "2025-09-08",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-2.png"
   },
   {
     "firstName": "Amina",
@@ -27,6 +29,194 @@
     "gender": "FEMALE",
     "address": "9 Park View, Enugu",
     "admissionDate": "2025-09-09",
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-3.png"
+  },
+  {
+    "firstName": "Chinedu",
+    "lastName": "Okonkwo",
+    "admissionNumber": "BS-2026-004",
+    "dateOfBirth": "2012-06-02",
+    "gender": "MALE",
+    "address": "12 Awka Road, Onitsha",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-4.png"
+  },
+  {
+    "firstName": "Fatima",
+    "lastName": "Usman",
+    "admissionNumber": "BS-2026-005",
+    "dateOfBirth": "2011-11-14",
+    "gender": "FEMALE",
+    "address": "27 Sokoto Crescent, Abuja",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student_5.png"
+  },
+  {
+    "firstName": "Oluwaseun",
+    "lastName": "Adeyemi",
+    "admissionNumber": "BS-2026-006",
+    "dateOfBirth": "2012-03-25",
+    "gender": "MALE",
+    "address": "44 Akinwunmi Street, Lagos",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-1.png"
+  },
+  {
+    "firstName": "Ngozi",
+    "lastName": "Eze",
+    "admissionNumber": "BS-2026-007",
+    "dateOfBirth": "2012-08-19",
+    "gender": "FEMALE",
+    "address": "7 Nnamdi Azikiwe Ave, Enugu",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-2.png"
+  },
+  {
+    "firstName": "Ibrahim",
+    "lastName": "Musa",
+    "admissionNumber": "BS-2026-008",
+    "dateOfBirth": "2011-12-03",
+    "gender": "MALE",
+    "address": "3 Emir Road, Kano",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-3.png"
+  },
+  {
+    "firstName": "Blessing",
+    "lastName": "Okafor",
+    "admissionNumber": "BS-2026-009",
+    "dateOfBirth": "2010-04-27",
+    "gender": "FEMALE",
+    "address": "19 Oguta Road, Owerri",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-4.png"
+  },
+  {
+    "firstName": "Yusuf",
+    "lastName": "Abdullahi",
+    "admissionNumber": "BS-2026-010",
+    "dateOfBirth": "2011-09-12",
+    "gender": "MALE",
+    "address": "31 Sabon Gari, Zaria",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student_5.png"
+  },
+  {
+    "firstName": "Adaeze",
+    "lastName": "Nwosu",
+    "admissionNumber": "BS-2026-011",
+    "dateOfBirth": "2010-07-08",
+    "gender": "FEMALE",
+    "address": "8 Niger Street, Port Harcourt",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-1.png"
+  },
+  {
+    "firstName": "Emeka",
+    "lastName": "Obi",
+    "admissionNumber": "BS-2026-012",
+    "dateOfBirth": "2012-01-21",
+    "gender": "MALE",
+    "address": "15 Zik Avenue, Aba",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-2.png"
+  },
+  {
+    "firstName": "Halima",
+    "lastName": "Sani",
+    "admissionNumber": "BS-2026-013",
+    "dateOfBirth": "2010-10-16",
+    "gender": "FEMALE",
+    "address": "6 Bristol Street, Jos",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-3.png"
+  },
+  {
+    "firstName": "Segun",
+    "lastName": "Balogun",
+    "admissionNumber": "BS-2026-014",
+    "dateOfBirth": "2012-05-09",
+    "gender": "MALE",
+    "address": "23 Liberty Road, Ibadan",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-4.png"
+  },
+  {
+    "firstName": "Ifeoma",
+    "lastName": "Ani",
+    "admissionNumber": "BS-2026-015",
+    "dateOfBirth": "2011-08-29",
+    "gender": "FEMALE",
+    "address": "2 Okpara Street, Awka",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student_5.png"
+  },
+  {
+    "firstName": "Musa",
+    "lastName": "Abdullahi",
+    "admissionNumber": "BS-2026-016",
+    "dateOfBirth": "2010-02-11",
+    "gender": "MALE",
+    "address": "40 Bello Road, Sokoto",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-1.png"
+  },
+  {
+    "firstName": "Kemi",
+    "lastName": "Adeleke",
+    "admissionNumber": "BS-2026-017",
+    "dateOfBirth": "2012-12-05",
+    "gender": "FEMALE",
+    "address": "11 Heritage Court, Abeokuta",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-2.png"
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Ugwu",
+    "admissionNumber": "BS-2026-018",
+    "dateOfBirth": "2011-06-17",
+    "gender": "MALE",
+    "address": "5 Independence Layout, Enugu",
+    "admissionDate": "2025-09-09",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-3.png"
+  },
+  {
+    "firstName": "Aisha",
+    "lastName": "Lawal",
+    "admissionNumber": "BS-2026-019",
+    "dateOfBirth": "2010-09-02",
+    "gender": "FEMALE",
+    "address": "17 Ahmadu Bello Way, Kaduna",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student-4.png"
+  },
+  {
+    "firstName": "Peter",
+    "lastName": "Ojo",
+    "admissionNumber": "BS-2026-020",
+    "dateOfBirth": "2010-05-25",
+    "gender": "MALE",
+    "address": "9 Opebi Road, Ikeja",
+    "admissionDate": "2025-09-08",
+    "status": "ACTIVE",
+    "photoUrl": "/images/student_5.png"
   }
 ]

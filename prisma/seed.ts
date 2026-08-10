@@ -31,6 +31,7 @@ type StudentSeed = {
   address?: string | null;
   admissionDate: string;
   status?: "ACTIVE" | "INACTIVE" | "GRADUATED" | "SUSPENDED";
+  photoUrl?: string | null;
 };
 
 type SessionSeed = {
@@ -305,7 +306,7 @@ async function main() {
     });
     await prisma.student.upsert({
       where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
-      update: {},
+      update: { photoUrl: s.photoUrl },
       create: {
         schoolId: school.id,
         firstName: s.firstName,
@@ -316,6 +317,7 @@ async function main() {
         address: s.address,
         admissionDate: new Date(s.admissionDate),
         status: (s.status as "ACTIVE" | "INACTIVE" | "GRADUATED" | "SUSPENDED") ?? "ACTIVE",
+        photoUrl: s.photoUrl,
       },
     });
   }

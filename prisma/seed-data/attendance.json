@@ -7,10 +7,59 @@
     "status": "PRESENT"
   },
   {
-    "admissionNumber": "BS-2026-002",
-    "className": "JSS 2A",
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
     "termName": "First Term",
-    "date": "2026-09-08",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-001",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
     "status": "LATE"
   },
   {
@@ -18,20 +67,1196 @@
     "className": "JSS 1A",
     "termName": "First Term",
     "date": "2026-09-08",
-    "status": "ABSENT"
-  },
-  {
-    "admissionNumber": "BS-2026-001",
-    "className": "JSS 1A",
-    "termName": "First Term",
-    "date": "2026-09-09",
     "status": "PRESENT"
   },
   {
     "admissionNumber": "BS-2026-003",
     "className": "JSS 1A",
     "termName": "First Term",
-    "date": "2026-09-09",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "EXCUSED"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-003",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-004",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-006",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-007",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-012",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-014",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-017",
+    "className": "JSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "EXCUSED"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "EXCUSED"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "EXCUSED"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "ABSENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "LATE"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-06",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-13",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-10-20",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-03",
+    "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-11-10",
     "status": "PRESENT"
   }
 ]

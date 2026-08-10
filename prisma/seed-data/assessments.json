@@ -34,6 +34,28 @@
   },
   {
     "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "CA 2",
+    "type": "CA",
+    "maxScore": 30,
+    "date": "2026-11-09"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "First Term Examination",
+    "type": "EXAMINATION",
+    "maxScore": 70,
+    "date": "2026-12-07"
+  },
+  {
+    "staffNumber": "TCH-001",
     "className": "JSS 2A",
     "subjectCode": "MTH",
     "sessionName": "2026/2027",
@@ -42,6 +64,39 @@
     "type": "CA",
     "maxScore": 30,
     "date": "2026-09-22"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "Mid-Term Test",
+    "type": "TEST",
+    "maxScore": 40,
+    "date": "2026-10-13"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "CA 2",
+    "type": "CA",
+    "maxScore": 30,
+    "date": "2026-11-10"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "First Term Examination",
+    "type": "EXAMINATION",
+    "maxScore": 70,
+    "date": "2026-12-07"
   },
   {
     "staffNumber": "TCH-001",
@@ -56,8 +111,41 @@
   },
   {
     "staffNumber": "TCH-001",
-    "className": "JSS 1A",
-    "subjectCode": "MTH",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "CA 1",
+    "type": "CA",
+    "maxScore": 30,
+    "date": "2026-09-25"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "Mid-Term Test",
+    "type": "TEST",
+    "maxScore": 40,
+    "date": "2026-10-15"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "name": "CA 2",
+    "type": "CA",
+    "maxScore": 30,
+    "date": "2026-11-12"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
     "sessionName": "2026/2027",
     "termName": "First Term",
     "name": "First Term Examination",

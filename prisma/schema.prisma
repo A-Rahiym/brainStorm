@@ -233,6 +233,7 @@ model Student {
   admissionNumber String
   dateOfBirth     DateTime      @db.Date
   gender          Gender
+  photoUrl        String?
   address         String?
   admissionDate   DateTime      @db.Date
   status          StudentStatus @default(ACTIVE)
