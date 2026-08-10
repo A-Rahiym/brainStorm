@@ -7,7 +7,6 @@ import {
   STUDENT_CLASS_FILTERS,
   STUDENT_SUBJECT_FILTERS,
 } from "@/features/students/constants/constants";
-import { MOCK_STUDENT_METRICS, MOCK_STUDENT_ROWS } from "@/features/students/mock/data";
 import type { StudentMetrics, StudentRow, TeacherStudents } from "@/features/students/types";
 
 const AVATAR_COLORS = [
@@ -29,18 +28,20 @@ function computeMetrics(students: StudentRow[]): StudentMetrics {
     count > 0 ? students.reduce((sum, s) => sum + s.attendance.pct, 0) / count : 0;
 
   return {
-    students: {
-      value: String(count),
-      trend: MOCK_STUDENT_METRICS.students.trend,
-      foot: MOCK_STUDENT_METRICS.students.foot,
-    },
+    students: { value: String(count), trend: "", foot: "" },
     performance: {
-      ...MOCK_STUDENT_METRICS.performance,
+      id: "students-performance",
+      label: "Students Performance",
       value: `${avgPerformance.toFixed(1)}%`,
+      trend: "",
+      points: [],
     },
     attendance: {
-      ...MOCK_STUDENT_METRICS.attendance,
+      id: "attendance-rate",
+      label: "Attendance Rate",
       value: `${Math.round(avgAttendance)}%`,
+      trend: "",
+      points: [],
     },
   };
 }
@@ -48,8 +49,7 @@ function computeMetrics(students: StudentRow[]): StudentMetrics {
 export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherStudents> {
   requirePermission(ctx, "dashboard.read");
 
-  let metrics = MOCK_STUDENT_METRICS;
-  let students: StudentRow[] = [...MOCK_STUDENT_ROWS];
+  let students: StudentRow[] = [];
 
   if (ctx.teacherId) {
     const context = await findCurrentTerm(ctx);
@@ -89,13 +89,12 @@ export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherSt
             gradeTone: tone,
           };
         });
-        metrics = computeMetrics(students);
       }
     }
   }
 
   return {
-    metrics,
+    metrics: computeMetrics(students),
     students,
     classes: STUDENT_CLASS_FILTERS,
     subjects: STUDENT_SUBJECT_FILTERS,

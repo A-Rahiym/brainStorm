@@ -3,6 +3,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSessionStore } from "@/store/session.store";
 import { fetchTeacherStudents } from "@/features/students/request";
+import {
+  STUDENT_CLASS_FILTERS,
+  STUDENT_SUBJECT_FILTERS,
+} from "@/features/students/constants/constants";
+import { MOCK_STUDENT_METRICS, MOCK_STUDENT_ROWS } from "@/features/students/mock/data";
 import type { TeacherStudents } from "@/features/students/types";
 
 export function useTeacherStudents() {
@@ -10,6 +15,17 @@ export function useTeacherStudents() {
 
   return useQuery<TeacherStudents>({
     queryKey: ["students", "teacher", userId ?? "anon"],
-    queryFn: fetchTeacherStudents,
+    queryFn: async () => {
+      const data = await fetchTeacherStudents();
+      if (data.students.length === 0) {
+        return {
+          metrics: MOCK_STUDENT_METRICS,
+          students: MOCK_STUDENT_ROWS,
+          classes: STUDENT_CLASS_FILTERS,
+          subjects: STUDENT_SUBJECT_FILTERS,
+        };
+      }
+      return data;
+    },
   });
 }

@@ -37,6 +37,7 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
   }
 
   const [performance, attendance] = data.metrics;
+  console.log("SubjectDetail data:", data);
 
   return (
     <div className="space-y-5">

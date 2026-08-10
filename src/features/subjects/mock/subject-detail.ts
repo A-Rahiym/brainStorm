@@ -87,6 +87,18 @@ export function findMockSubject(subjectId: string): TeacherSubject | undefined {
   return MOCK_SUBJECTS.find((s) => s.id === subjectId);
 }
 
+const DEFAULT_SUBJECT: TeacherSubject = {
+  id: "default-subject",
+  name: "Mathematics",
+  code: "MTH",
+  students: 21,
+  progress: 60,
+};
+
+export function mockSubjectDetail(subjectId: string): SubjectDetail {
+  return resolveSubjectDetail(findMockSubject(subjectId) ?? DEFAULT_SUBJECT);
+}
+
 export function resolveSubjectDetail(subject: TeacherSubject): SubjectDetail {
   const periods = PERIOD_TEMPLATES[subject.id] ?? DEFAULT_PERIODS;
   const assignments = MOCK_ASSIGNMENTS.filter((a) => a.subject === subject.name);

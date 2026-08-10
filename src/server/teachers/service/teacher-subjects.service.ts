@@ -5,19 +5,12 @@ import {
   listAssignments,
   topScoredStudents,
 } from "@/server/shared/repository/dashboard.repository";
-import { teacherSubjects } from "@/server/teachers/repository/teacher-dashboard.repository";
+import {
+  subjectScoreProgress,
+  teacherSubjects,
+} from "@/server/teachers/repository/teacher-dashboard.repository";
 import { toRankedStudent } from "@/server/shared/helpers";
 import { CLASS_FILTERS } from "@/features/subjects/constants/constants";
-import {
-  MOCK_ASSIGNMENTS,
-  MOCK_SUBJECTS,
-  MOCK_TOP_STUDENTS,
-  SUBJECT_PROGRESS,
-} from "@/features/subjects/mock/data";
-import {
-  findMockSubject,
-  resolveSubjectDetail,
-} from "@/features/subjects/mock/subject-detail";
 import type { SubjectDetail, TeacherSubjects, TeacherSubject } from "@/features/subjects/types";
 import type { AssignmentItem } from "@/features/dashboard/types";
 
@@ -45,30 +38,31 @@ function toAssignmentItem(
 export async function getTeacherSubjects(ctx: RequestContext): Promise<TeacherSubjects> {
   requirePermission(ctx, "dashboard.read");
 
-  let subjects: TeacherSubject[] = [...MOCK_SUBJECTS];
-  let assignments: AssignmentItem[] = [...MOCK_ASSIGNMENTS];
-  let topStudents = [...MOCK_TOP_STUDENTS];
+  let subjects: TeacherSubject[] = [];
+  let assignments: AssignmentItem[] = [];
+  let topStudents: TeacherSubjects["topStudents"] = [];
 
   if (ctx.teacherId) {
     const context = await findCurrentTerm(ctx);
     if (context) {
-      const [rows, topRows, subjectRows] = await Promise.all([
+      const [rows, topRows, subjectRows, progressRows] = await Promise.all([
         listAssignments(ctx, context.termId, { teacherId: ctx.teacherId }),
         topScoredStudents(ctx, context.termId, context.sessionId, { teacherId: ctx.teacherId, limit: 5 }),
         teacherSubjects(ctx, ctx.teacherId, context.termId),
+        subjectScoreProgress(ctx, ctx.teacherId, context.termId),
       ]);
 
-      if (rows.length > 0) assignments = rows.map(toAssignmentItem);
-      if (topRows.length > 0) topStudents = topRows.map(toRankedStudent);
-      if (subjectRows.length > 0) {
-        subjects = subjectRows.map((row) => ({
-          id: row.subjectId,
-          name: row.subjectName,
-          code: row.subjectCode,
-          students: row.students,
-          progress: SUBJECT_PROGRESS[row.subjectName] ?? 0,
-        }));
-      }
+      const progressBySubject = new Map(progressRows.map((p) => [p.subjectId, p.progress]));
+
+      assignments = rows.map(toAssignmentItem);
+      topStudents = topRows.map(toRankedStudent);
+      subjects = subjectRows.map((row) => ({
+        id: row.subjectId,
+        name: row.subjectName,
+        code: row.subjectCode,
+        students: row.students,
+        progress: progressBySubject.get(row.subjectId) ?? 0,
+      }));
     }
   }
 
@@ -97,18 +91,7 @@ export async function createSyllabus(
   return subject;
 }
 
-export async function getSubjectDetail(ctx: RequestContext, subjectId: string): Promise<SubjectDetail> {
+export async function getSubjectDetail(ctx: RequestContext): Promise<SubjectDetail | null> {
   requirePermission(ctx, "dashboard.read");
-
-  const subject =
-    findMockSubject(subjectId) ??
-    createdSubjects.find((s) => s.id === subjectId) ?? {
-      id: subjectId,
-      name: "Mathematics",
-      code: "MTH",
-      students: 21,
-      progress: 60,
-    };
-
-  return resolveSubjectDetail(subject);
+  return null;
 }

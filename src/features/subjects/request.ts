@@ -6,8 +6,8 @@ export async function fetchTeacherSubjects(): Promise<TeacherSubjects> {
   return res.data;
 }
 
-export async function fetchSubjectDetail(subjectId: string): Promise<SubjectDetail> {
-  const res = await apiFetch<SingleResponse<SubjectDetail>>(
+export async function fetchSubjectDetail(subjectId: string): Promise<SubjectDetail | null> {
+  const res = await apiFetch<SingleResponse<SubjectDetail | null>>(
     `/dashboard/subjects/${encodeURIComponent(subjectId)}`
   );
   return res.data;

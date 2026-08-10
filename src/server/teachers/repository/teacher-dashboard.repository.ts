@@ -124,8 +124,7 @@ export type TeacherStudentRow = {
 export async function teacherStudents(
   ctx: RequestContext,
   params: { teacherId: string; termId: string; sessionId: string }
-): Promise<TeacherStudentRow[]> {
-  const schoolId = ctx.schoolId ?? undefined;
+): Promise<TeacherStudentRow[]> {  const schoolId = ctx.schoolId ?? undefined;
   const { teacherId, termId, sessionId } = params;
 
   const assignments = await prisma.teachingAssignment.findMany({
@@ -213,6 +212,49 @@ export async function teacherStudents(
       total,
     };
   });
+}
+
+export async function subjectScoreProgress(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string
+): Promise<Array<{ subjectId: string; progress: number }>> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const scores = await prisma.score.findMany({
+    where: {
+      assessment: {
+        termId,
+        teachingAssignment: { teacherId, academicSession: { schoolId }, status: "ACTIVE" },
+      },
+    },
+    select: {
+      score: true,
+      assessment: {
+        select: {
+          maxScore: true,
+          teachingAssignment: {
+            select: { classSubject: { select: { subjectId: true } } },
+          },
+        },
+      },
+    },
+  });
+
+  const bySubject = new Map<string, { sum: number; count: number }>();
+  for (const s of scores) {
+    const subjectId = s.assessment.teachingAssignment.classSubject.subjectId;
+    const max = Number(s.assessment.maxScore) || 100;
+    const pct = (Number(s.score) / max) * 100;
+    const entry = bySubject.get(subjectId) ?? { sum: 0, count: 0 };
+    entry.sum += pct;
+    entry.count += 1;
+    bySubject.set(subjectId, entry);
+  }
+
+  return [...bySubject.entries()].map(([subjectId, { sum, count }]) => ({
+    subjectId,
+    progress: count > 0 ? Math.round(sum / count) : 0,
+  }));
 }
 
 export async function upcomingAssignments(

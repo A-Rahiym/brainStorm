@@ -9,8 +9,13 @@ export function MetricCard({
   metric: SubjectMetric;
   icon: React.ReactNode;
 }) {
+
+  const points = metric.points.length
+    ? metric.points
+    : Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
+
   return (
-    <article className="flex min-h-[218px] flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 pb-0 shadow-card">
+    <article className="flex min-h-54.5 flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 pb-0 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <span className="text-[15px] font-medium text-text-primary">{metric.label}</span>
         <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-accent-black text-white">
@@ -23,7 +28,7 @@ export function MetricCard({
           <TrendUpIcon size={10} /> {metric.trend}
         </span>
       </div>
-      <Sparkline points={metric.points} className="-mx-6 mt-auto block w-[calc(100%+48px)]" />
+      <Sparkline points={points} className="-mx-6 mt-auto block w-[calc(100%+48px)]" />
     </article>
   );
 }

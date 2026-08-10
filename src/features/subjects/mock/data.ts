@@ -2,11 +2,6 @@ import type { TeacherSubject } from "@/features/subjects/types";
 import type { AssignmentItem } from "@/features/dashboard/types";
 import type { RankedStudent } from "@/components/charts/RankedList";
 
-export const SUBJECT_PROGRESS: Record<string, number> = {
-  Mathematics: 60,
-  Physics: 80,
-};
-
 export const MOCK_SUBJECTS: TeacherSubject[] = [
   { id: "mock-subj-math", name: "Mathematics", code: "MTH", students: 21, progress: 60 },
   { id: "mock-subj-phy", name: "Physics", code: "PHY", students: 21, progress: 80 },
