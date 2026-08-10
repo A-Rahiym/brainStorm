@@ -1,6 +1,7 @@
 import { formatDate } from "@/lib/format";
 import type { AgendaItem } from "@/components/charts/AgendaList";
 import type { RankedStudent } from "@/components/charts/RankedList";
+import type { GradeTone } from "@/components/ui";
 
 const GRADE_BANDS: Array<{ min: number; grade: string }> = [
   { min: 70, grade: "A" },
@@ -12,6 +13,18 @@ const GRADE_BANDS: Array<{ min: number; grade: string }> = [
 
 export function gradeFor(pct: number): string {
   return GRADE_BANDS.find((band) => pct >= band.min)?.grade ?? "F";
+}
+
+const GRADE_CODES: Array<{ min: number; code: string; tone: GradeTone }> = [
+  { min: 70, code: "A1", tone: "a" },
+  { min: 50, code: "B2", tone: "b" },
+  { min: 45, code: "C4", tone: "c" },
+  { min: 40, code: "D7", tone: "d" },
+  { min: 0, code: "F9", tone: "f" },
+];
+
+export function gradeCodeFor(pct: number): { code: string; tone: GradeTone } {
+  return GRADE_CODES.find((band) => pct >= band.min) ?? GRADE_CODES[GRADE_CODES.length - 1];
 }
 
 export function dayLabel(date: Date): string {

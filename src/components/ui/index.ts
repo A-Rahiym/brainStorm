@@ -13,3 +13,7 @@ export { StatCard } from "./StatCard";
 export { ErrorState, errorKind } from "./ErrorState";
 export { Skeleton } from "./Skeleton";
 export { Toaster } from "./Toast";
+export { SearchInput } from "./SearchInput";
+export { DataTable, type TableColumn } from "./DataTable";
+export { GradeBadge, type GradeTone } from "./GradeBadge";
+export { PctBadge, type PctTone } from "./PctBadge";
