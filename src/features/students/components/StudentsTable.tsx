@@ -19,7 +19,7 @@ const columns: TableColumn<StudentRow>[] = [
     header: "Student",
     render: (s) => (
       <div className="flex items-center gap-3.5">
-        <Avatar name={s.name} size={38} style={{ background: s.avatarColor, color: "#fff" }} />
+        <Avatar name={s.name} src={s.avatar} size={38} style={{ background: s.avatarColor, color: "#fff" }} />
         <div>
           <p className="text-base font-semibold tracking-[-0.01em] text-text-primary">{s.name}</p>
           <p className="mt-0.5 text-[13px] font-medium text-text-secondary">{s.admissionNumber}</p>

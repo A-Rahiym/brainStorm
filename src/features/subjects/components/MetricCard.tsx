@@ -12,7 +12,7 @@ export function MetricCard({
 
   const points = metric.points.length
     ? metric.points
-    : Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
+    : [40, 48, 44, 56, 52, 62, 58, 70, 66, 76];
 
   return (
     <article className="flex min-h-54.5 flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 pb-0 shadow-card">
