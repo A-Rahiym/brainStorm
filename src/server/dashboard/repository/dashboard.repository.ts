@@ -68,6 +68,78 @@ export async function teacherStats(ctx: RequestContext, teacherId: string, termI
   };
 }
 
+export type TeacherSubjectRow = {
+  subjectId: string;
+  subjectName: string;
+  subjectCode: string;
+  classIds: string[];
+  students: number;
+};
+
+export async function teacherSubjects(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string
+): Promise<TeacherSubjectRow[]> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const assignments = await prisma.teachingAssignment.findMany({
+    where: { teacherId, termId, status: "ACTIVE", academicSession: { schoolId } },
+    select: {
+      id: true,
+      classSubject: {
+        select: {
+          subjectId: true,
+          classId: true,
+          subject: { select: { name: true, code: true } },
+        },
+      },
+    },
+  });
+
+  const bySubject = new Map<string, TeacherSubjectRow>();
+  for (const a of assignments) {
+    const cs = a.classSubject;
+    let row = bySubject.get(cs.subjectId);
+    if (!row) {
+      row = {
+        subjectId: cs.subjectId,
+        subjectName: cs.subject.name,
+        subjectCode: cs.subject.code,
+        classIds: [],
+        students: 0,
+      };
+      bySubject.set(cs.subjectId, row);
+    }
+    if (!row.classIds.includes(cs.classId)) row.classIds.push(cs.classId);
+  }
+
+  const classIds = [...new Set(assignments.map((a) => a.classSubject.classId))];
+  if (classIds.length > 0) {
+    const enrollments = await prisma.enrollment.findMany({
+      where: { classId: { in: classIds }, status: "ACTIVE", academicSession: { schoolId } },
+      select: { classId: true, studentId: true },
+    });
+    const perClass = new Map<string, Set<string>>();
+    for (const e of enrollments) {
+      let set = perClass.get(e.classId);
+      if (!set) {
+        set = new Set();
+        perClass.set(e.classId, set);
+      }
+      set.add(e.studentId);
+    }
+    for (const row of bySubject.values()) {
+      const ids = new Set<string>();
+      for (const cid of row.classIds) {
+        for (const sid of perClass.get(cid) ?? []) ids.add(sid);
+      }
+      row.students = ids.size;
+    }
+  }
+
+  return [...bySubject.values()];
+}
+
 export async function fees(ctx: RequestContext, sessionId: string) {
   const schoolId = ctx.schoolId ?? undefined;
   const structures = await prisma.feeStructure.findMany({

@@ -2,7 +2,15 @@ import { Card, ControlPill } from "@/components/ui";
 import { StudentsIcon } from "@/components/icons";
 import { RankedList, type RankedStudent } from "@/components/charts/RankedList";
 
-export function TopStudentsCard({ students }: { students: RankedStudent[] }) {
+export function TopStudentsCard({
+  students,
+  filterLabel = "By",
+  filterValue = "All classes",
+}: {
+  students: RankedStudent[];
+  filterLabel?: string;
+  filterValue?: string;
+}) {
   return (
     <Card className="flex flex-col">
       <div className="mb-4 flex items-center justify-between">
@@ -10,7 +18,7 @@ export function TopStudentsCard({ students }: { students: RankedStudent[] }) {
           <StudentsIcon size={20} className="text-text-primary" />
           Top students
         </h3>
-        <ControlPill label="By" value="All classes" variant="outline" size="md" onClick={() => {}} />
+        <ControlPill label={filterLabel} value={filterValue} variant="outline" size="md" onClick={() => {}} />
       </div>
       <RankedList students={students} />
     </Card>

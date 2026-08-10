@@ -4,14 +4,19 @@ import { useState } from "react";
 import { Layers } from "lucide-react";
 import { Button, Card, Badge, ControlPill } from "@/components/ui";
 import { CalendarIcon, PlusIcon } from "@/components/icons";
+import { ASSIGNMENT_CLASSES, ASSIGNMENT_TABS } from "@/features/dashboard/constants/constants";
 import type { AssignmentItem } from "@/features/dashboard/types";
 
-const classes = ["All", "SS1", "SS2", "SS3", "JSS 3"];
-const TABS = ["Home quiz", "Submissions"] as const;
-type Tab = (typeof TABS)[number];
+type Tab = (typeof ASSIGNMENT_TABS)[number];
 
-export function AssignmentsCard({ assignments }: { assignments: AssignmentItem[] }) {
-  const [selectedClass, setSelectedClass] = useState(classes[0]);
+export function AssignmentsCard({
+  assignments,
+  showClassFilter = true,
+}: {
+  assignments: AssignmentItem[];
+  showClassFilter?: boolean;
+}) {
+  const [selectedClass, setSelectedClass] = useState(ASSIGNMENT_CLASSES[0]);
   const [tab, setTab] = useState<Tab>("Home quiz");
 
   return (
@@ -22,19 +27,21 @@ export function AssignmentsCard({ assignments }: { assignments: AssignmentItem[]
           Assignments
         </h3>
         <div className="flex items-center gap-3">
-          <ControlPill
-            label=""
-            value={selectedClass}
-            variant="outline"
-            size="md"
-            onChange={(v) => setSelectedClass(v)}
-          >
-            {classes.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </ControlPill>
+          {showClassFilter && (
+            <ControlPill
+              label=""
+              value={selectedClass}
+              variant="outline"
+              size="md"
+              onChange={(v) => setSelectedClass(v)}
+            >
+              {ASSIGNMENT_CLASSES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </ControlPill>
+          )}
           <Button variant="dark" className="h-10 rounded-full px-4.5">
             <PlusIcon size={16} /> Add
           </Button>
@@ -42,7 +49,7 @@ export function AssignmentsCard({ assignments }: { assignments: AssignmentItem[]
       </div>
 
       <div className="mb-5 flex gap-7 border-b border-border" role="tablist">
-        {TABS.map((t) => (
+        {ASSIGNMENT_TABS.map((t) => (
           <button
             key={t}
             role="tab"
