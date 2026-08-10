@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createSyllabus } from "@/features/subjects/api";
+import { createSyllabus } from "@/features/subjects/request";
 
 export function useCreateSyllabus() {
   const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import { apiFetch, type SingleResponse } from "@/lib/api-client";
+import { apiFetch, type SingleResponse } from "@/lib/request";
 import type { LoginRequest, LoginResponse, SessionResponse } from "@/features/auth/types";
 
 export async function loginUser(body: LoginRequest): Promise<LoginResponse> {

@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSessionStore } from "@/store/session.store";
-import { fetchSubjectDetail } from "@/features/subjects/api";
+import { fetchSubjectDetail } from "@/features/subjects/request";
 import type { SubjectDetail } from "@/features/subjects/types";
 
 export function useSubjectDetail(subjectId: string) {

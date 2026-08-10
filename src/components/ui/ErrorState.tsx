@@ -2,7 +2,7 @@
 
 import { WifiOff, Lock, ServerCrash, SearchX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { ApiError, NetworkError, TimeoutError } from "@/lib/api-client";
+import { ApiError, NetworkError, TimeoutError } from "@/lib/request";
 
 export type ErrorKind = "offline" | "notFound" | "forbidden" | "serverError";
 

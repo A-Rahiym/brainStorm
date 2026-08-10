@@ -1,4 +1,4 @@
-import { apiFetch, type SingleResponse } from "@/lib/api-client";
+import { apiFetch, type SingleResponse } from "@/lib/request";
 import type { TeacherSubjects, TeacherSubject, SubjectDetail } from "@/features/subjects/types";
 
 export async function fetchTeacherSubjects(): Promise<TeacherSubjects> {

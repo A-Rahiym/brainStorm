@@ -1,4 +1,4 @@
-import { apiFetch } from "@/lib/api-client";
+import { apiFetch } from "@/lib/request";
 import type { DashboardStats } from "@/features/dashboard/types";
 
 type ListResponse<T> = { data: T[]; meta: { page: number; limit: number; total: number } };

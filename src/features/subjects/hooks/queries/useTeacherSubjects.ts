@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSessionStore } from "@/store/session.store";
-import { fetchTeacherSubjects } from "@/features/subjects/api";
+import { fetchTeacherSubjects } from "@/features/subjects/request";
 import type { TeacherSubjects } from "@/features/subjects/types";
 
 export function useTeacherSubjects() {

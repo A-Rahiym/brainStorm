@@ -1,6 +1,6 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getSession, loginUser } from "@/features/auth/api";
+import { getSession, loginUser } from "@/features/auth/request";
 import { useSessionStore } from "@/store/session.store";
 
 export function useLogin() {
@@ -34,7 +34,7 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: async () => {
-      const { logoutUser } = await import("@/features/auth/api");
+      const { logoutUser } = await import("@/features/auth/request");
       return logoutUser();
     },
     onSuccess: () => {

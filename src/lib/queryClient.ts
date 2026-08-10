@@ -1,5 +1,5 @@
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
-import { ApiError, NetworkError, TimeoutError } from "@/lib/api-client";
+import { ApiError, NetworkError, TimeoutError } from "@/lib/request";
 import { useSessionStore } from "@/store/session.store";
 
 function retryPolicy(failureCount: number, error: unknown) {
