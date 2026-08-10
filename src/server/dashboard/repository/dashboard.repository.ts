@@ -151,6 +151,9 @@ export async function listAssignments(
       title: true,
       status: true,
       dueDate: true,
+      _count: {
+        select: { submissions: true },
+      },
       teachingAssignment: {
         select: {
           classSubject: {

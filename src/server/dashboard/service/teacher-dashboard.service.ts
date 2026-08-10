@@ -61,6 +61,12 @@ export async function getTeacherDashboard(ctx: RequestContext): Promise<TeacherD
       className: a.teachingAssignment.classSubject.class.name,
       dueDate: a.dueDate.toISOString(),
       status: a.status as "OPEN" | "CLOSED",
+      type: "Assignment",
+      submitted: a._count.submissions,
+      dueLabel: `DUE ${a.dueDate
+        .toLocaleDateString("en-GB", { day: "2-digit", month: "short" })
+        .toUpperCase()}`,
+      foot: "Snap & upload",
     })),
     upcoming: upcomingRows.map((a) => toAgendaItem(a, "EVENT")),
     agenda: agendaRows.map((a) => toAgendaItem(a, "EVENT")),

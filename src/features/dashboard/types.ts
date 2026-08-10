@@ -36,6 +36,12 @@ export type AssignmentItem = {
   className: string;
   dueDate: string;
   status: "OPEN" | "CLOSED";
+  type?: string;
+  submitted?: number;
+  total?: number;
+  dueLabel?: string;
+  foot?: string;
+  footBadge?: string;
 };
 
 export type HeadmasterDashboard = {
