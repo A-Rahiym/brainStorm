@@ -4,7 +4,7 @@ import { TopNav } from "@/components/layout/TopNav";
 import { RightRail } from "@/components/layout/RightRail";
 import { Toaster } from "@/components/ui";
 
-export function DashboardShell({ children }: { children: React.ReactNode }) {
+export function MainShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <div className="flex min-w-0 flex-1 flex-col mx-1">

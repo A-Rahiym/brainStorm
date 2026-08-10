@@ -13,7 +13,6 @@ export type HydratedSession = {
 
 export function SessionHydrator({ session }: { session: HydratedSession | null }) {
   const setSession = useSessionStore((s) => s.setSession);
-
   useEffect(() => {
     if (session) setSession(session);
   }, [session, setSession]);

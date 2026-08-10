@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/server-session";
 import { Providers } from "@/lib/providers";
-import { DashboardShell } from "@/components/layout/DashboardShell";
+import {  MainShell } from "@/components/layout/DashboardShell";
 import { SessionHydrator } from "@/components/layout/SessionHydrator";
 
 export const revalidate = 0;
@@ -13,7 +13,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <Providers>
       <SessionHydrator session={session} />
-      <DashboardShell>{children}</DashboardShell>
+      <MainShell>{children}</MainShell>
     </Providers>
   );
 }
