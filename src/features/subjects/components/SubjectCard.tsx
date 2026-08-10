@@ -1,9 +1,13 @@
+import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import type { TeacherSubject } from "@/features/subjects/types";
 
 export function SubjectCard({ subject }: { subject: TeacherSubject }) {
   return (
-    <article className="flex w-[356px] flex-none flex-col rounded-2xl border border-border bg-surface p-6 shadow-card">
+    <Link
+      href={`/subjects/${subject.id}`}
+      className="flex w-[356px] flex-none flex-col rounded-2xl border border-border bg-surface p-6 shadow-card transition-colors hover:border-primary-pill"
+    >
       <span className="mb-4.5 flex h-12 w-12 items-center justify-center rounded-full bg-accent-black text-white">
         <BookOpen size={24} />
       </span>
@@ -25,6 +29,6 @@ export function SubjectCard({ subject }: { subject: TeacherSubject }) {
       <p className="mt-3.5 text-sm text-text-secondary">
         Students: <b className="font-bold text-text-primary">{subject.students}</b>
       </p>
-    </article>
+    </Link>
   );
 }

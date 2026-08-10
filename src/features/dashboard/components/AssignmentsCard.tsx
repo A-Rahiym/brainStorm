@@ -11,9 +11,11 @@ type Tab = (typeof ASSIGNMENT_TABS)[number];
 
 export function AssignmentsCard({
   assignments,
+  title = "Assignments",
   showClassFilter = true,
 }: {
   assignments: AssignmentItem[];
+  title?: string;
   showClassFilter?: boolean;
 }) {
   const [selectedClass, setSelectedClass] = useState(ASSIGNMENT_CLASSES[0]);
@@ -24,7 +26,7 @@ export function AssignmentsCard({
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
           <Layers size={20} className="text-text-primary" />
-          Assignments
+          {title}
         </h3>
         <div className="flex items-center gap-3">
           {showClassFilter && (

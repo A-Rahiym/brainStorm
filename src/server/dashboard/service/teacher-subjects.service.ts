@@ -14,7 +14,11 @@ import {
   MOCK_TOP_STUDENTS,
   SUBJECT_PROGRESS,
 } from "@/features/subjects/mock/data";
-import type { TeacherSubjects, TeacherSubject } from "@/features/subjects/types";
+import {
+  findMockSubject,
+  resolveSubjectDetail,
+} from "@/features/subjects/mock/subject-detail";
+import type { SubjectDetail, TeacherSubjects, TeacherSubject } from "@/features/subjects/types";
 import type { AssignmentItem } from "@/features/dashboard/types";
 
 const createdSubjects: TeacherSubject[] = [];
@@ -91,4 +95,20 @@ export async function createSyllabus(
   };
   createdSubjects.push(subject);
   return subject;
+}
+
+export async function getSubjectDetail(ctx: RequestContext, subjectId: string): Promise<SubjectDetail> {
+  requirePermission(ctx, "dashboard.read");
+
+  const subject =
+    findMockSubject(subjectId) ??
+    createdSubjects.find((s) => s.id === subjectId) ?? {
+      id: subjectId,
+      name: "Mathematics",
+      code: "MTH",
+      students: 21,
+      progress: 60,
+    };
+
+  return resolveSubjectDetail(subject);
 }

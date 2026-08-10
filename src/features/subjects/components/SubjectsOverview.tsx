@@ -6,7 +6,7 @@ import { AssignmentsCard } from "@/features/dashboard/components/AssignmentsCard
 import { TopStudentsCard } from "@/features/dashboard/components/TopStudentsCard";
 import { SubjectCard } from "@/features/subjects/components/SubjectCard";
 import { CLASS_FILTERS } from "@/features/subjects/constants/constants";
-import { MOCK_SUBJECTS , MOCK_ASSIGNMENTS, MOCK_TOP_STUDENTS } from "@/features/subjects/mock/data";
+import { MOCK_SUBJECTS, MOCK_TOP_STUDENTS } from "@/features/subjects/mock/data";
 import { useTeacherSubjects } from "@/features/subjects/hooks/queries/useTeacherSubjects";
 
 export function SubjectsOverview() {
