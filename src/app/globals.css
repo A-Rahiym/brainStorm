@@ -222,3 +222,26 @@ body {
   background: rgba(255, 255, 255, 0.75);
 }
 
+/* react-day-picker (v10) overrides scoped to WeekStrip */
+.brain-strip {
+  margin: 0;
+}
+
+.brain-strip .brain-strip-months,
+.brain-strip .brain-strip-month {
+  width: max-content;
+}
+
+.brain-strip .brain-strip-grid,
+.brain-strip .brain-strip-weeks {
+  display: flex;
+  gap: 4px;
+  border-collapse: collapse;
+}
+
+.brain-strip .brain-strip-week {
+  display: flex;
+  flex: none;
+  gap: 4px;
+}
+
