@@ -17,3 +17,4 @@ export { SearchInput } from "./SearchInput";
 export { DataTable, type TableColumn } from "./DataTable";
 export { GradeBadge, type GradeTone } from "./GradeBadge";
 export { PctBadge, type PctTone } from "./PctBadge";
+export { StatusPill, type StatusPillTone } from "./StatusPill";
