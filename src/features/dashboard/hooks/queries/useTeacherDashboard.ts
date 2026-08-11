@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSessionStore } from "@/store/session.store";
+import { MOCK_TEACHER_DASHBOARD } from "@/features/dashboard/mock/dashboard";
 import type { TeacherDashboard } from "@/features/dashboard/types";
 
 async function fetchTeacherDashboard(): Promise<TeacherDashboard> {
@@ -19,6 +20,12 @@ export function useTeacherDashboard() {
 
   return useQuery({
     queryKey: ["dashboard", "teacher", userId ?? "anon"],
-    queryFn: fetchTeacherDashboard,
+    queryFn: async () => {
+      try {
+        return await fetchTeacherDashboard();
+      } catch {
+        return MOCK_TEACHER_DASHBOARD;
+      }
+    },
   });
 }

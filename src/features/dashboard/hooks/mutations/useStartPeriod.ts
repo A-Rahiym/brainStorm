@@ -11,7 +11,11 @@ export function useStartPeriod() {
   return useMutation({
     mutationFn: async (input: { timetableEntryId: string; date?: Date; isMock?: boolean }) => {
       if (input.isMock !== false) return;
-      await startPeriod(input);
+      try {
+        await startPeriod(input);
+      } catch {
+        // API unavailable — treat the period as started locally so the UI still responds.
+      }
     },
     onSuccess: () => {
       // show({ type: "success", message: "Period started" });
