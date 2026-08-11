@@ -5,6 +5,8 @@ import { BookOpen, Play, X } from "lucide-react";
 import { Avatar, Badge, Button } from "@/components/ui";
 import { ClockIcon } from "@/components/icons";
 import { usePeriodStore } from "@/store/period.store";
+import { useUiStore } from "@/store/ui.store";
+import { useStartPeriod } from "@/features/dashboard/hooks/mutations/useStartPeriod";
 
 const POPOVER_WIDTH = 470;
 const GAP = 12;
@@ -15,6 +17,8 @@ export function PeriodPopover() {
   const period = usePeriodStore((s) => s.period);
   const anchorRect = usePeriodStore((s) => s.anchorRect);
   const closePeriod = usePeriodStore((s) => s.closePeriod);
+  const selectedDate = useUiStore((s) => s.selectedDate);
+  const startPeriod = useStartPeriod();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -95,13 +99,23 @@ export function PeriodPopover() {
         <ClockIcon size={18} className="text-text-secondary" /> {period.time}
       </div>
 
-      {period.status === "live" ? (
-        <Button variant="primary" className="mt-4 w-full justify-center rounded-full">
+      {period.status === "live" && period.isMine !== false ? (
+        <Button
+          variant="primary"
+          className="mt-4 w-full justify-center rounded-full"
+          disabled={startPeriod.isPending}
+          onClick={() =>
+            startPeriod.mutate(
+              { timetableEntryId: period.id, date: selectedDate, isMock: period.isMock },
+              { onSuccess: closePeriod }
+            )
+          }
+        >
           <Play size={15} fill="currentColor" /> Start Period
         </Button>
       ) : (
         <span className="mt-4 flex h-11 w-full items-center justify-center rounded-full bg-primary-pill text-sm font-semibold text-[#C08199]">
-          Period Ended
+          {period.status === "live" ? "In Progress" : "Period Ended"}
         </span>
       )}
     </div>

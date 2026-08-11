@@ -4,17 +4,22 @@ import { useState } from "react";
 import { Avatar } from "@/components/ui";
 import { IconButton } from "@/components/ui/IconButton";
 import { ScheduleTimeline } from "@/components/charts/ScheduleTimeline";
-import { TEACHER_BLOCKS } from "@/features/dashboard/mock/timeline";
-import { RAIL_CLASS_TABS } from "@/features/dashboard/constants/constants";
+import { useClasses } from "@/features/dashboard/hooks/queries/useClasses";
+import { useRightRailSchedule } from "@/features/dashboard/hooks/queries/useRightRailSchedule";
 import { useSessionStore } from "@/store/session.store";
 import { usePeriodStore } from "@/store/period.store";
+import { useUiStore } from "@/store/ui.store";
 import { ChevronRightIcon, LogOutIcon, FilterIcon, PlusIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
 
 export function RightRail() {
   const role = useSessionStore((s) => s.role);
   const isTeacher = role === "TEACHER";
-  const [activeClass, setActiveClass] = useState(RAIL_CLASS_TABS[0]);
+  const selectedDate = useUiStore((s) => s.selectedDate);
+  const { data: classes } = useClasses();
+  const [selectedClassId, setSelectedClassId] = useState<string | undefined>(undefined);
+  const activeClassId = selectedClassId ?? classes?.[0]?.id;
+  const { data: schedule } = useRightRailSchedule({ classId: activeClassId, date: selectedDate });
   const openPeriod = usePeriodStore((s) => s.openPeriod);
   const logout = useLogout();
   const profileName = isTeacher ? "Grace Okon" : "Bello Salis Adam";
@@ -76,20 +81,20 @@ export function RightRail() {
           </div>
           <ScheduleTimeline
             variant="card"
-            blocks={TEACHER_BLOCKS}
+            blocks={schedule?.blocks ?? []}
             onSelectPeriod={openPeriod}
             afterStrip={
               <div className="mb-4.5 flex gap-2" role="tablist" aria-label="Classes">
-                {RAIL_CLASS_TABS.map((c) => (
+                {(classes ?? []).map((c) => (
                   <button
-                    key={c}
+                    key={c.id}
                     role="tab"
-                    aria-selected={activeClass === c}
-                    onClick={() => setActiveClass(c)}
-                    className={`h-9.5 flex-1 rounded-full text-sm font-semibold transition-colors ${activeClass === c ? "bg-primary text-white" : "bg-bg text-text-primary hover:bg-[#EDEDF0]"
+                    aria-selected={activeClassId === c.id}
+                    onClick={() => setSelectedClassId(c.id)}
+                    className={`h-9.5 flex-1 rounded-full text-sm font-semibold transition-colors ${activeClassId === c.id ? "bg-primary text-white" : "bg-bg text-text-primary hover:bg-[#EDEDF0]"
                       }`}
                   >
-                    {c}
+                    {c.name}
                   </button>
                 ))}
               </div>

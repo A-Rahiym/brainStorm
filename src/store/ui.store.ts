@@ -46,6 +46,6 @@ export const useUiStore = create<UiState>((set) => ({
   dismissToast: (id) => set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
 }));
 
-export function useToast() {
-  return useUiStore((s) => ({ show: s.showToast, dismiss: s.dismissToast }));
-}
+// export function useToast() {
+//   return useUiStore((s) => ({ show: s.showToast, dismiss: s.dismissToast }));
+// }

@@ -55,7 +55,7 @@ export function WeekStrip() {
     <div>
       <div className="mb-4 flex items-center gap-2">
         <ControlPill
-          variant="outline"
+          variant="default"
           size="sm"
           aria-label="Month"
           value={monthKey(calendarMonth)}
@@ -67,7 +67,7 @@ export function WeekStrip() {
         />
       </div>
 
-      <div ref={scrollRef} className="scrollbar-thin -mx-1 overflow-x-auto px-1 pb-1">
+      <div ref={scrollRef} className="scrollbar-none -mx-1 overflow-x-auto px-1 pb-1">
         <DayPicker
           mode="single"
           selected={selectedDate}

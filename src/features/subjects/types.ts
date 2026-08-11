@@ -25,6 +25,8 @@ export type SubjectPeriod = {
   time: string;
   code: "DP" | "SP";
   status: SubjectPeriodStatus;
+  isMine?: boolean;
+  isMock?: boolean;
 };
 
 export type SubjectClassGroup = {

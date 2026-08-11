@@ -6,6 +6,9 @@ export type ScheduleEvent = {
   time?: string;
   person?: string;
   tone: "red" | "pink" | "neutral";
+  isMine?: boolean;
+  live?: boolean;
+  isMock?: boolean;
 };
 
 export type ScheduleBlock = {

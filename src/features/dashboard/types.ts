@@ -2,6 +2,28 @@ import type { AgendaItem } from "@/components/charts/AgendaList";
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { RankedStudent } from "@/components/charts/RankedList";
 
+export type ScheduleOccurrence = {
+  id: string;
+  periodName: string;
+  startTime: string;
+  endTime: string;
+  dayOfWeek: string;
+  class: { id: string; name: string };
+  subject: { id: string; name: string; code: string };
+  teacher: { id: string; name: string };
+  isMine: boolean;
+  status: "live" | "ended";
+  sessionStarted: boolean;
+};
+
+export type DaySchedule = {
+  date: string;
+  dayOfWeek: string | null;
+  occurrences: ScheduleOccurrence[];
+};
+
+export type ClassOption = { id: string; name: string };
+
 export type DashboardStats = {
   students: number;
   teachers: number;

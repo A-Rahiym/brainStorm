@@ -31,7 +31,7 @@ export function useTeacherAttendance() {
           subjects: ATTENDANCE_SUBJECT_FILTERS,
         };
       }
-      return data;
+        return data;
     },
   });
 }
