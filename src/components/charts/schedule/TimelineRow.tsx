@@ -29,7 +29,7 @@ export function TimelineRow({
       <div className="relative flex-1 border-t border-border">
         {block.events.map((event) =>
           isCard ? (
-            <ScheduleEventCard key={event.id} event={event} block={block} onSelectPeriod={onSelectPeriod} />
+            <ScheduleEventCard key={event.id} event={event} onSelectPeriod={onSelectPeriod} />
           ) : (
             <ScheduleEventChip key={event.id} event={event} />
           )

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Clock, User } from "lucide-react";
-import type { ScheduleBlock, ScheduleEvent } from "@/features/dashboard/constants/timeline";
+import type { ScheduleEvent } from "@/features/dashboard/constants/timeline";
 import type { SubjectPeriod } from "@/features/subjects/types";
 
 function parseProgress(time: string | undefined, now: Date): number | null {
@@ -18,19 +18,17 @@ function parseProgress(time: string | undefined, now: Date): number | null {
 
 export function ScheduleEventCard({
   event,
-  block,
   onSelectPeriod,
 }: {
   event: ScheduleEvent;
-  block: ScheduleBlock;
   onSelectPeriod?: (input: {
     subjectName: string;
     period: SubjectPeriod;
     anchorRect: DOMRect;
   }) => void;
 }) {
-  const isLive = event.live ?? block.now ?? false;
-  const canStart = isLive && (event.isMine ?? true);
+  const isLive = event.live ?? false;
+  const canStart = isLive && event.isMine === true;
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
