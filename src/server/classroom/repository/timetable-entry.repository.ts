@@ -49,6 +49,22 @@ export async function listTimetableEntries(
   return { items, total };
 }
 
+export async function listEntriesForDay(
+  ctx: RequestContext,
+  params: { dayOfWeek: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY"; classId?: string; teacherId?: string }
+) {
+  return prisma.timetableEntry.findMany({
+    where: {
+      class: { schoolId: ctx.schoolId ?? undefined },
+      dayOfWeek: params.dayOfWeek,
+      ...(params.classId ? { classId: params.classId } : {}),
+      ...(params.teacherId ? { teachingAssignment: { teacherId: params.teacherId } } : {}),
+    },
+    orderBy: { period: { startTime: "asc" } },
+    include,
+  });
+}
+
 export async function createTimetableEntry(ctx: RequestContext, data: {
   classId: string;
   teachingAssignmentId: string;

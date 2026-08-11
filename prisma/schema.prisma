@@ -221,6 +221,7 @@ model Teacher {
 
   teachingAssignments TeachingAssignment[]
   attendance           Attendance[]
+  startedPeriodSessions PeriodSession[]
 
   @@unique([schoolId, staffNumber])
   @@index([schoolId])
@@ -431,9 +432,32 @@ model TimetableEntry {
   teachingAssignment  TeachingAssignment  @relation(fields: [teachingAssignmentId], references: [id])
   period              Period              @relation(fields: [periodId], references: [id])
 
+  periodSessions PeriodSession[]
+
   @@index([classId, dayOfWeek])
   @@index([teachingAssignmentId])
   @@index([periodId])
+}
+
+enum PeriodSessionStatus {
+  LIVE
+  ENDED
+}
+
+model PeriodSession {
+  id               String              @id @default(uuid()) @db.Uuid
+  timetableEntryId String              @db.Uuid
+  date             DateTime            @db.Date
+  status           PeriodSessionStatus @default(LIVE)
+  startedAt        DateTime            @default(now())
+  startedBy        String              @db.Uuid
+  endedAt          DateTime?
+
+  timetableEntry TimetableEntry @relation(fields: [timetableEntryId], references: [id])
+  starter        Teacher        @relation(fields: [startedBy], references: [id])
+
+  @@unique([timetableEntryId, date])
+  @@index([date])
 }
 
 model Attendance {
