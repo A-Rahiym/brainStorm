@@ -1,28 +1,18 @@
+"use client";
+
 import { useId } from "react";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, type TooltipContentProps } from "recharts";
 
-const WIDTH = 420;
-const HEIGHT = 96;
+function ChartTooltip({ active, payload }: TooltipContentProps) {
+  if (!active || !payload || payload.length === 0) return null;
+  const point = payload[0].payload as { i: number; value: number };
 
-function toPoints(values: number[]): { x: number; y: number }[] {
-  const step = values.length > 1 ? WIDTH / (values.length - 1) : 0;
-  return values.map((y, i) => ({ x: i * step, y: Math.max(0, Math.min(HEIGHT, y)) }));
-}
-
-function smoothPath(points: { x: number; y: number }[]): string {
-  if (points.length < 2) return "";
-  let d = `M${points[0].x} ${points[0].y}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i - 1] ?? points[i];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[i + 2] ?? p2;
-    const c1x = p1.x + (p2.x - p0.x) / 6;
-    const c1y = p1.y + (p2.y - p0.y) / 6;
-    const c2x = p2.x - (p3.x - p1.x) / 6;
-    const c2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C${c1x.toFixed(2)} ${c1y.toFixed(2)}, ${c2x.toFixed(2)} ${c2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
-  }
-  return d;
+  return (
+    <div className="rounded-[10px] border border-border bg-surface px-2.5 py-2 text-[13px] font-semibold shadow-card">
+      <div className="text-text-secondary">Week {point.i + 1}</div>
+      <div className="text-text-primary">Class average: {point.value}%</div>
+    </div>
+  );
 }
 
 export function Sparkline({
@@ -33,32 +23,34 @@ export function Sparkline({
   className?: string;
 }) {
   const gradientId = `spark-${useId().replace(/:/g, "")}`;
-  const pts = toPoints(points);
-  const line = smoothPath(pts);
-  const area = `${line} L${WIDTH} ${HEIGHT} L0 ${HEIGHT} Z`;
+  const data = points.map((value, i) => ({ i, value }));
 
   return (
-    <svg
-      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-      preserveAspectRatio="none"
-      aria-hidden
-      className={className}
-    >
-      <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#9F1244" stopOpacity="0.16" />
-          <stop offset="100%" stopColor="#9F1244" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={area} fill={`url(#${gradientId})`} />
-      <path
-        d={line}
-        fill="none"
-        stroke="#9F1244"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
+    <div className={`h-28 pt-3 ${className}`}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+          <defs>
+            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#9F1244" stopOpacity={0.16} />
+              <stop offset="100%" stopColor="#9F1244" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <Tooltip
+            cursor={{ stroke: "#9F1244", strokeWidth: 1, strokeDasharray: "3 3" }}
+            content={(props) => <ChartTooltip {...props} />}
+          />
+          <Area
+            type="natural"
+            dataKey="value"
+            stroke="#9F1244"
+            strokeWidth={2.8}
+            fill={`url(#${gradientId})`}
+            dot={{ r: 2.5, fill: "#9F1244", strokeWidth: 0 }}
+            activeDot={{ r: 5, fill: "#9F1244", strokeWidth: 2, stroke: "#fff" }}
+            isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

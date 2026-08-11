@@ -62,14 +62,14 @@ export const METRICS: SubjectMetric[] = [
     label: "Class Performance",
     value: "85.4%",
     trend: "15%",
-    points: [74, 70, 52, 54, 56, 76, 76, 48, 44, 40, 52, 48, 44, 30, 30, 20, 16],
+    points: [52, 60, 55, 66, 61, 75, 79, 90],
   },
   {
     id: "attendance-rate",
     label: "Attendance Rate",
     value: "88%",
     trend: "3%",
-    points: [66, 62, 74, 78, 82, 56, 52, 48, 62, 60, 58, 44, 46, 48, 34, 32, 16],
+    points: [58, 68, 61, 72, 66, 82, 86, 95],
   },
 ];
 
