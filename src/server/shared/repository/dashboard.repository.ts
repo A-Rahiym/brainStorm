@@ -52,13 +52,52 @@ export async function listAssignments(
           classSubject: {
             select: {
               subject: { select: { name: true } },
-              class: { select: { name: true } },
+              class: { select: { id: true, name: true } },
             },
           },
         },
       },
     },
   });
+}
+
+export async function classEnrollmentCounts(
+  ctx: RequestContext,
+  sessionId: string,
+  classIds: string[]
+): Promise<Record<string, number>> {
+  if (classIds.length === 0) return {};
+  const schoolId = ctx.schoolId ?? undefined;
+  const rows = await prisma.enrollment.groupBy({
+    by: ["classId"],
+    where: { classId: { in: classIds }, academicSessionId: sessionId, status: "ACTIVE", academicSession: { schoolId } },
+    _count: { _all: true },
+  });
+  return Object.fromEntries(rows.map((r) => [r.classId, r._count._all]));
+}
+
+export async function submissionStatusCounts(
+  ctx: RequestContext,
+  termId: string,
+  params: { teacherId?: string }
+): Promise<Record<"SUBMITTED" | "LATE" | "GRADED", number>> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const rows = await prisma.submission.groupBy({
+    by: ["status"],
+    where: {
+      assignment: {
+        teachingAssignment: {
+          termId,
+          academicSession: { schoolId },
+          ...(params.teacherId ? { teacherId: params.teacherId } : {}),
+        },
+      },
+    },
+    _count: { _all: true },
+  });
+  const counts: Record<"SUBMITTED" | "LATE" | "GRADED", number> = { SUBMITTED: 0, LATE: 0, GRADED: 0 };
+  for (const row of rows) counts[row.status] = row._count._all;
+  return counts;
 }
 
 export async function topScoredStudents(
