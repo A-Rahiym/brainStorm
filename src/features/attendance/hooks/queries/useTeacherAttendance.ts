@@ -12,8 +12,9 @@ import {
   MOCK_ATTENDANCE_METRICS,
   MOCK_ATTENDANCE_ROWS,
 } from "@/features/attendance/mock/data";
-import type { TeacherAttendance } from "@/features/attendance/types";
 
+
+import type { TeacherAttendance } from "@/features/attendance/types";
 export function useTeacherAttendance() {
   const userId = useSessionStore((s) => s.userId);
 
