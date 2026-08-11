@@ -2,6 +2,7 @@
 
 import { TopNav } from "@/components/layout/TopNav";
 import { RightRail } from "@/components/layout/RightRail";
+import { PeriodPopover } from "@/features/subjects/components/PeriodPopover";
 import { Toaster } from "@/components/ui";
 
 export function MainShell({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export function MainShell({ children }: { children: React.ReactNode }) {
         <main className="min-w-0 flex-1 px-8 py-2">{children}</main>
       </div>
       <RightRail />
+      <PeriodPopover />
       <Toaster />
     </div>
   );

@@ -1,20 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { BarChart3, CheckCircle2 } from "lucide-react";
 import { ErrorState, Skeleton } from "@/components/ui";
 import { AssignmentsCard } from "@/features/dashboard/components/AssignmentsCard";
 import { TopStudentsCard } from "@/features/dashboard/components/TopStudentsCard";
 import { MetricCard } from "@/features/subjects/components/MetricCard";
 import { PeriodsCard } from "@/features/subjects/components/PeriodsCard";
-import { PeriodPopover } from "@/features/subjects/components/PeriodPopover";
 import { SubjectSummaryCard } from "@/features/subjects/components/SubjectSummaryCard";
 import { useSubjectDetail } from "@/features/subjects/hooks/queries/useSubjectDetail";
-import type { SubjectPeriod } from "@/features/subjects/types";
+import { usePeriodStore } from "@/store/period.store";
 
 export function SubjectDetail({ subjectId }: { subjectId: string }) {
   const { data, isLoading, isError, error, refetch } = useSubjectDetail(subjectId);
-  const [selectedPeriod, setSelectedPeriod] = useState<SubjectPeriod | null>(null);
+  const openPeriod = usePeriodStore((s) => s.openPeriod);
 
   if (isLoading) {
     return (
@@ -52,19 +50,12 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
           subjectName={data.subject.name}
           classes={data.classes}
           weekDays={data.weekDays}
-          onStartPeriod={setSelectedPeriod}
+          onStartPeriod={(period, anchorRect) => openPeriod({ subjectName: data.subject.name, period, anchorRect })}
         />
         <div className="flex flex-col gap-3">
           <AssignmentsCard title="Assessments" assignments={data.assignments} showClassFilter={false} />
           <TopStudentsCard students={data.topStudents} />
         </div>
-        {selectedPeriod && (
-          <PeriodPopover
-            subjectName={data.subject.name}
-            period={selectedPeriod}
-            onClose={() => setSelectedPeriod(null)}
-          />
-        )}
       </div>
     </div>
   );

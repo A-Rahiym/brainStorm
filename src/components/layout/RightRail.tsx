@@ -7,6 +7,7 @@ import { ScheduleTimeline } from "@/components/charts/ScheduleTimeline";
 import { TEACHER_BLOCKS } from "@/features/dashboard/mock/timeline";
 import { RAIL_CLASS_TABS } from "@/features/dashboard/constants/constants";
 import { useSessionStore } from "@/store/session.store";
+import { usePeriodStore } from "@/store/period.store";
 import { ChevronRightIcon, LogOutIcon, FilterIcon, PlusIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
 
@@ -14,6 +15,7 @@ export function RightRail() {
   const role = useSessionStore((s) => s.role);
   const isTeacher = role === "TEACHER";
   const [activeClass, setActiveClass] = useState(RAIL_CLASS_TABS[0]);
+  const openPeriod = usePeriodStore((s) => s.openPeriod);
   const logout = useLogout();
   const profileName = isTeacher ? "Grace Okon" : "Bello Salis Adam";
   const profileSubtitle = isTeacher ? "Mathematics" : "Headmaster";
@@ -75,6 +77,7 @@ export function RightRail() {
           <ScheduleTimeline
             variant="card"
             blocks={TEACHER_BLOCKS}
+            onSelectPeriod={openPeriod}
             afterStrip={
               <div className="mb-4.5 flex gap-2" role="tablist" aria-label="Classes">
                 {RAIL_CLASS_TABS.map((c) => (

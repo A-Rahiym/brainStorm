@@ -1,6 +1,6 @@
 export { Button } from "./Button";
 export { Input } from "./Input";
-export { ControlPill } from "./ControlPill";
+export { ControlPill, type ControlPillOption, type ControlPillVariant } from "./ControlPill";
 export { Modal } from "./Modal";
 export { Card } from "./Card";
 export { Badge } from "./Badge";

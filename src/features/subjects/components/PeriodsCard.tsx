@@ -26,7 +26,7 @@ function PeriodCard({
 }: {
   subjectName: string;
   period: SubjectPeriod;
-  onStartPeriod: (period: SubjectPeriod) => void;
+  onStartPeriod: (period: SubjectPeriod, anchorRect: DOMRect) => void;
 }) {
   return (
     <article className="relative rounded-xl border border-border bg-surface px-4.5 py-4">
@@ -40,7 +40,7 @@ function PeriodCard({
         {period.status === "live" ? (
           <button
             type="button"
-            onClick={() => onStartPeriod(period)}
+            onClick={(e) => onStartPeriod(period, e.currentTarget.getBoundingClientRect())}
             className="inline-flex h-11 items-center gap-2.25 rounded-full bg-primary px-5.5 text-[15px] font-semibold text-white transition-colors hover:bg-primary-dark"
           >
             <Play size={15} fill="currentColor" /> Start Period
@@ -68,7 +68,7 @@ export function PeriodsCard({
   subjectName: string;
   classes: SubjectClassGroup[];
   weekDays: WeekDay[];
-  onStartPeriod: (period: SubjectPeriod) => void;
+  onStartPeriod: (period: SubjectPeriod, anchorRect: DOMRect) => void;
 }) {
   return (
     <Card className="flex flex-col">
