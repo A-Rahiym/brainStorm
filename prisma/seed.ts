@@ -20,6 +20,7 @@ type StaffSeed = {
   qualification?: string | null;
   status?: "ACTIVE" | "INACTIVE" | "SUSPENDED";
   authEmail?: string | null;
+  photoUrl?: string | null;
 };
 
 type StudentSeed = {
@@ -282,20 +283,21 @@ async function main() {
     await prisma.teacher.upsert({
       where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
       update: { userId: userId ?? undefined },
-      create: {
-        schoolId: school.id,
-        userId,
-        firstName: t.firstName,
-        lastName: t.lastName,
-        email: t.email,
-        phone: t.phone,
-        staffNumber: t.staffNumber,
-        dateOfBirth: new Date(t.dateOfBirth),
-        address: t.address,
-        employmentDate: new Date(t.employmentDate),
-        qualification: t.qualification,
-        status: (t.status as "ACTIVE" | "INACTIVE" | "SUSPENDED") ?? "ACTIVE",
-      },
+        create: {
+          schoolId: school.id,
+          userId,
+          firstName: t.firstName,
+          lastName: t.lastName,
+          email: t.email,
+          phone: t.phone,
+          staffNumber: t.staffNumber,
+          photoUrl: t.photoUrl,
+          dateOfBirth: new Date(t.dateOfBirth),
+          address: t.address,
+          employmentDate: new Date(t.employmentDate),
+          qualification: t.qualification,
+          status: (t.status as "ACTIVE" | "INACTIVE" | "SUSPENDED") ?? "ACTIVE",
+        },
     });
   }
 

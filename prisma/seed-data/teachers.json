@@ -10,7 +10,8 @@
     "employmentDate": "2021-01-11",
     "qualification": "B.Sc Mathematics",
     "status": "ACTIVE",
-    "authEmail": "teacher@brainstorm.test"
+    "authEmail": "teacher@brainstorm.test",
+    "photoUrl": "/images/student-1.png"
   },
   {
     "firstName": "Emeka",
@@ -23,6 +24,7 @@
     "employmentDate": "2022-03-14",
     "qualification": "B.Ed English",
     "status": "ACTIVE",
-    "authEmail": null
+    "authEmail": null,
+    "photoUrl": null
   }
 ]

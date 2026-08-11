@@ -207,6 +207,7 @@ model Teacher {
   email          String
   phone          String?
   staffNumber    String
+  photoUrl       String?
   dateOfBirth    DateTime      @db.Date
   address        String?
   employmentDate DateTime      @db.Date
