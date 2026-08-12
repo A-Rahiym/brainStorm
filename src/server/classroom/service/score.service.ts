@@ -6,6 +6,14 @@ import * as scoreRepository from "@/server/classroom/repository/score.repository
 import { recordScoresSchema, updateScoreSchema } from "@/server/classroom/validator/score.schema";
 import { findMatchingGrade } from "@/server/grades/repository/grade.repository";
 
+/**
+ * Bulk-records student scores for an assessment, validating that each score does not exceed
+ * the assessment's maximum and resolving/assigning the matching letter grade for each score.
+ * @param ctx - request context carrying the caller's school/permission scope
+ * @param input - raw request payload, validated against `recordScoresSchema`; contains the target assessment id and per-student score rows
+ * @returns the array of created/updated score records
+ * @throws NotFoundError if the assessment doesn't exist; ValidationError if any score exceeds the assessment's max score; throws if the caller lacks `scores.record` permission or `input` fails schema validation
+ */
 export async function recordScores(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "scores.record");
   const data = recordScoresSchema.parse(input);
@@ -29,6 +37,15 @@ export async function recordScores(ctx: RequestContext, input: unknown) {
   return scoreRepository.createScores(ctx, data.assessmentId, rows);
 }
 
+/**
+ * Lists scores recorded for a specific assessment.
+ * @param ctx - request context carrying the caller's school/permission scope
+ * @param assessmentId - the assessment whose scores are being listed
+ * @param params.skip - number of records to skip for pagination
+ * @param params.take - maximum number of records to return
+ * @returns an object with `items` (matching scores) and `total` (matching record count)
+ * @throws if the caller lacks `scores.read` permission
+ */
 export async function listScoresByAssessment(
   ctx: RequestContext,
   assessmentId: string,
@@ -38,6 +55,13 @@ export async function listScoresByAssessment(
   return scoreRepository.listScoresByAssessment(ctx, assessmentId, params);
 }
 
+/**
+ * Fetches a single score by id, enforcing read permission and school scope.
+ * @param ctx - request context carrying the caller's school/permission scope
+ * @param id - the score's unique identifier
+ * @returns the matching score
+ * @throws NotFoundError if no score with that id exists in the caller's school; throws if the caller lacks `scores.read` permission
+ */
 export async function getScore(ctx: RequestContext, id: string) {
   requirePermission(ctx, "scores.read");
   const score = await scoreRepository.findScoreById(ctx, id);
@@ -45,6 +69,15 @@ export async function getScore(ctx: RequestContext, id: string) {
   return score;
 }
 
+/**
+ * Updates an existing score after validating the input and confirming it exists in the
+ * caller's school. If the score value changes, the matching letter grade is re-resolved.
+ * @param ctx - request context carrying the caller's school/permission scope
+ * @param id - the id of the score to update
+ * @param input - raw request payload, validated against `updateScoreSchema`
+ * @returns the updated score
+ * @throws NotFoundError if the score does not exist in the caller's school; throws if the caller lacks `scores.update` permission or `input` fails schema validation
+ */
 export async function updateScore(ctx: RequestContext, id: string, input: unknown) {
   requirePermission(ctx, "scores.update");
   const data = updateScoreSchema.parse(input);

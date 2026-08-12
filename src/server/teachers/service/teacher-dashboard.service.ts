@@ -16,6 +16,15 @@ import { toAgendaItem, toRankedStudent } from "@/server/shared/helpers";
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { TeacherDashboard } from "@/features/dashboard/types";
 
+/**
+ * Assembles the full teacher dashboard payload: teaching stats, assignment
+ * list, upcoming and full agenda items, top-scoring students, and a merged,
+ * time-sorted activity feed built from recently published assignments and
+ * recently recorded attendance.
+ * @param ctx - request context carrying the caller's teacher/school scope; must have "dashboard.read" permission
+ * @returns the assembled TeacherDashboard view model
+ * @throws Error if the session has no linked teacher profile, or there is no active academic session/term for the school
+ */
 export async function getTeacherDashboard(ctx: RequestContext): Promise<TeacherDashboard> {
   requirePermission(ctx, "dashboard.read");
   if (!ctx.teacherId) {

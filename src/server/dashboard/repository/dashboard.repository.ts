@@ -1,6 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 
+/**
+ * Computes headline school-wide counts (active students, teachers,
+ * subjects, classes, and all periods) for the headmaster dashboard.
+ * @param ctx - request context carrying the caller's school scope
+ * @returns an object with counts for students, teachers, subjects, classes, and periods
+ */
 export async function headmasterStats(ctx: RequestContext) {
   const schoolId = ctx.schoolId ?? undefined;
   const [students, teachers, subjects, classes, periods] = await prisma.$transaction([
@@ -13,6 +19,14 @@ export async function headmasterStats(ctx: RequestContext) {
   return { students, teachers, subjects, classes, periods };
 }
 
+/**
+ * Summarizes fee collection for an academic session: total amount expected
+ * across all fee structures, total confirmed payments collected, and the
+ * count of student fee accounts still pending payment.
+ * @param ctx - request context carrying the caller's school scope
+ * @param sessionId - the academic session to summarize fees for
+ * @returns expected/collected amounts and a defaulters count; all zero if the session has no fee structures
+ */
 export async function fees(ctx: RequestContext, sessionId: string) {
   const schoolId = ctx.schoolId ?? undefined;
   const structures = await prisma.feeStructure.findMany({
@@ -43,6 +57,14 @@ export async function fees(ctx: RequestContext, sessionId: string) {
   };
 }
 
+/**
+ * Builds an enrollment breakdown for an academic session: total active
+ * enrollments, a gender split, and a per-class count with a chart color
+ * assigned to each class.
+ * @param ctx - request context carrying the caller's school scope
+ * @param sessionId - the academic session to compute enrollment stats for
+ * @returns total/boys/girls counts and a byClass array of {className, students, color}
+ */
 export async function enrollments(ctx: RequestContext, sessionId: string) {
   const schoolId = ctx.schoolId ?? undefined;
   const rows = await prisma.enrollment.findMany({
@@ -75,6 +97,13 @@ export async function enrollments(ctx: RequestContext, sessionId: string) {
   };
 }
 
+/**
+ * Fetches the next upcoming school-wide events (from now onward) for the
+ * dashboard agenda, ordered soonest first.
+ * @param ctx - request context carrying the caller's school scope
+ * @param take - maximum number of events to return (defaults to 4)
+ * @returns an array of events with id, title, date, and type; empty if none are scheduled
+ */
 export async function upcomingSchoolEvents(ctx: RequestContext, take = 4) {
   const schoolId = ctx.schoolId ?? undefined;
   const now = new Date();
@@ -86,6 +115,14 @@ export async function upcomingSchoolEvents(ctx: RequestContext, take = 4) {
   });
 }
 
+/**
+ * Fetches the most recently created enrollments for an academic session,
+ * used to populate the headmaster dashboard's recent-activity feed.
+ * @param ctx - request context carrying the caller's school scope
+ * @param sessionId - the academic session to pull enrollments from
+ * @param take - maximum number of enrollment records to return (defaults to 5)
+ * @returns enrollment records newest-first with student name and class name
+ */
 export async function recentEnrollments(ctx: RequestContext, sessionId: string, take = 5) {
   const schoolId = ctx.schoolId ?? undefined;
   return prisma.enrollment.findMany({
@@ -101,6 +138,13 @@ export async function recentEnrollments(ctx: RequestContext, sessionId: string, 
   });
 }
 
+/**
+ * Fetches the most recently created payments across the school, used to
+ * populate the headmaster dashboard's recent-activity feed.
+ * @param ctx - request context carrying the caller's school scope
+ * @param take - maximum number of payment records to return (defaults to 5)
+ * @returns payment records newest-first with amount and the paying student's name
+ */
 export async function recentPayments(ctx: RequestContext, take = 5) {
   const schoolId = ctx.schoolId ?? undefined;
   return prisma.payment.findMany({

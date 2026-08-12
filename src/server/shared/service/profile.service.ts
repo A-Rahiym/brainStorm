@@ -7,6 +7,13 @@ export type Profile = {
   role: "TEACHER" | "HEADMASTER";
 };
 
+/**
+ * Resolves the display profile (name, avatar, role) for the currently
+ * authenticated caller, looking up the linked teacher or headmaster record
+ * depending on which id is present in the session.
+ * @param ctx - request context carrying the caller's school scope and optional teacherId/headmasterId
+ * @returns the caller's profile, or null if neither a teacher nor headmaster id is present, or the linked record cannot be found in this school
+ */
 export async function getCurrentProfile(ctx: RequestContext): Promise<Profile | null> {
   const schoolId = ctx.schoolId ?? undefined;
 

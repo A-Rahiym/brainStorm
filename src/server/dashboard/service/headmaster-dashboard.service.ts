@@ -17,6 +17,15 @@ import { schoolEventToAgendaItem, toRankedStudent } from "@/server/shared/helper
 import type { ActivityItem } from "@/components/charts/ActivityFeed";
 import type { HeadmasterDashboard } from "@/features/dashboard/types";
 
+/**
+ * Assembles the full headmaster dashboard payload: school-wide stats, fee
+ * and enrollment summaries, upcoming agenda, top-scoring students, and a
+ * merged, time-sorted activity feed built from recent enrollments,
+ * payments, and assignments.
+ * @param ctx - request context carrying the caller's school scope; must have "dashboard.read" permission
+ * @returns the assembled HeadmasterDashboard view model
+ * @throws Error if there is no active academic session/term for the school
+ */
 export async function getHeadmasterDashboard(ctx: RequestContext): Promise<HeadmasterDashboard> {
   requirePermission(ctx, "dashboard.read");
 

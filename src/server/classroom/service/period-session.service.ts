@@ -6,6 +6,17 @@ import * as periodSessionRepository from "@/server/classroom/repository/period-s
 import { startPeriodSessionSchema } from "@/server/classroom/validator/period-session.schema";
 import { dateOnly, dayOfWeekOf, isSameDate, minutesOfDay } from "@/server/classroom/service/schedule-time";
 
+/**
+ * Starts (or restarts) a live period session for a timetable entry, allowing a teacher to mark
+ * a class period as actively in progress for attendance/tracking purposes. Enforces that only
+ * the teacher assigned to the entry may start it, that the target date matches the entry's
+ * scheduled weekday, and that the current moment falls within the period's start/end time on
+ * that date.
+ * @param ctx - request context carrying the caller's teacher identity and permission scope
+ * @param input - raw request payload, validated against `startPeriodSessionSchema`; may include an explicit `date`, defaulting to now
+ * @returns the period session, now in LIVE status
+ * @throws NotFoundError if the timetable entry doesn't exist; ForbiddenError if the caller isn't the assigned teacher; ConflictError if the target date doesn't match the entry's scheduled day, if the date isn't today, or if the current time falls outside the period's time window; throws if the caller lacks `period-sessions.create` permission or `input` fails validation
+ */
 export async function startPeriodSession(ctx: RequestContext, input: unknown) {
   requirePermission(ctx, "period-sessions.create");
   const data = startPeriodSessionSchema.parse(input);

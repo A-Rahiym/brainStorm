@@ -10,6 +10,15 @@ export type LoginResult = {
   user: { id: string; email: string; role: Role };
 };
 
+/**
+ * Authenticates a user by email and password, verifying the account is
+ * active and the password matches, then builds the session payload used to
+ * authorize subsequent requests.
+ * @param email - the email address supplied at login (validated/normalized against loginSchema)
+ * @param password - the plaintext password supplied at login, checked against the stored hash
+ * @returns the constructed session (including resolved role, schoolId, headmasterId/teacherId) and basic user info
+ * @throws UnauthorizedError if no active user matches the email or the password does not match
+ */
 export async function login(email: string, password: string): Promise<LoginResult> {
   const { email: parsedEmail, password: parsedPassword } = loginSchema.parse({ email, password });
 

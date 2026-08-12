@@ -24,6 +24,17 @@ export type TeacherAttendanceContext = {
   subjectName: string | null;
 };
 
+/**
+ * Builds a per-student attendance overview for a teacher's active classes in
+ * a term: today's status plus term-to-date absent/late/present/total tallies
+ * for every enrolled student.
+ * @param ctx - request context carrying the caller's school scope
+ * @param params.teacherId - the teacher whose active teaching assignments define the class scope
+ * @param params.termId - the term to compute attendance history within
+ * @param params.sessionId - the academic session used to resolve current active enrollments
+ * @param params.date - the date treated as "today" when computing each student's today status
+ * @returns rows per enrolled student plus the primary class/subject names, or empty rows and null names if the teacher has no active classes
+ */
 export async function teacherAttendanceOverview(
   ctx: RequestContext,
   params: { teacherId: string; termId: string; sessionId: string; date: Date }

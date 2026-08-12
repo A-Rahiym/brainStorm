@@ -9,10 +9,24 @@ import {
 import type { AssignmentItem } from "@/features/dashboard/types";
 import type { TeacherAssessments } from "@/features/assessments/types";
 
+/**
+ * Formats an assignment's due date into a short display label like
+ * "DUE 12 AUG".
+ * @param dueDate - the assignment's due date
+ * @returns the formatted "DUE ..." label string
+ */
 function dueLabelFor(dueDate: Date): string {
   return `DUE ${dueDate.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).toUpperCase()}`;
 }
 
+/**
+ * Assembles the teacher's assessments/assignments dashboard: the list of
+ * assignments for the teacher's current class/subject, submission and
+ * grading metrics, and average completion, split into open and closed
+ * buckets.
+ * @param ctx - request context carrying the caller's teacher/school scope; must have "dashboard.read" permission
+ * @returns the assembled TeacherAssessments view model; returns an all-empty/zeroed model if the caller has no teacher id or no active term
+ */
 export async function getTeacherAssessments(ctx: RequestContext): Promise<TeacherAssessments> {
   requirePermission(ctx, "dashboard.read");
 
