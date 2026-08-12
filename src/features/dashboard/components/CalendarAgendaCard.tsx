@@ -32,8 +32,8 @@ export function CalendarAgendaCard({
   const months = monthOptions(selectedMonth);
 
   return (
-    <Card className="flex flex-row gap-3 ">
-      <div className="flex min-w-0 flex-1 flex-col">
+    <Card className="flex h-140 flex-row gap-3">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
 
         <div className="mb-4 flex  w-full items-center justify-between gap-3">
           <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
@@ -69,8 +69,8 @@ export function CalendarAgendaCard({
 
       <div className="w-px shrink-0 bg-border" aria-hidden />
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <div className="mb-3.5 mt-7 flex items-center justify-between">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="mb-3.5 mt-7 flex flex-none items-center justify-between">
           <h3 className="text-lg font-semibold text-text-primary">Agenda</h3>
           {role === "HEADMASTER" ? (
             <Button variant="dark" size="sm" className="h-8 rounded-full px-3.5">
@@ -86,7 +86,9 @@ export function CalendarAgendaCard({
           )}
         </div>
 
-        <AgendaList items={agenda} />
+        <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
+          <AgendaList items={agenda} />
+        </div>
       </div>
     </Card>
   );
