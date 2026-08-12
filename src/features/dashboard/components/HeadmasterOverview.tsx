@@ -78,31 +78,32 @@ export function HeadmasterOverview() {
       </div>
 
       <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
-        <CalendarAgendaCard
-          agenda={agenda}
-          month={calendarMonth}
-          selected={eventDays[0]}
-          eventDays={eventDays}
-        />
-        <div className="flex flex-col gap-4.5">
-          <FeesCard fees={fees} />
-          <EnrollmentsCard enrollments={enrollments} />
-          <TopStudentsCard students={topStudents} />
-        </div>
+        <FeesCard fees={fees} />
+        <EnrollmentsCard enrollments={enrollments} />
       </div>
 
-      <Card className="w-full">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
-            <FileTextIcon size={17} className="text-text-secondary" />
-            Recent Activities
-          </h3>
-          <span className="flex items-center gap-0.5 text-[13px] font-bold text-primary">
-            View all <ChevronRightIcon size={13} />
-          </span>
-        </div>
-        <ActivityFeed items={activities} />
-      </Card>
+      <CalendarAgendaCard
+        agenda={agenda}
+        month={calendarMonth}
+        selected={eventDays[0]}
+        eventDays={eventDays}
+      />
+
+      <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
+        <Card className="w-full">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
+              <FileTextIcon size={17} className="text-text-secondary" />
+              Recent Activities
+            </h3>
+            <span className="flex items-center gap-0.5 text-[13px] font-bold text-primary">
+              View all <ChevronRightIcon size={13} />
+            </span>
+          </div>
+          <ActivityFeed items={activities} />
+        </Card>
+        <TopStudentsCard students={topStudents} />
+      </div>
     </div>
   );
 }

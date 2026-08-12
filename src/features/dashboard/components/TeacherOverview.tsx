@@ -57,9 +57,9 @@ export function TeacherOverview() {
         <TermCountCard />
       </div>
 
-      <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-[minmax(0,1.22fr)_minmax(0,1fr)]">
-        <div className="flex flex-col gap-3">
-          <CalendarAgendaCard agenda={agenda} />
+      <div className="flex flex-col gap-3">
+        <CalendarAgendaCard agenda={agenda} />
+        <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
           <Card className="flex flex-col">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
@@ -72,10 +72,7 @@ export function TeacherOverview() {
             </div>
             <ActivityFeed items={activities} />
           </Card>
-        </div>
-        <div className="flex flex-col gap-3">
           <AssignmentsCard assignments={assignments} />
-          <TopStudentsCard students={topStudents} />
         </div>
       </div>
     </div>
