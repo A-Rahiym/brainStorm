@@ -10,7 +10,11 @@ export async function fetchSubjectDetail(subjectId: string): Promise<SubjectDeta
   const res = await apiFetch<SingleResponse<SubjectDetail | null>>(
     `/dashboard/subjects/${encodeURIComponent(subjectId)}`
   );
-  return res.data;
+  if (!res.data) return res.data;
+  return {
+    ...res.data,
+    calendarEventDays: res.data.calendarEventDays.map((d) => new Date(d)),
+  };
 }
 
 export async function createSyllabus(
