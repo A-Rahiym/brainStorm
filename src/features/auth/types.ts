@@ -25,3 +25,9 @@ export type SessionResponse = {
   authenticated: boolean;
   session: (SessionPayload & { iat?: number; exp?: number }) | null;
 };
+
+export type Profile = {
+  name: string;
+  avatar: string | null;
+  role: "TEACHER" | "HEADMASTER";
+};

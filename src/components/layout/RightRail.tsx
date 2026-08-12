@@ -13,6 +13,7 @@ import { usePeriodStore } from "@/store/period.store";
 import { useUiStore } from "@/store/ui.store";
 import { LogOutIcon, FilterIcon, PlusIcon } from "@/components/icons";
 import { useLogout } from "@/features/auth/hooks/mutations/useLogin";
+import { useProfile } from "@/features/auth/hooks/queries/useProfile";
 
 export function RightRail() {
   const role = useSessionStore((s) => s.role);
@@ -25,8 +26,10 @@ export function RightRail() {
   const { data: schedule } = useRightRailSchedule({ classId: activeClassId, date: selectedDate });
   const openPeriod = usePeriodStore((s) => s.openPeriod);
   const logout = useLogout();
-  const profileName = isTeacher ? "Grace Okon" : "Bello Salis Adam";
-  const profileSubtitle = isTeacher ? "Mathematics" : "Headmaster";
+  useProfile();
+  const profileName = useSessionStore((s) => s.profileName) ?? (isTeacher ? "Teacher" : "Headmaster");
+  const profileAvatar = useSessionStore((s) => s.profileAvatar);
+  const profileSubtitle = isTeacher ? "Teacher" : "Headmaster";
 
   return (
     <aside className="sticky mx-2 top-5 hidden w-86 shrink-0 self-start rounded-2xl border border-border bg-surface p-5 pb-6 shadow-card lg:block">
@@ -57,7 +60,7 @@ export function RightRail() {
           <div className="flex flex-col items-center border-b border-border pb-5 text-center">
             <Avatar
               name={profileName}
-              src={"/images/profile.png"}
+              src={profileAvatar}
               size={84}
               className={`mb-4 border-3 border-surface shadow-[0_0_0_1px_var(--color-border)] ${isTeacher ? "bg-[#7A5C4B]! text-white!" : ""
                 }`}
