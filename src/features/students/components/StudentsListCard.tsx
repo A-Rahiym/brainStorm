@@ -15,8 +15,8 @@ export function StudentsListCard({
   classes: string[];
   subjects: string[];
 }) {
-  const [selectedClass, setSelectedClass] = useState("SS3");
-  const [selectedSubject, setSelectedSubject] = useState("Mathematics");
+  const [selectedClass, setSelectedClass] = useState("All");
+  const [selectedSubject, setSelectedSubject] = useState("All");
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {

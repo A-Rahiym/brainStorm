@@ -5,8 +5,6 @@ export const STUDENTS_META: Record<Role, { title: string; subtitle: string }> = 
   HEADMASTER: { title: "My Students", subtitle: "Admin overview · updated moments ago" },
 };
 
-export const STUDENT_CLASS_FILTERS = ["All", "JSS 3", "SS1", "SS2", "SS3"];
-
 export const STUDENT_SUBJECT_FILTERS = [
   "All",
   "Mathematics",

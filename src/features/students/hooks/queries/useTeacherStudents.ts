@@ -3,10 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSessionStore } from "@/store/session.store";
 import { fetchTeacherStudents } from "@/features/students/request";
-import {
-  STUDENT_CLASS_FILTERS,
-  STUDENT_SUBJECT_FILTERS,
-} from "@/features/students/constants/constants";
+import { STUDENT_SUBJECT_FILTERS } from "@/features/students/constants/constants";
 import { MOCK_STUDENT_METRICS, MOCK_STUDENT_ROWS } from "@/features/students/mock/data";
 import type { TeacherStudents } from "@/features/students/types";
 
@@ -21,7 +18,7 @@ export function useTeacherStudents() {
         return {
           metrics: MOCK_STUDENT_METRICS,
           students: MOCK_STUDENT_ROWS,
-          classes: STUDENT_CLASS_FILTERS,
+          classes: ["All", ...new Set(MOCK_STUDENT_ROWS.map((s) => s.className))],
           subjects: STUDENT_SUBJECT_FILTERS,
         };
       }

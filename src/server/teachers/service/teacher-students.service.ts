@@ -8,10 +8,7 @@ import {
   type TrendPoint,
 } from "@/server/teachers/repository/teacher-dashboard.repository";
 import { gradeCodeFor } from "@/server/shared/helpers";
-import {
-  STUDENT_CLASS_FILTERS,
-  STUDENT_SUBJECT_FILTERS,
-} from "@/features/students/constants/constants";
+import { STUDENT_SUBJECT_FILTERS } from "@/features/students/constants/constants";
 import type { StudentMetrics, StudentRow, TeacherStudents } from "@/features/students/types";
 
 const AVATAR_COLORS = [
@@ -25,12 +22,27 @@ const AVATAR_COLORS = [
   "#8E3B5E",
 ];
 
+/**
+ * Formats the change between the first and last point of a trend series as
+ * a signed percentage string, for display next to a metric.
+ * @param points - the trend series to compare (chronologically ordered)
+ * @returns a string like "+5%" or "-3%", or an empty string if there are fewer than 2 points
+ */
 function trendFor(points: TrendPoint[]): string {
   if (points.length < 2) return "";
   const delta = points[points.length - 1].value - points[0].value;
   return `${delta >= 0 ? "+" : "-"}${Math.abs(Math.round(delta))}%`;
 }
 
+/**
+ * Derives the summary metric tiles for the students dashboard (student
+ * count, average performance, and average attendance rate with trends) from
+ * the roster and historical trend series.
+ * @param students - the UI-ready student roster rows
+ * @param scoreTrend - the historical average score trend, used for the performance tile's trend/sparkline
+ * @param attendanceTrend - the historical attendance trend, used for the attendance tile's trend/sparkline
+ * @returns the StudentMetrics object consumed by the dashboard's metric tiles
+ */
 function computeMetrics(
   students: StudentRow[],
   scoreTrend: TrendPoint[],
@@ -61,6 +73,13 @@ function computeMetrics(
   };
 }
 
+/**
+ * Assembles the teacher's students dashboard: the full roster of actively
+ * enrolled students in the teacher's classes with attendance and score
+ * breakdowns and letter grades, plus summary metrics and filter options.
+ * @param ctx - request context carrying the caller's teacher/school scope; must have "dashboard.read" permission
+ * @returns the assembled TeacherStudents view model; returns an empty roster and zeroed metrics if the caller has no teacher id, no active term, or no attendance/score data yet
+ */
 export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherStudents> {
   requirePermission(ctx, "dashboard.read");
 
@@ -116,10 +135,12 @@ export async function getTeacherStudents(ctx: RequestContext): Promise<TeacherSt
     }
   }
 
+  const classes = ["All", ...new Set(students.map((s) => s.className))];
+
   return {
     metrics: computeMetrics(students, scoreTrend, attendanceTrend),
     students,
-    classes: STUDENT_CLASS_FILTERS,
+    classes,
     subjects: STUDENT_SUBJECT_FILTERS,
   };
 }
