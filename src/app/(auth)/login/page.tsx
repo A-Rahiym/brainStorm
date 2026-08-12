@@ -23,12 +23,19 @@ export default function LoginPage() {
       </div>
 
       <div className="mt-5 space-y-1.5 rounded-xl border border-dashed border-border bg-surface px-4 py-3 text-center text-xs text-text-muted">
+        <p className="mb-2 font-semibold text-text-secondary">
+          These logins are for development purposes only
+        </p>
         <p>
           Headmaster · <span className="font-bold text-text-primary">admin@brainstorm.test</span> ·{" "}
           <span className="font-bold text-text-primary">password123</span>
         </p>
         <p>
           Teacher · <span className="font-bold text-text-primary">teacher@brainstorm.test</span> ·{" "}
+          <span className="font-bold text-text-primary">password123</span>
+        </p>
+        <p>
+          Teacher (test) · <span className="font-bold text-text-primary">yahaya.umar@brainstorm.test</span> ·{" "}
           <span className="font-bold text-text-primary">password123</span>
         </p>
       </div>

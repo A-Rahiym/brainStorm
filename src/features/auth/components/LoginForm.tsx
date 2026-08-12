@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,6 +19,7 @@ type LoginFormValues = z.infer<typeof schema>;
 
 export function LoginForm() {
   const login = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -50,13 +53,24 @@ export function LoginForm() {
         />
       </FormField>
       <FormField label="Password" name="password" error={errors.password}>
-        <Input
-          type="password"
-          placeholder="••••••••"
-          autoComplete="current-password"
-          invalid={!!errors.password}
-          {...register("password")}
-        />
+        <div className="relative">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="••••••••"
+            autoComplete="current-password"
+            invalid={!!errors.password}
+            className="pr-10"
+            {...register("password")}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+          >
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        </div>
       </FormField>
       {errors.root && (
         <p role="alert" className="text-xs font-medium text-danger-text">
