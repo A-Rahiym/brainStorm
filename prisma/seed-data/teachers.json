@@ -26,5 +26,19 @@
     "status": "ACTIVE",
     "authEmail": null,
     "photoUrl": null
+  },
+  {
+    "firstName": "Yahaya",
+    "lastName": "Umar",
+    "email": "yahaya.umar@brainstorm.test",
+    "phone": "+2348000000004",
+    "staffNumber": "TCH-003",
+    "dateOfBirth": "1985-03-10",
+    "address": "9 Garki Street, Abuja",
+    "employmentDate": "2020-08-01",
+    "qualification": "B.Sc Biology",
+    "status": "ACTIVE",
+    "authEmail": "yahaya.umar@brainstorm.test",
+    "photoUrl": "/images/student-2.png"
   }
 ]

@@ -113,6 +113,7 @@ type AttendanceSeed = {
   termName: string;
   date: string;
   status?: "PRESENT" | "ABSENT" | "LATE" | "EXCUSED";
+  staffNumber?: string;
 };
 
 type AssignmentSeed = {
@@ -227,27 +228,26 @@ async function main() {
     school = await prisma.school.create({ data: { name: "Brainstorm Academy" } });
   }
 
-  const adminUser = await prisma.user.upsert({
-    where: { email: "admin@brainstorm.test" },
-    update: {},
-    create: {
-      email: "admin@brainstorm.test",
-      passwordHash: await hash("password123", 12),
-      roleId: headmasterRole.id,
-      status: "ACTIVE",
-    },
-  });
-
-  await prisma.user.upsert({
-    where: { email: "teacher@brainstorm.test" },
-    update: {},
-    create: {
-      email: "teacher@brainstorm.test",
-      passwordHash: await hash("password123", 12),
-      roleId: teacherRole.id,
-      status: "ACTIVE",
-    },
-  });
+  const logins: { email: string; roleId: string }[] = [
+    { email: "admin@brainstorm.test", roleId: headmasterRole.id },
+    { email: "teacher@brainstorm.test", roleId: teacherRole.id },
+    { email: "yahaya.umar@brainstorm.test", roleId: teacherRole.id },
+  ];
+  const userByEmail = new Map<string, { id: string }>();
+  for (const login of logins) {
+    const user = await prisma.user.upsert({
+      where: { email: login.email },
+      update: {},
+      create: {
+        email: login.email,
+        passwordHash: await hash("password123", 12),
+        roleId: login.roleId,
+        status: "ACTIVE",
+      },
+    });
+    userByEmail.set(login.email, user);
+  }
+  const adminUser = userByEmail.get("admin@brainstorm.test")!;
 
   const headmasters = readSeedData<StaffSeed>("headmasters.json");
   for (const h of headmasters) {
@@ -578,7 +578,7 @@ async function main() {
     const studentId = studentIds.get(a.admissionNumber);
     const classId = classIds.get(a.className);
     const termId = termIds.get(a.termName);
-    const teacherId = teacherIds.get("TCH-001");
+    const teacherId = teacherIds.get(a.staffNumber ?? "TCH-001");
     if (!studentId || !classId || !termId || !teacherId) {
       console.warn(`Attendance skipped for ${a.admissionNumber} ${a.date}: missing dependency`);
       continue;
@@ -614,7 +614,11 @@ async function main() {
     });
     await prisma.assignment.upsert({
       where: { id: existing?.id ?? "00000000-0000-0000-0000-000000000000" },
-      update: {},
+      update: {
+        description: asg.description,
+        dueDate: new Date(asg.dueDate),
+        status: (asg.status as "OPEN" | "CLOSED") ?? "OPEN",
+      },
       create: {
         teachingAssignmentId,
         title: asg.title,

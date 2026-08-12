@@ -8,7 +8,7 @@
     "title": "Fractions worksheet",
     "description": "Complete problems 1-20 on fractions",
     "dueDate": "2026-09-15",
-    "status": "OPEN"
+    "status": "CLOSED"
   },
   {
     "staffNumber": "TCH-002",
@@ -19,7 +19,7 @@
     "title": "Essay: My School",
     "description": "Write a 300-word descriptive essay",
     "dueDate": "2026-09-18",
-    "status": "OPEN"
+    "status": "CLOSED"
   },
   {
     "staffNumber": "TCH-001",
@@ -30,6 +30,215 @@
     "title": "Algebra basics",
     "description": "Solve linear equations exercises",
     "dueDate": "2026-09-16",
+    "status": "CLOSED"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Fractions revision quiz",
+    "description": "10-question quiz covering fraction operations",
+    "dueDate": "2026-09-22",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Geometry basics",
+    "description": "Identify and classify basic shapes and angles",
+    "dueDate": "2026-09-29",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Ratio and proportion worksheet",
+    "description": "Solve word problems involving ratio and proportion",
+    "dueDate": "2026-10-06",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 1A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Mental maths drill",
+    "description": "Timed mental arithmetic practice sheet",
+    "dueDate": "2026-10-13",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Algebra practice set 2",
+    "description": "Simplify and evaluate algebraic expressions",
+    "dueDate": "2026-09-23",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Simultaneous equations worksheet",
+    "description": "Solve pairs of linear equations by substitution",
+    "dueDate": "2026-09-30",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "JSS 2A",
+    "subjectCode": "MTH",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Word problems assignment",
+    "description": "Translate word problems into algebraic equations",
+    "dueDate": "2026-10-07",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Motion & forces lab report",
+    "description": "Write up findings from the motion practical",
+    "dueDate": "2026-09-20",
+    "status": "CLOSED"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Measurement practical writeup",
+    "description": "Summarize measurement techniques and error analysis",
+    "dueDate": "2026-09-27",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-001",
+    "className": "SSS 1A",
+    "subjectCode": "PHY",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Energy conservation worksheet",
+    "description": "Solve problems on kinetic and potential energy",
+    "dueDate": "2026-10-04",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Cell structure worksheet",
+    "description": "Label the parts of an animal and plant cell",
+    "dueDate": "2026-09-21",
+    "status": "CLOSED"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Classification of living things",
+    "description": "Complete the classification chart exercise",
+    "dueDate": "2026-09-28",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Photosynthesis diagram labeling",
+    "description": "Label and explain the stages of photosynthesis",
+    "dueDate": "2026-10-05",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Ecosystem case study",
+    "description": "Write a short report on a local ecosystem",
+    "dueDate": "2026-10-12",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Nutrition and digestion worksheet",
+    "description": "Answer questions on the human digestive system",
+    "dueDate": "2026-10-19",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "JSS 2A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Parts of a flower",
+    "description": "Draw and label a flowering plant",
+    "dueDate": "2026-09-24",
+    "status": "CLOSED"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "JSS 2A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Living vs non-living things",
+    "description": "List and explain 10 characteristics of living things",
+    "dueDate": "2026-10-01",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "JSS 2A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Animal habitats worksheet",
+    "description": "Match animals to their natural habitats",
+    "dueDate": "2026-10-08",
+    "status": "OPEN"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "JSS 2A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "title": "Simple food chains",
+    "description": "Draw three food chains from the local environment",
+    "dueDate": "2026-10-15",
     "status": "OPEN"
   }
 ]

@@ -30,5 +30,21 @@
     "sessionName": "2026/2027",
     "termName": "First Term",
     "status": "ACTIVE"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "SSS 1A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
+  },
+  {
+    "staffNumber": "TCH-003",
+    "className": "JSS 2A",
+    "subjectCode": "BIO",
+    "sessionName": "2026/2027",
+    "termName": "First Term",
+    "status": "ACTIVE"
   }
 ]

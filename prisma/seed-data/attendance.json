@@ -1258,5 +1258,389 @@
     "termName": "First Term",
     "date": "2026-11-10",
     "status": "PRESENT"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-009",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "ABSENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-011",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-013",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "ABSENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-016",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "LATE",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-019",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-08",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-15",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-22",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-020",
+    "className": "SSS 1A",
+    "termName": "First Term",
+    "date": "2026-09-29",
+    "status": "ABSENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "LATE",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-002",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "LATE",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-005",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-008",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "LATE",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "ABSENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-010",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-015",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-09",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-16",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-23",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
+  },
+  {
+    "admissionNumber": "BS-2026-018",
+    "className": "JSS 2A",
+    "termName": "First Term",
+    "date": "2026-09-30",
+    "status": "PRESENT",
+    "staffNumber": "TCH-003"
   }
 ]
