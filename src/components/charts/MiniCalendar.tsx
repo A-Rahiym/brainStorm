@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-import { useUiStore } from "@/store/ui.store";
 
 export function MiniCalendar({
   eventDays,
@@ -20,31 +19,21 @@ export function MiniCalendar({
   month?: Date;
   hideNavigation?: boolean;
 }) {
-  const storeSelected = useUiStore((s) => s.selectedDate);
-  const setSelected = useUiStore((s) => s.setSelectedDate);
-  const setMonth = useUiStore((s) => s.setCalendarMonth);
-  const [monthState, setLocalMonth] = useState<Date>(initialMonth ?? storeSelected);
+  const [monthState, setLocalMonth] = useState<Date>(initialMonth ?? initialSelected ?? new Date());
   const [localSelected, setLocalSelected] = useState<Date | undefined>(initialSelected);
 
   const displayMonth = month ?? monthState;
-  const selected = localSelected ?? storeSelected;
   const eventSet = new Set((eventDays ?? []).map((d) => d.toDateString()));
 
   return (
     <DayPicker
       mode="single"
-      selected={selected}
+      selected={localSelected}
       onSelect={(day) => {
-        if (day) {
-          setLocalSelected(day);
-          setSelected(day);
-        }
+        if (day) setLocalSelected(day);
       }}
       month={displayMonth}
-      onMonthChange={(m) => {
-        setLocalMonth(m);
-        setMonth(m);
-      }}
+      onMonthChange={setLocalMonth}
       hideNavigation={hideNavigation}
       modifiers={{ hasEvent: (day) => eventSet.has(day.toDateString()) }}
       modifiersClassNames={{ hasEvent: "brain-cal-event" }}
