@@ -3,7 +3,6 @@ import type {
   SubjectDetail,
   SubjectMetric,
   TeacherSubject,
-  WeekDay,
 } from "@/features/subjects/types";
 import { MOCK_ASSIGNMENTS, MOCK_SUBJECTS, MOCK_TOP_STUDENTS } from "@/features/subjects/mock/data";
 
@@ -73,14 +72,12 @@ export const METRICS: SubjectMetric[] = [
   },
 ];
 
-export const WEEK_DAYS: WeekDay[] = [
-  { dow: "Mon", num: 14, current: true },
-  { dow: "Tue", num: 15 },
-  { dow: "Wed", num: 16 },
-  { dow: "Thu", num: 17, marked: true },
-  { dow: "Fri", num: 18 },
-  { dow: "Sat", num: 19 },
-  { dow: "Sun", num: 20 },
+const today = new Date();
+
+export const CALENDAR_EVENT_DAYS: Date[] = [
+  new Date(today.getFullYear(), today.getMonth(), 18),
+  new Date(today.getFullYear(), today.getMonth(), 23),
+  new Date(today.getFullYear(), today.getMonth(), 25),
 ];
 
 export function findMockSubject(subjectId: string): TeacherSubject | undefined {
@@ -105,7 +102,7 @@ export function resolveSubjectDetail(subject: TeacherSubject): SubjectDetail {
   return {
     subject,
     metrics: METRICS,
-    weekDays: WEEK_DAYS,
+    calendarEventDays: CALENDAR_EVENT_DAYS,
     classes: periods,
     assignments: assignments.length > 0 ? assignments : MOCK_ASSIGNMENTS,
     topStudents: MOCK_TOP_STUDENTS,

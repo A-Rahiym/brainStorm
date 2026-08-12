@@ -3,6 +3,7 @@
 import { TopNav } from "@/components/layout/TopNav";
 import { RightRail } from "@/components/layout/RightRail";
 import { PeriodPopover } from "@/features/subjects/components/PeriodPopover";
+import { PeriodSessionModal } from "@/features/subjects/components/PeriodSessionModal";
 import { Toaster } from "@/components/ui";
 
 export function MainShell({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export function MainShell({ children }: { children: React.ReactNode }) {
       </div>
       <RightRail />
       <PeriodPopover />
+      <PeriodSessionModal />
       <Toaster />
     </div>
   );

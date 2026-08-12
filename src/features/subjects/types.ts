@@ -42,17 +42,10 @@ export type SubjectMetric = {
   points: number[];
 };
 
-export type WeekDay = {
-  dow: string;
-  num: number;
-  current?: boolean;
-  marked?: boolean;
-};
-
 export type SubjectDetail = {
   subject: TeacherSubject;
   metrics: SubjectMetric[];
-  weekDays: WeekDay[];
+  calendarEventDays: Date[];
   classes: SubjectClassGroup[];
   assignments: AssignmentItem[];
   topStudents: RankedStudent[];

@@ -20,7 +20,7 @@ export function ScheduleTimeline({
   onSelectPeriod?: (input: {
     subjectName: string;
     period: SubjectPeriod;
-    anchorRect: DOMRect;
+    anchorEl: HTMLElement;
   }) => void;
 }) {
   const timeline = blocks ?? HEADMASTER_BLOCKS;

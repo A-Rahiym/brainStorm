@@ -4,16 +4,14 @@ import { useEffect, useState } from "react";
 import { Clock, User } from "lucide-react";
 import type { ScheduleEvent } from "@/features/dashboard/constants/timeline";
 import type { SubjectPeriod } from "@/features/subjects/types";
+import { usePeriodStore } from "@/store/period.store";
+import { parseTimeRange } from "@/lib/time";
 
 function parseProgress(time: string | undefined, now: Date): number | null {
-  const match = time?.match(/^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/);
-  if (!match) return null;
-  const [, sh, sm, eh, em] = match.slice(1).map(Number);
-  const start = sh * 60 + sm;
-  const end = eh * 60 + em;
-  if (end <= start) return null;
+  const range = parseTimeRange(time);
+  if (!range) return null;
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  return Math.min(1, Math.max(0, (nowMinutes - start) / (end - start)));
+  return Math.min(1, Math.max(0, (nowMinutes - range.start) / (range.end - range.start)));
 }
 
 export function ScheduleEventCard({
@@ -24,11 +22,12 @@ export function ScheduleEventCard({
   onSelectPeriod?: (input: {
     subjectName: string;
     period: SubjectPeriod;
-    anchorRect: DOMRect;
+    anchorEl: HTMLElement;
   }) => void;
 }) {
   const isLive = event.live ?? false;
   const canStart = isLive && event.isMine === true;
+  const isActiveSession = usePeriodStore((s) => s.sessionOpen && s.period?.id === event.id);
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -83,9 +82,14 @@ export function ScheduleEventCard({
   );
 
   const toneClass = event.tone === "pink" ? "border-transparent bg-primary-pill" : "border-border bg-surface";
+  const activeClass = isActiveSession ? "ring-2 ring-primary ring-offset-2 ring-offset-surface" : "";
 
   if (!canStart) {
-    return <div className={`block w-full -mt-px mb-2 rounded-xl border px-3.5 py-3 text-left ${toneClass}`}>{body}</div>;
+    return (
+      <div className={`block w-full -mt-px mb-2 rounded-xl border px-3.5 py-3 text-left ${toneClass} ${activeClass}`}>
+        {body}
+      </div>
+    );
   }
 
   return (
@@ -105,11 +109,11 @@ export function ScheduleEventCard({
                   status: "live",
                   isMine: event.isMine ?? true,
                 },
-                anchorRect: e.currentTarget.getBoundingClientRect(),
+                anchorEl: e.currentTarget,
               })
           : undefined
       }
-      className={`block w-full -mt-px mb-2 rounded-xl border px-3.5 py-3 text-left transition-colors ${toneClass} ${
+      className={`block w-full -mt-px mb-2 rounded-xl border px-3.5 py-3 text-left transition-colors ${toneClass} ${activeClass} ${
         onSelectPeriod ? "cursor-pointer hover:border-primary/40" : ""
       }`}
     >

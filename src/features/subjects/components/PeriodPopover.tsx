@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BookOpen, Play, X } from "lucide-react";
 import { Avatar, Badge, Button } from "@/components/ui";
 import { ClockIcon } from "@/components/icons";
 import { usePeriodStore } from "@/store/period.store";
 import { useUiStore } from "@/store/ui.store";
 import { useStartPeriod } from "@/features/dashboard/hooks/mutations/useStartPeriod";
+import { MOCK_ATTENDANCE_ROWS } from "@/features/attendance/mock/data";
 
 const POPOVER_WIDTH = 470;
 const GAP = 12;
@@ -15,11 +16,32 @@ const EDGE = 16;
 export function PeriodPopover() {
   const subjectName = usePeriodStore((s) => s.subjectName);
   const period = usePeriodStore((s) => s.period);
-  const anchorRect = usePeriodStore((s) => s.anchorRect);
+  const anchorEl = usePeriodStore((s) => s.anchorEl);
+  const sessionOpen = usePeriodStore((s) => s.sessionOpen);
   const closePeriod = usePeriodStore((s) => s.closePeriod);
   const selectedDate = useUiStore((s) => s.selectedDate);
   const startPeriod = useStartPeriod();
+  const openSession = usePeriodStore((s) => s.openSession);
   const ref = useRef<HTMLDivElement>(null);
+  const [rect, setRect] = useState<DOMRect | null>(null);
+
+  useEffect(() => {
+    if (!anchorEl) return;
+    const update = () => setRect(anchorEl.getBoundingClientRect());
+    update();
+    let raf = 0;
+    const onScrollOrResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScrollOrResize, true);
+    window.addEventListener("resize", onScrollOrResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScrollOrResize, true);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
+  }, [anchorEl]);
 
   useEffect(() => {
     if (!period) return;
@@ -37,17 +59,17 @@ export function PeriodPopover() {
     };
   }, [period, closePeriod]);
 
-  if (!period || !anchorRect || typeof window === "undefined") return null;
+  if (!period || !anchorEl || !rect || sessionOpen || typeof window === "undefined") return null;
 
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  const leftOfAnchor = anchorRect.left - POPOVER_WIDTH - GAP;
-  const rightOfAnchor = anchorRect.right + GAP;
+  const leftOfAnchor = rect.left - POPOVER_WIDTH - GAP;
+  const rightOfAnchor = rect.right + GAP;
   const left =
-    anchorRect.left >= vw / 2
+    rect.left >= vw / 2
       ? Math.max(EDGE, leftOfAnchor)
       : Math.min(rightOfAnchor, vw - POPOVER_WIDTH - EDGE);
-  const top = Math.min(Math.max(EDGE, anchorRect.top), Math.max(EDGE, vh - 420));
+  const top = Math.min(Math.max(EDGE, rect.top), Math.max(EDGE, vh - 420));
 
   return (
     <div
@@ -107,7 +129,11 @@ export function PeriodPopover() {
           onClick={() =>
             startPeriod.mutate(
               { timetableEntryId: period.id, date: selectedDate, isMock: period.isMock },
-              { onSuccess: closePeriod }
+              {
+                onSuccess: () => {
+                  openSession({ studentIds: MOCK_ATTENDANCE_ROWS.map((r) => r.id) });
+                },
+              }
             )
           }
         >

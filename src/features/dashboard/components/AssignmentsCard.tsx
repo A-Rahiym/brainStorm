@@ -7,19 +7,19 @@ import { CalendarIcon, PlusIcon } from "@/components/icons";
 import { ASSIGNMENT_CLASSES, ASSIGNMENT_TABS } from "@/features/dashboard/constants/constants";
 import type { AssignmentItem } from "@/features/dashboard/types";
 
-type Tab = (typeof ASSIGNMENT_TABS)[number];
-
 export function AssignmentsCard({
   assignments,
   title = "Assignments",
   showClassFilter = true,
+  tabs = ASSIGNMENT_TABS,
 }: {
   assignments: AssignmentItem[];
   title?: string;
   showClassFilter?: boolean;
+  tabs?: readonly string[];
 }) {
   const [selectedClass, setSelectedClass] = useState(ASSIGNMENT_CLASSES[0]);
-  const [tab, setTab] = useState<Tab>("Home quiz");
+  const [tab, setTab] = useState<string>(tabs[0]);
 
   return (
     <Card className="flex flex-col">
@@ -51,7 +51,7 @@ export function AssignmentsCard({
       </div>
 
       <div className="mb-5 flex gap-7 border-b border-border" role="tablist">
-        {ASSIGNMENT_TABS.map((t) => (
+        {tabs.map((t) => (
           <button
             key={t}
             role="tab"
@@ -64,7 +64,7 @@ export function AssignmentsCard({
             }`}
           >
             {t}
-            {t === "Home quiz" && (
+            {t === tabs[0] && (
               <span className="text-[13px] font-semibold text-text-secondary">{assignments.length}</span>
             )}
           </button>

@@ -5,10 +5,12 @@ import { ErrorState, Skeleton } from "@/components/ui";
 import { AssignmentsCard } from "@/features/dashboard/components/AssignmentsCard";
 import { TopStudentsCard } from "@/features/dashboard/components/TopStudentsCard";
 import { MetricCard } from "@/features/subjects/components/MetricCard";
-import { PeriodsCard } from "@/features/subjects/components/PeriodsCard";
+import { SubjectCalendarCard } from "@/features/subjects/components/SubjectCalendarCard";
 import { SubjectSummaryCard } from "@/features/subjects/components/SubjectSummaryCard";
 import { useSubjectDetail } from "@/features/subjects/hooks/queries/useSubjectDetail";
 import { usePeriodStore } from "@/store/period.store";
+
+const ASSESSMENT_TABS = ["Home quiz", "CA"] as const;
 
 export function SubjectDetail({ subjectId }: { subjectId: string }) {
   const { data, isLoading, isError, error, refetch } = useSubjectDetail(subjectId);
@@ -22,9 +24,10 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
           <Skeleton className="h-54.5 w-full" />
           <Skeleton className="h-54.5 w-full" />
         </div>
+        <Skeleton className="h-96 w-full" />
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
-          <Skeleton className="h-96 w-full" />
-          <Skeleton className="h-96 w-full" />
+          <Skeleton className="h-72 w-full" />
+          <Skeleton className="h-72 w-full" />
         </div>
       </div>
     );
@@ -35,7 +38,6 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
   }
 
   const [performance, attendance] = data.metrics;
-  console.log("SubjectDetail data:", data);
 
   return (
     <div className="space-y-5">
@@ -45,17 +47,22 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
         <MetricCard metric={attendance} icon={<CheckCircle2 size={20} />} />
       </section>
 
-      <div className="relative grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
-        <PeriodsCard
-          subjectName={data.subject.name}
-          classes={data.classes}
-          weekDays={data.weekDays}
-          onStartPeriod={(period, anchorRect) => openPeriod({ subjectName: data.subject.name, period, anchorRect })}
+      <SubjectCalendarCard
+        subjectName={data.subject.name}
+        classes={data.classes}
+        onStartPeriod={(period, anchorEl) => openPeriod({ subjectName: data.subject.name, period, anchorEl })}
+        eventDays={data.calendarEventDays}
+        initialSelected={data.calendarEventDays[data.calendarEventDays.length - 1]}
+      />
+
+      <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
+        <AssignmentsCard
+          title="Assessments"
+          assignments={data.assignments}
+          showClassFilter={false}
+          tabs={ASSESSMENT_TABS}
         />
-        <div className="flex flex-col gap-3">
-          <AssignmentsCard title="Assessments" assignments={data.assignments} showClassFilter={false} />
-          <TopStudentsCard students={data.topStudents} />
-        </div>
+        <TopStudentsCard students={data.topStudents} />
       </div>
     </div>
   );

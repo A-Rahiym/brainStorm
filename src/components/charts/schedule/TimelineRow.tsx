@@ -14,7 +14,7 @@ export function TimelineRow({
   onSelectPeriod?: (input: {
     subjectName: string;
     period: SubjectPeriod;
-    anchorRect: DOMRect;
+    anchorEl: HTMLElement;
   }) => void;
 }) {
   return (

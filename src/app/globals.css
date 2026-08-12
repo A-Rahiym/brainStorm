@@ -20,6 +20,10 @@
   --color-meeting-text: #6d28d9;
   --color-info-bg: #e7eefb;
   --color-info-text: #2f5fa8;
+  --color-late: #cc8000;
+  --color-late-bg: #f7edd9;
+  --color-absent: #d93333;
+  --color-absent-bg: #f9e0e0;
 
   /* Neutrals */
   --color-bg: #f7f7f9;
@@ -66,6 +70,10 @@
   --color-meeting-text: var(--color-meeting-text);
   --color-info-bg: var(--color-info-bg);
   --color-info-text: var(--color-info-text);
+  --color-late: var(--color-late);
+  --color-late-bg: var(--color-late-bg);
+  --color-absent: var(--color-absent);
+  --color-absent-bg: var(--color-absent-bg);
   --color-bg: var(--color-bg);
   --color-surface: var(--color-surface);
   --color-border: var(--color-border);
