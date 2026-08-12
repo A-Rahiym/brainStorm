@@ -116,7 +116,7 @@ body {
 .brain-cal .brain-week {
   width: 100%;
   grid-template-columns: repeat(7, 1fr);
-  gap: 20px;
+  gap: 28px;
 }
 
 .brain-cal.brain-cal-hide-caption .brain-caption {
@@ -169,7 +169,9 @@ body {
 }
 
 .brain-cal .brain-day-button {
-  width: 100%;
+  display: block;
+  width: 60%;
+  margin: 0 auto;
   aspect-ratio: 1;
   border: 1px solid var(--color-border);
   border-radius: 50%;
