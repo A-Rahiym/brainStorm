@@ -65,7 +65,7 @@ export function SubjectsOverview() {
       </div>
 
       <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
-        <AssignmentsCard title="Assessments" assignments={assignments} showClassFilter={true} className="h-140 overflow-scroll scroll-bar-hidden" />
+        <AssignmentsCard title="Assessments" assignments={assignments} showClassFilter={true} className="h-140 overflow-hidden scroll-bar-hidden" />
         <TopStudentsCard students={data.topStudents} className="h-140" />
       </div>
     </div>
