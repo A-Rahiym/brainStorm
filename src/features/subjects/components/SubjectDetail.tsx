@@ -61,8 +61,9 @@ export function SubjectDetail({ subjectId }: { subjectId: string }) {
           assignments={data.assignments}
           showClassFilter={false}
           tabs={ASSESSMENT_TABS}
+          className="h-140"
         />
-        <TopStudentsCard students={data.topStudents} />
+        <TopStudentsCard students={data.topStudents} className="h-140" />
       </div>
     </div>
   );

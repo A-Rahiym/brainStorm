@@ -90,8 +90,8 @@ export function HeadmasterOverview() {
       />
 
       <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
-        <Card className="w-full">
-          <div className="mb-4 flex items-center justify-between">
+        <Card className="flex h-140 min-h-0 w-full flex-col">
+          <div className="mb-4 flex flex-none items-center justify-between">
             <h3 className="flex items-center gap-2 text-[15px] font-bold text-text-primary">
               <FileTextIcon size={17} className="text-text-secondary" />
               Recent Activities
@@ -100,9 +100,11 @@ export function HeadmasterOverview() {
               View all <ChevronRightIcon size={13} />
             </span>
           </div>
-          <ActivityFeed items={activities} />
+          <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
+            <ActivityFeed items={activities} />
+          </div>
         </Card>
-        <TopStudentsCard students={topStudents} />
+        <TopStudentsCard students={topStudents} className="h-140" />
       </div>
     </div>
   );

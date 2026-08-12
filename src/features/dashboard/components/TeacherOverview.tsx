@@ -60,8 +60,8 @@ export function TeacherOverview() {
       <div className="flex flex-col gap-3">
         <CalendarAgendaCard agenda={agenda} />
         <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
-          <Card className="flex flex-col">
-            <div className="mb-4 flex items-center justify-between">
+          <Card className="flex h-140 min-h-0 flex-col">
+            <div className="mb-4 flex flex-none items-center justify-between">
               <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
                 <FileTextIcon size={20} className="text-text-primary" />
                 Recent Activities
@@ -70,9 +70,11 @@ export function TeacherOverview() {
                 View all <ChevronRightIcon size={14} />
               </span>
             </div>
-            <ActivityFeed items={activities} />
+            <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
+              <ActivityFeed items={activities} />
+            </div>
           </Card>
-          <AssignmentsCard assignments={assignments} />
+          <AssignmentsCard assignments={assignments} className="h-140" />
         </div>
       </div>
     </div>

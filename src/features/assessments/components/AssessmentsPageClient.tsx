@@ -32,8 +32,8 @@ export function AssessmentsPageClient() {
     <div className="space-y-6">
       <AssessmentsMetricsRow metrics={data.metrics} />
       <div className="grid grid-cols-1 gap-4.5 xl:grid-cols-2">
-        <AssignmentsCard assignments={data.open} title="Open Assignments" />
-        <AssignmentsCard assignments={data.closed} title="Closed Assignments" />
+        <AssignmentsCard assignments={data.open} title="Open Assignments" className="h-140" />
+        <AssignmentsCard assignments={data.closed} title="Closed Assignments" className="h-140" />
       </div>
     </div>
   );

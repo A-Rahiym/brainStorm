@@ -12,17 +12,23 @@ export function AssignmentsCard({
   title = "Assignments",
   showClassFilter = true,
   tabs = ASSIGNMENT_TABS,
+  className = "",
 }: {
   assignments: AssignmentItem[];
   title?: string;
   showClassFilter?: boolean;
   tabs?: readonly string[];
+  className?: string;
 }) {
   const [selectedClass, setSelectedClass] = useState(ASSIGNMENT_CLASSES[0]);
   const [tab, setTab] = useState<string>(tabs[0]);
 
+  const openAssignments = assignments.filter((a) => a.status === "OPEN");
+  const closedAssignments = assignments.filter((a) => a.status === "CLOSED");
+  const visibleAssignments = tab === tabs[0] ? openAssignments : closedAssignments;
+
   return (
-    <Card className="flex flex-col">
+    <Card className={`flex min-h-0 flex-col ${className}`}>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h3 className="flex items-center gap-2.5 text-lg font-semibold text-text-primary">
           <Layers size={20} className="text-text-primary" />
@@ -64,15 +70,18 @@ export function AssignmentsCard({
             }`}
           >
             {t}
-            {t === tabs[0] && (
-              <span className="text-[13px] font-semibold text-text-secondary">{assignments.length}</span>
-            )}
+            <span className="text-[13px] font-semibold text-text-secondary">
+              {t === tabs[0] ? openAssignments.length : closedAssignments.length}
+            </span>
           </button>
         ))}
       </div>
 
-      <div className="space-y-3">
-        {assignments.map((item) => {
+      <div className="scrollbar-none min-h-0 flex-1 space-y-3 overflow-y-auto">
+        {visibleAssignments.length === 0 && (
+          <p className="py-6 text-center text-sm text-text-secondary">Nothing here yet.</p>
+        )}
+        {visibleAssignments.map((item) => {
           const pct = item.total
             ? Math.min(100, Math.round(((item.submitted ?? 0) / item.total) * 100))
             : 0;
