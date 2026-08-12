@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 export type Role = "HEADMASTER" | "TEACHER";
 
+export type PresenceStatus = "active" | "busy" | "unavailable" | "offline";
+
 export type SessionState = {
   userId: string | null;
   role: Role | null;
@@ -11,6 +13,7 @@ export type SessionState = {
   isAuthenticated: boolean;
   profileName: string | null;
   profileAvatar: string | null;
+  status: PresenceStatus;
   setSession: (session: {
     userId: string;
     role: Role;
@@ -19,6 +22,7 @@ export type SessionState = {
     headmasterId?: string;
   }) => void;
   setProfile: (profile: { name: string; avatar: string | null }) => void;
+  setStatus: (status: PresenceStatus) => void;
   clearSession: () => void;
 };
 
@@ -31,9 +35,11 @@ export const useSessionStore = create<SessionState>((set) => ({
   isAuthenticated: false,
   profileName: null,
   profileAvatar: null,
+  status: "active",
   setSession: ({ userId, role, schoolId, teacherId, headmasterId }) =>
     set({ userId, role, schoolId, teacherId, headmasterId, isAuthenticated: true }),
   setProfile: ({ name, avatar }) => set({ profileName: name, profileAvatar: avatar }),
+  setStatus: (status) => set({ status }),
   clearSession: () =>
     set({
       userId: null,
@@ -44,5 +50,6 @@ export const useSessionStore = create<SessionState>((set) => ({
       isAuthenticated: false,
       profileName: null,
       profileAvatar: null,
+      status: "active",
     }),
 }));

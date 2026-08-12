@@ -15,6 +15,7 @@ interface AvatarProps {
   size?: number;
   className?: string;
   style?: React.CSSProperties;
+  priority?: boolean;
 }
 
 export function Avatar({
@@ -23,6 +24,7 @@ export function Avatar({
   size = 38,
   className = "",
   style,
+  priority = false,
 }: AvatarProps) {
   if (src) {
     return (
@@ -31,6 +33,8 @@ export function Avatar({
         alt={name}
         width={size}
         height={size}
+        loading={priority ? undefined : "lazy"}
+        priority={priority}
         className={`shrink-0 rounded-full object-cover ${className}`}
         style={{
           width: size,
