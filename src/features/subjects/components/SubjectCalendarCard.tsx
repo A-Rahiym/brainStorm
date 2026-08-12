@@ -9,8 +9,6 @@ import { usePeriodStore } from "@/store/period.store";
 import { addMonths, monthLabel, padHour } from "@/features/subjects/utils/period";
 import type { SubjectClassGroup, SubjectPeriod } from "@/features/subjects/types";
 
-const HOURS = [8, 9, 10];
-
 function PeriodCard({
   subjectName,
   period,
@@ -71,6 +69,7 @@ export function SubjectCalendarCard({
   initialSelected?: Date;
 }) {
   const [month, setMonth] = useState<Date>(initialSelected ?? new Date());
+  const hours = [...new Set(classes.flatMap((g) => g.periods.map((p) => p.startHour)))].sort((a, b) => a - b);
 
   return (
     <Card className="flex h-140 flex-col gap-4 sm:flex-row">
@@ -143,7 +142,7 @@ export function SubjectCalendarCard({
                 </span>
               </div>
               <div className="grid grid-cols-[58px_minmax(0,1fr)] gap-x-3">
-                {HOURS.map((hour) => {
+                {hours.map((hour) => {
                   const period = group.periods.find((p) => p.startHour === hour);
                   return (
                     <Fragment key={hour}>

@@ -6,6 +6,13 @@ export type CurrentTerm = {
   termId: string;
 };
 
+/**
+ * Resolves the school's currently active academic session and, within it,
+ * the currently active term. Used as the anchor context for most dashboard
+ * and reporting queries.
+ * @param ctx - request context carrying the caller's school scope
+ * @returns the active session/term id pair, or null if there is no active session or no active term within it
+ */
 export async function findCurrentTerm(ctx: RequestContext): Promise<CurrentTerm | null> {
   const schoolId = ctx.schoolId ?? undefined;
   const session = await prisma.academicSession.findFirst({
@@ -23,10 +30,20 @@ export async function findCurrentTerm(ctx: RequestContext): Promise<CurrentTerm 
   return { sessionId: session.id, termId: term.id };
 }
 
+/**
+ * Lists assignments for a term, optionally narrowed to a specific teacher
+ * and/or subject, including submission counts and the related class/subject
+ * names for display.
+ * @param ctx - request context carrying the caller's school scope
+ * @param termId - restrict results to assignments whose teaching assignment belongs to this term
+ * @param params.teacherId - optional, restrict results to this teacher's assignments only
+ * @param params.subjectId - optional, restrict results to assignments for this subject only
+ * @returns assignments ordered by due date ascending, with submission count and class/subject info
+ */
 export async function listAssignments(
   ctx: RequestContext,
   termId: string,
-  params: { teacherId?: string }
+  params: { teacherId?: string; subjectId?: string }
 ) {
   const schoolId = ctx.schoolId ?? undefined;
   const where = {
@@ -34,6 +51,7 @@ export async function listAssignments(
       termId,
       academicSession: { schoolId },
       ...(params.teacherId ? { teacherId: params.teacherId } : {}),
+      ...(params.subjectId ? { classSubject: { subjectId: params.subjectId } } : {}),
     },
   };
   return prisma.assignment.findMany({
@@ -61,6 +79,14 @@ export async function listAssignments(
   });
 }
 
+/**
+ * Counts active enrollments per class for a given academic session, used to
+ * compute assignment completion ratios (submitted vs. class size).
+ * @param ctx - request context carrying the caller's school scope
+ * @param sessionId - the academic session to count enrollments within
+ * @param classIds - the set of class ids to count; returns an empty object immediately if empty
+ * @returns a map of classId to active enrollment count
+ */
 export async function classEnrollmentCounts(
   ctx: RequestContext,
   sessionId: string,
@@ -76,6 +102,14 @@ export async function classEnrollmentCounts(
   return Object.fromEntries(rows.map((r) => [r.classId, r._count._all]));
 }
 
+/**
+ * Counts assignment submissions for a term, grouped by status
+ * (SUBMITTED/LATE/GRADED), optionally scoped to one teacher's assignments.
+ * @param ctx - request context carrying the caller's school scope
+ * @param termId - restrict results to submissions for assignments in this term
+ * @param params.teacherId - optional, restrict results to this teacher's assignments only
+ * @returns a record with a count for each of SUBMITTED, LATE, and GRADED (defaulting to 0 when absent)
+ */
 export async function submissionStatusCounts(
   ctx: RequestContext,
   termId: string,
@@ -100,11 +134,23 @@ export async function submissionStatusCounts(
   return counts;
 }
 
+/**
+ * Ranks students by their average score percentage across assessments in a
+ * term, optionally scoped to one teacher's teaching assignments and/or a
+ * single subject, for use in "top students" leaderboards.
+ * @param ctx - request context carrying the caller's school scope
+ * @param termId - restrict scores to assessments within this term
+ * @param sessionId - the academic session used to resolve each student's current class
+ * @param params.teacherId - optional, restrict results to this teacher's assessments only
+ * @param params.limit - maximum number of students to return (defaults to 5)
+ * @param params.subjectId - optional, restrict results to assessments for this subject only
+ * @returns students sorted by average score percentage descending, each with their student info and avgPct
+ */
 export async function topScoredStudents(
   ctx: RequestContext,
   termId: string,
   sessionId: string,
-  params: { teacherId?: string; limit?: number }
+  params: { teacherId?: string; limit?: number; subjectId?: string }
 ) {
   const schoolId = ctx.schoolId ?? undefined;
   const scores = await prisma.score.findMany({
@@ -114,6 +160,7 @@ export async function topScoredStudents(
         teachingAssignment: {
           academicSession: { schoolId },
           ...(params.teacherId ? { teacherId: params.teacherId } : {}),
+          ...(params.subjectId ? { classSubject: { subjectId: params.subjectId } } : {}),
         },
       },
     },
@@ -156,6 +203,15 @@ export async function topScoredStudents(
     .slice(0, params.limit ?? 5);
 }
 
+/**
+ * Fetches the most recently created assignments for a term, optionally
+ * scoped to one teacher, for use in recent-activity feeds.
+ * @param ctx - request context carrying the caller's school scope
+ * @param termId - restrict results to assignments within this term
+ * @param params.teacherId - optional, restrict results to this teacher's assignments only
+ * @param params.take - maximum number of assignments to return (defaults to 5)
+ * @returns assignments newest-first with id, title, and createdAt
+ */
 export async function recentAssignments(
   ctx: RequestContext,
   termId: string,

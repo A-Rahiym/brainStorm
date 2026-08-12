@@ -1,6 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import type { RequestContext } from "@/server/context";
 
+/**
+ * Computes headline counts for a teacher's dashboard: distinct students
+ * taught, total active teachers school-wide, and the teacher's own subject,
+ * class, and timetable-period counts, derived from their active teaching
+ * assignments in the given term.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignments define the scope
+ * @param termId - the term to compute active teaching assignments within
+ * @returns counts for students, teachers (school-wide), subjects, classes, and periods
+ */
 export async function teacherStats(ctx: RequestContext, teacherId: string, termId: string) {
   const schoolId = ctx.schoolId ?? undefined;
   const [assignments, teacherCount] = await Promise.all([
@@ -42,6 +52,15 @@ export type TeacherSubjectRow = {
   students: number;
 };
 
+/**
+ * Builds a per-subject summary for a teacher's active teaching assignments
+ * in a term: subject identity, the classes it's taught in, and the total
+ * distinct number of actively enrolled students across those classes.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignments define the scope
+ * @param termId - the term to compute active teaching assignments within
+ * @returns one row per subject the teacher teaches; empty array if the teacher has no active assignments
+ */
 export async function teacherSubjects(
   ctx: RequestContext,
   teacherId: string,
@@ -122,6 +141,17 @@ export type TeacherStudentRow = {
   total: number;
 };
 
+/**
+ * Builds a full per-student roster row for every student actively enrolled
+ * in a teacher's classes: attendance present/total, first and second CA
+ * scores (scaled out of 20 each), exam score (scaled out of 60), and the
+ * combined total.
+ * @param ctx - request context carrying the caller's school scope
+ * @param params.teacherId - the teacher whose active teaching assignments define the class scope
+ * @param params.termId - the term to pull scores and attendance from
+ * @param params.sessionId - the academic session used to resolve current active enrollments
+ * @returns one row per enrolled student with attendance and computed score components; ca/exam values default to 0 when no score exists
+ */
 export async function teacherStudents(
   ctx: RequestContext,
   params: { teacherId: string; termId: string; sessionId: string }
@@ -223,17 +253,33 @@ export async function teacherStudents(
 
 export type TrendPoint = { date: Date; value: number };
 
+/**
+ * Builds a day-by-day average score percentage trend across a teacher's
+ * assessments in a term, optionally narrowed to one subject, for charting
+ * performance over time.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignments define the scope
+ * @param termId - the term to pull assessment scores from
+ * @param subjectId - optional, restrict scores to assessments for this subject only
+ * @returns one point per assessment date, sorted ascending, with the average score percentage that day; empty array if there are no scores
+ */
 export async function teacherScoreTrend(
   ctx: RequestContext,
   teacherId: string,
-  termId: string
+  termId: string,
+  subjectId?: string
 ): Promise<TrendPoint[]> {
   const schoolId = ctx.schoolId ?? undefined;
   const scores = await prisma.score.findMany({
     where: {
       assessment: {
         termId,
-        teachingAssignment: { teacherId, academicSession: { schoolId }, status: "ACTIVE" },
+        teachingAssignment: {
+          teacherId,
+          academicSession: { schoolId },
+          status: "ACTIVE",
+          ...(subjectId ? { classSubject: { subjectId } } : {}),
+        },
       },
     },
     select: {
@@ -261,14 +307,31 @@ export async function teacherScoreTrend(
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 }
 
+/**
+ * Builds a day-by-day attendance rate trend across the classes a teacher
+ * actively teaches in a term, optionally narrowed to one subject, for
+ * charting attendance over time.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignments define the class scope
+ * @param termId - the term to pull attendance records from
+ * @param subjectId - optional, restrict the class scope to this subject only
+ * @returns one point per attendance date, sorted ascending, with the percent present that day; empty array if the teacher has no active classes
+ */
 export async function teacherAttendanceTrend(
   ctx: RequestContext,
   teacherId: string,
-  termId: string
+  termId: string,
+  subjectId?: string
 ): Promise<TrendPoint[]> {
   const schoolId = ctx.schoolId ?? undefined;
   const assignments = await prisma.teachingAssignment.findMany({
-    where: { teacherId, termId, status: "ACTIVE", academicSession: { schoolId } },
+    where: {
+      teacherId,
+      termId,
+      status: "ACTIVE",
+      academicSession: { schoolId },
+      ...(subjectId ? { classSubject: { subjectId } } : {}),
+    },
     select: { classSubject: { select: { classId: true } } },
   });
   const classIds = [...new Set(assignments.map((a) => a.classSubject.classId))];
@@ -296,6 +359,15 @@ export async function teacherAttendanceTrend(
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 }
 
+/**
+ * Computes an average score-percentage "progress" figure per subject for a
+ * teacher's active teaching assignments in a term, used as a rough syllabus
+ * completion/performance indicator.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignments define the scope
+ * @param termId - the term to pull assessment scores from
+ * @returns one entry per subject with an averaged, rounded progress percentage; empty array if there are no scores
+ */
 export async function subjectScoreProgress(
   ctx: RequestContext,
   teacherId: string,
@@ -339,6 +411,15 @@ export async function subjectScoreProgress(
   }));
 }
 
+/**
+ * Fetches assignments that are still open and due in the future, optionally
+ * scoped to one teacher, ordered by soonest due date first.
+ * @param ctx - request context carrying the caller's school scope
+ * @param termId - restrict results to assignments within this term
+ * @param params.teacherId - optional, restrict results to this teacher's assignments only
+ * @param params.take - maximum number of assignments to return (defaults to 4)
+ * @returns open assignments due from now onward, soonest first
+ */
 export async function upcomingAssignments(
   ctx: RequestContext,
   termId: string,
@@ -362,6 +443,14 @@ export async function upcomingAssignments(
   });
 }
 
+/**
+ * Fetches the most recently recorded attendance entries taken by a specific
+ * teacher, for use in the teacher's recent-activity feed.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher who recorded the attendance (matches the recordedBy field)
+ * @param take - maximum number of attendance records to return (defaults to 5)
+ * @returns attendance records newest-first with the recorded date and student name
+ */
 export async function recentAttendance(ctx: RequestContext, teacherId: string, take = 5) {
   const schoolId = ctx.schoolId ?? undefined;
   return prisma.attendance.findMany({
@@ -375,4 +464,74 @@ export async function recentAttendance(ctx: RequestContext, teacherId: string, t
       student: { select: { firstName: true, lastName: true } },
     },
   });
+}
+
+/**
+ * Fetches the recurring weekly timetable entries for a teacher's active
+ * teaching assignment in a single subject, ordered by period start time, for
+ * building the subject detail page's "Periods" panel.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignment defines the scope
+ * @param termId - the term to compute the active teaching assignment within
+ * @param subjectId - restrict results to timetable entries for this subject only
+ * @returns one row per weekly timetable entry with class name, day of week, and period name/start/end time
+ */
+export async function subjectPeriods(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string,
+  subjectId: string
+) {
+  const schoolId = ctx.schoolId ?? undefined;
+  return prisma.timetableEntry.findMany({
+    where: {
+      teachingAssignment: {
+        teacherId,
+        termId,
+        status: "ACTIVE",
+        academicSession: { schoolId },
+        classSubject: { subjectId },
+      },
+    },
+    orderBy: { period: { startTime: "asc" } },
+    select: {
+      id: true,
+      dayOfWeek: true,
+      class: { select: { name: true } },
+      period: { select: { name: true, startTime: true, endTime: true } },
+    },
+  });
+}
+
+/**
+ * Fetches the distinct dates on which a teacher has assessments scheduled
+ * for a single subject in a term, used to mark event days on the subject
+ * detail page's calendar.
+ * @param ctx - request context carrying the caller's school scope
+ * @param teacherId - the teacher whose active teaching assignment defines the scope
+ * @param termId - the term to pull assessments from
+ * @param subjectId - restrict results to assessments for this subject only
+ * @returns a list of distinct assessment dates for the subject
+ */
+export async function subjectCalendarEventDays(
+  ctx: RequestContext,
+  teacherId: string,
+  termId: string,
+  subjectId: string
+): Promise<Date[]> {
+  const schoolId = ctx.schoolId ?? undefined;
+  const rows = await prisma.assessment.findMany({
+    where: {
+      termId,
+      teachingAssignment: {
+        teacherId,
+        status: "ACTIVE",
+        academicSession: { schoolId },
+        classSubject: { subjectId },
+      },
+    },
+    select: { date: true },
+    distinct: ["date"],
+  });
+  return rows.map((r) => r.date);
 }
