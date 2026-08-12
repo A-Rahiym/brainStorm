@@ -1,0 +1,70 @@
+enum FeeAccountStatus {
+  PENDING
+  PARTIAL
+  PAID
+}
+
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  CARD
+  ONLINE
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
+model FeeStructure {
+  id                String   @id @default(uuid()) @db.Uuid
+  schoolId          String   @db.Uuid
+  academicSessionId String   @db.Uuid
+  name              String
+  amount            Decimal  @db.Decimal(12, 2)
+  description       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  school             School              @relation(fields: [schoolId], references: [id])
+  academicSession    AcademicSession     @relation(fields: [academicSessionId], references: [id])
+  studentFeeAccounts StudentFeeAccount[]
+
+  @@index([schoolId])
+}
+
+model StudentFeeAccount {
+  id             String           @id @default(uuid()) @db.Uuid
+  studentId      String           @db.Uuid
+  feeStructureId String           @db.Uuid
+  amountDue      Decimal          @db.Decimal(12, 2)
+  status         FeeAccountStatus @default(PENDING)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  student      Student      @relation(fields: [studentId], references: [id])
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
+  payments     Payment[]
+
+  @@unique([studentId, feeStructureId])
+  @@index([feeStructureId])
+}
+
+model Payment {
+  id                  String        @id @default(uuid()) @db.Uuid
+  studentFeeAccountId String        @db.Uuid
+  amount              Decimal       @db.Decimal(12, 2)
+  paymentDate         DateTime      @default(now()) @db.Date
+  paymentMethod       PaymentMethod @default(CASH)
+  reference           String        @unique
+  status              PaymentStatus @default(CONFIRMED)
+  recordedBy          String        @db.Uuid
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  studentFeeAccount StudentFeeAccount @relation(fields: [studentFeeAccountId], references: [id])
+  recorder          User              @relation(fields: [recordedBy], references: [id])
+
+  @@index([studentFeeAccountId])
+}

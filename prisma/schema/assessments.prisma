@@ -1,0 +1,87 @@
+enum AssignmentStatus {
+  OPEN
+  CLOSED
+}
+
+enum AssessmentType {
+  QUIZ
+  TEST
+  CA
+  EXAMINATION
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  LATE
+  GRADED
+}
+
+model Assignment {
+  id                   String           @id @default(uuid()) @db.Uuid
+  teachingAssignmentId String           @db.Uuid
+  title                String
+  description          String?
+  dueDate              DateTime
+  status               AssignmentStatus @default(OPEN)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
+
+  submissions Submission[]
+
+  @@index([teachingAssignmentId])
+}
+
+model Assessment {
+  id                   String         @id @default(uuid()) @db.Uuid
+  teachingAssignmentId String         @db.Uuid
+  termId               String         @db.Uuid
+  name                 String
+  type                 AssessmentType
+  maxScore             Decimal        @db.Decimal(5, 2)
+  date                 DateTime       @db.Date
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
+  term               Term               @relation(fields: [termId], references: [id])
+  scores             Score[]
+
+  @@index([teachingAssignmentId, termId])
+}
+
+model Score {
+  id           String   @id @default(uuid()) @db.Uuid
+  assessmentId String   @db.Uuid
+  studentId    String   @db.Uuid
+  gradeId      String?  @db.Uuid
+  score        Decimal  @db.Decimal(5, 2)
+  remark       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+  grade      Grade?     @relation(fields: [gradeId], references: [id])
+
+  @@unique([assessmentId, studentId])
+  @@index([studentId])
+}
+
+model Submission {
+  id           String           @id @default(uuid()) @db.Uuid
+  assignmentId String           @db.Uuid
+  studentId    String           @db.Uuid
+  submittedAt  DateTime         @default(now())
+  status       SubmissionStatus @default(SUBMITTED)
+  content      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+
+  @@unique([assignmentId, studentId])
+  @@index([studentId])
+}

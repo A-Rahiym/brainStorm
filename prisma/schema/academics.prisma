@@ -1,0 +1,180 @@
+enum SessionStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum TermStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum ClassStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum SubjectStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  TRANSFERRED
+  WITHDRAWN
+}
+
+enum AssignmentContextStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model AcademicSession {
+  id        String        @id @default(uuid()) @db.Uuid
+  schoolId  String        @db.Uuid
+  name      String
+  startDate DateTime      @db.Date
+  endDate   DateTime      @db.Date
+  status    SessionStatus @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+  terms  Term[]
+
+  enrollments         Enrollment[]
+  teachingAssignments TeachingAssignment[]
+
+  feeStructures FeeStructure[]
+
+  @@index([schoolId])
+}
+
+model Term {
+  id                String     @id @default(uuid()) @db.Uuid
+  academicSessionId String     @db.Uuid
+  name              String
+  startDate         DateTime   @db.Date
+  endDate           DateTime   @db.Date
+  status            TermStatus @default(ACTIVE)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  academicSession     AcademicSession      @relation(fields: [academicSessionId], references: [id])
+  teachingAssignments TeachingAssignment[]
+  attendance          Attendance[]
+  assessments         Assessment[]
+
+  @@index([academicSessionId])
+}
+
+model Class {
+  id        String      @id @default(uuid()) @db.Uuid
+  schoolId  String      @db.Uuid
+  name      String
+  level     String
+  capacity  Int
+  status    ClassStatus @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  enrollments      Enrollment[]
+  classSubjects    ClassSubject[]
+  timetableEntries TimetableEntry[]
+  attendance       Attendance[]
+
+  @@index([schoolId])
+}
+
+model Subject {
+  id          String        @id @default(uuid()) @db.Uuid
+  schoolId    String        @db.Uuid
+  name        String
+  code        String
+  description String?
+  status      SubjectStatus @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  classSubjects ClassSubject[]
+
+  @@unique([schoolId, code])
+  @@index([schoolId])
+}
+
+model Grade {
+  id        String   @id @default(uuid()) @db.Uuid
+  schoolId  String   @db.Uuid
+  name      String
+  minScore  Decimal  @db.Decimal(5, 2)
+  maxScore  Decimal  @db.Decimal(5, 2)
+  remark    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  scores Score[]
+
+  @@index([schoolId])
+}
+
+model Enrollment {
+  id                String           @id @default(uuid()) @db.Uuid
+  studentId         String           @db.Uuid
+  classId           String           @db.Uuid
+  academicSessionId String           @db.Uuid
+  enrollmentDate    DateTime         @default(now()) @db.Date
+  status            EnrollmentStatus @default(ACTIVE)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  student         Student         @relation(fields: [studentId], references: [id])
+  class           Class           @relation(fields: [classId], references: [id])
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+
+  @@index([studentId, academicSessionId])
+  @@index([classId])
+}
+
+model ClassSubject {
+  id        String   @id @default(uuid()) @db.Uuid
+  classId   String   @db.Uuid
+  subjectId String   @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  class               Class                @relation(fields: [classId], references: [id])
+  subject             Subject              @relation(fields: [subjectId], references: [id])
+  teachingAssignments TeachingAssignment[]
+
+  @@unique([classId, subjectId])
+  @@index([subjectId])
+}
+
+model TeachingAssignment {
+  id                String                  @id @default(uuid()) @db.Uuid
+  teacherId         String                  @db.Uuid
+  classSubjectId    String                  @db.Uuid
+  academicSessionId String                  @db.Uuid
+  termId            String                  @db.Uuid
+  status            AssignmentContextStatus @default(ACTIVE)
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  teacher         Teacher         @relation(fields: [teacherId], references: [id])
+  classSubject    ClassSubject    @relation(fields: [classSubjectId], references: [id])
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+  term            Term            @relation(fields: [termId], references: [id])
+
+  timetableEntries TimetableEntry[]
+  assignments      Assignment[]
+  assessments      Assessment[]
+
+  @@unique([classSubjectId, termId])
+  @@index([teacherId, academicSessionId, termId])
+}

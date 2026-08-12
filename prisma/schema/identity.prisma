@@ -1,0 +1,155 @@
+enum RoleName {
+  HEADMASTER
+  TEACHER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+}
+
+enum HeadmasterStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum TeacherStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  GRADUATED
+  SUSPENDED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model School {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  headmasters      Headmaster[]
+  teachers         Teacher[]
+  students         Student[]
+  academicSessions AcademicSession[]
+  classes          Class[]
+  subjects         Subject[]
+  grades           Grade[]
+  periods          Period[]
+  feeStructures    FeeStructure[]
+  schoolEvents     SchoolEvent[]
+}
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        RoleName @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users User[]
+}
+
+model User {
+  id           String     @id @default(uuid()) @db.Uuid
+  email        String     @unique
+  passwordHash String
+  roleId       String     @db.Uuid
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  role       Role        @relation(fields: [roleId], references: [id])
+  headmaster Headmaster?
+  teacher    Teacher?
+  payments   Payment[]
+
+  @@index([roleId])
+}
+
+model Headmaster {
+  id             String           @id @default(uuid()) @db.Uuid
+  schoolId       String           @db.Uuid
+  userId         String?          @unique @db.Uuid
+  firstName      String
+  lastName       String
+  email          String
+  phone          String?
+  staffNumber    String
+  dateOfBirth    DateTime         @db.Date
+  address        String?
+  employmentDate DateTime         @db.Date
+  status         HeadmasterStatus @default(ACTIVE)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+  user   User?  @relation(fields: [userId], references: [id])
+
+  @@index([schoolId])
+}
+
+model Teacher {
+  id             String        @id @default(uuid()) @db.Uuid
+  schoolId       String        @db.Uuid
+  userId         String?       @unique @db.Uuid
+  firstName      String
+  lastName       String
+  email          String
+  phone          String?
+  staffNumber    String
+  photoUrl       String?
+  dateOfBirth    DateTime      @db.Date
+  address        String?
+  employmentDate DateTime      @db.Date
+  qualification  String?
+  status         TeacherStatus @default(ACTIVE)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+  user   User?  @relation(fields: [userId], references: [id])
+
+  teachingAssignments   TeachingAssignment[]
+  attendance            Attendance[]
+  startedPeriodSessions PeriodSession[]
+
+  @@unique([schoolId, staffNumber])
+  @@index([schoolId])
+}
+
+model Student {
+  id              String        @id @default(uuid()) @db.Uuid
+  schoolId        String        @db.Uuid
+  firstName       String
+  lastName        String
+  admissionNumber String
+  dateOfBirth     DateTime      @db.Date
+  gender          Gender
+  photoUrl        String?
+  address         String?
+  admissionDate   DateTime      @db.Date
+  status          StudentStatus @default(ACTIVE)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  school      School              @relation(fields: [schoolId], references: [id])
+  enrollments Enrollment[]
+  attendance  Attendance[]
+  scores      Score[]
+  feeAccounts StudentFeeAccount[]
+  submissions Submission[]
+
+  @@unique([schoolId, admissionNumber])
+  @@index([schoolId])
+}

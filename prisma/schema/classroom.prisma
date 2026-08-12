@@ -1,0 +1,92 @@
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum PeriodSessionStatus {
+  LIVE
+  ENDED
+}
+
+model Period {
+  id        String   @id @default(uuid()) @db.Uuid
+  schoolId  String   @db.Uuid
+  name      String
+  startTime DateTime @db.Time(0)
+  endTime   DateTime @db.Time(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  timetableEntries TimetableEntry[]
+
+  @@index([schoolId])
+}
+
+model TimetableEntry {
+  id                   String    @id @default(uuid()) @db.Uuid
+  classId              String    @db.Uuid
+  teachingAssignmentId String    @db.Uuid
+  periodId             String    @db.Uuid
+  dayOfWeek            DayOfWeek
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  class              Class              @relation(fields: [classId], references: [id])
+  teachingAssignment TeachingAssignment @relation(fields: [teachingAssignmentId], references: [id])
+  period             Period             @relation(fields: [periodId], references: [id])
+
+  periodSessions PeriodSession[]
+
+  @@index([classId, dayOfWeek])
+  @@index([teachingAssignmentId])
+  @@index([periodId])
+}
+
+model PeriodSession {
+  id               String              @id @default(uuid()) @db.Uuid
+  timetableEntryId String              @db.Uuid
+  date             DateTime            @db.Date
+  status           PeriodSessionStatus @default(LIVE)
+  startedAt        DateTime            @default(now())
+  startedBy        String              @db.Uuid
+  endedAt          DateTime?
+
+  timetableEntry TimetableEntry @relation(fields: [timetableEntryId], references: [id])
+  starter        Teacher        @relation(fields: [startedBy], references: [id])
+
+  @@unique([timetableEntryId, date])
+  @@index([date])
+}
+
+model Attendance {
+  id         String           @id @default(uuid()) @db.Uuid
+  studentId  String           @db.Uuid
+  classId    String           @db.Uuid
+  termId     String           @db.Uuid
+  date       DateTime         @db.Date
+  status     AttendanceStatus @default(PRESENT)
+  recordedBy String           @db.Uuid
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  student  Student @relation(fields: [studentId], references: [id])
+  class    Class   @relation(fields: [classId], references: [id])
+  term     Term    @relation(fields: [termId], references: [id])
+  recorder Teacher @relation(fields: [recordedBy], references: [id])
+
+  @@index([classId, termId, date])
+  @@index([studentId])
+  @@index([recordedBy])
+}
